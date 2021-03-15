@@ -1,0 +1,18 @@
+int main() {
+    set s;
+    s = $;
+
+    add(! in s);
+    add(2 in s);
+    add(5 in s);
+    add(8 in s);
+    add(54 in s);
+    add(43 in s);
+    add(3 in s);
+    add(?? in s);
+    add(56 in s);
+    add(6 in s);
+ 
+return ;
+
+}
