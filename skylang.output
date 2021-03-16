@@ -3,27 +3,6 @@ Terminais sem uso na gramática
     READ
 
 
-Regras inúteis no analisador por causa de conflitos
-
-    9 params_list: params_list
-
-   14 statements: statements
-
-   49 relExp: ID rel ID
-
-   54 rel: '='
-   56    | '<'
-   57    | '>'
-
-
-Estado 13 conflitos: 1 de redução/redução
-Estado 27 conflitos: 1 de deslocamento/redução
-Estado 62 conflitos: 3 de deslocamento/redução
-Estado 67 conflitos: 3 de redução/redução
-Estado 68 conflitos: 3 de redução/redução
-Estado 87 conflitos: 5 de redução/redução
-
-
 Gramática
 
     0 $accept: programa $end
@@ -42,191 +21,192 @@ Gramática
 
     8 params: params_list
 
-    9 params_list: params_list
-   10            | param
+    9 params_list: param
 
-   11 param: TYPE ID
+   10 param: TYPE ID
 
-   12 codeBlock: statements returns
+   11 codeBlock: statements returns
 
-   13 returns: RETURN exp
+   12 returns: RETURN exp
 
-   14 statements: statements
-   15           | statement
+   13 statements: statement
 
-   16 statement: if_statement
-   17          | while_statement
-   18          | for_statement
-   19          | declaration_statement
-   20          | for_all_statement
-   21          | exists_statement
-   22          | add_statement
-   23          | remove_statement
+   14 statement: if_statement
+   15          | while_statement
+   16          | for_statement
+   17          | declaration_statement
+   18          | for_all_statement
+   19          | exists_statement
+   20          | add_statement
+   21          | remove_statement
 
-   24 declaration_statement: variable_declaration
+   22 declaration_statement: variable_declaration
 
-   25 while_statement: WHILE '(' exp ')' codeBlock
+   23 while_statement: WHILE '(' exp ')' codeBlock
 
-   26 if_statement: IF '(' exp ')' codeBlock
-   27             | IF '(' exp ')' codeBlock ELSE codeBlock
+   24 if_statement: IF '(' exp ')' codeBlock
+   25             | IF '(' exp ')' codeBlock ELSE codeBlock
 
-   28 for_statement: FOR '(' exp ')' codeBlock
+   26 for_statement: FOR '(' exp ')' codeBlock
 
-   29 for_all_statement: FORALL '(' exp ')' codeBlock
-   30                  | FORALL '(' exp ')'
+   27 for_all_statement: FORALL '(' exp ')' codeBlock
+   28                  | FORALL '(' exp ')'
 
-   31 exists_statement: EXISTS '(' exp ')' codeBlock
-   32                 | EXISTS '(' exp ')'
+   29 exists_statement: EXISTS '(' exp ')' codeBlock
+   30                 | EXISTS '(' exp ')'
 
-   33 add_statement: ADD '(' exp ')' codeBlock
-   34              | ADD '(' exp ')'
+   31 add_statement: ADD '(' exp ')' codeBlock
+   32              | ADD '(' exp ')'
 
-   35 remove_statement: REMOVE '(' exp ')' codeBlock
-   36                 | REMOVE '(' exp ')'
+   33 remove_statement: REMOVE '(' exp ')' codeBlock
+   34                 | REMOVE '(' exp ')'
 
-   37 exp: setExp
-   38    | opExp
-   39    | relExp
+   35 exp: setExp
+   36    | opExp
+   37    | relExp
 
-   40 setExp: ID IN ID
-   41       | WRITELN IN ID
-   42       | WRITE IN ID
+   38 setExp: ID IN ID
+   39       | WRITELN IN ID
+   40       | WRITE IN ID
 
-   43 opExp: ID
-   44      | ID '=' exp
-   45      | ID '*' ID
-   46      | ID '+' ID
-   47      | ID '-' ID
-   48      | ID '/' ID
+   41 opExp: ID
+   42      | ID '=' exp
+   43      | ID '*' ID
+   44      | ID '+' ID
+   45      | ID '-' ID
+   46      | ID '/' ID
 
-   49 relExp: ID rel ID
-   50       | ID rel exp
+   47 relExp: %empty
+   48       | ID rel exp
 
-   51 rel: '>'
-   52    | '<'
-   53    | '!'
-   54    | '='
-   55    | '&'
-   56    | '<'
-   57    | '>'
+   49 rel: CGE
+   50    | CGT
+   51    | CNE
+   52    | CLT
+   53    | AND
+   54    | CLE
+   55    | CEQ
 
 
 Terminais, com as regras onde eles aparecem
 
     $end (0) 0
-    '!' (33) 53
-    '&' (38) 55
-    '(' (40) 7 25 26 27 28 29 30 31 32 33 34 35 36
-    ')' (41) 7 25 26 27 28 29 30 31 32 33 34 35 36
-    '*' (42) 45
-    '+' (43) 46
-    '-' (45) 47
-    '/' (47) 48
-    '<' (60) 52 56
-    '=' (61) 44 54
-    '>' (62) 51 57
+    '(' (40) 7 23 24 25 26 27 28 29 30 31 32 33 34
+    ')' (41) 7 23 24 25 26 27 28 29 30 31 32 33 34
+    '*' (42) 43
+    '+' (43) 44
+    '-' (45) 45
+    '/' (47) 46
+    '=' (61) 42
     error (256)
-    TYPE <type> (258) 6 7 11
-    ID <id> (259) 6 7 11 40 41 42 43 44 45 46 47 48 49 50
-    RETURN (260) 13
-    IF (261) 26 27
-    ELSE (262) 27
-    WHILE (263) 25
-    WRITE (264) 42
-    WRITELN (265) 41
+    TYPE <type> (258) 6 7 10
+    ID <id> (259) 6 7 10 38 39 40 41 42 43 44 45 46 48
+    RETURN (260) 12
+    IF (261) 24 25
+    ELSE (262) 25
+    WHILE (263) 23
+    WRITE (264) 40
+    WRITELN (265) 39
     READ (266)
-    EXISTS (267) 31 32
-    ADD (268) 33 34
-    REMOVE (269) 35 36
-    FOR (270) 28
-    FORALL (271) 29 30
-    IN (272) 40 41 42
+    EXISTS (267) 29 30
+    ADD (268) 31 32
+    REMOVE (269) 33 34
+    FOR (270) 26
+    FORALL (271) 27 28
+    IN (272) 38 39 40
+    CLE (273) 54
+    CLT (274) 52
+    CNE (275) 51
+    CGT (276) 50
+    AND (277) 53
+    CEQ (278) 55
+    CGE (279) 49
 
 
 Não terminais com as regras onde eles aparecem
 
-    $accept (29)
+    $accept (32)
         à esquerda: 0
-    programa (30)
+    programa (33)
         à esquerda: 1
         à direita: 0
-    declarationList (31)
+    declarationList (34)
         à esquerda: 2 3
         à direita: 1 2
-    declaration (32)
+    declaration (35)
         à esquerda: 4 5
         à direita: 2 3
-    variable_declaration (33)
+    variable_declaration (36)
         à esquerda: 6
-        à direita: 4 24
-    func_declaration (34)
+        à direita: 4 22
+    func_declaration (37)
         à esquerda: 7
         à direita: 5
-    params (35)
+    params (38)
         à esquerda: 8
         à direita: 7
-    params_list (36)
-        à esquerda: 9 10
-        à direita: 8 9
-    param (37)
+    params_list (39)
+        à esquerda: 9
+        à direita: 8
+    param (40)
+        à esquerda: 10
+        à direita: 9
+    codeBlock (41)
         à esquerda: 11
-        à direita: 10
-    codeBlock (38)
+        à direita: 7 23 24 25 26 27 29 31 33
+    returns (42)
         à esquerda: 12
-        à direita: 7 25 26 27 28 29 31 33 35
-    returns (39)
+        à direita: 11
+    statements (43)
         à esquerda: 13
-        à direita: 12
-    statements (40)
-        à esquerda: 14 15
-        à direita: 12 14
-    statement (41)
-        à esquerda: 16 17 18 19 20 21 22 23
-        à direita: 15
-    declaration_statement (42)
-        à esquerda: 24
-        à direita: 19
-    while_statement (43)
-        à esquerda: 25
+        à direita: 11
+    statement (44)
+        à esquerda: 14 15 16 17 18 19 20 21
+        à direita: 13
+    declaration_statement (45)
+        à esquerda: 22
         à direita: 17
-    if_statement (44)
-        à esquerda: 26 27
+    while_statement (46)
+        à esquerda: 23
+        à direita: 15
+    if_statement (47)
+        à esquerda: 24 25
+        à direita: 14
+    for_statement (48)
+        à esquerda: 26
         à direita: 16
-    for_statement (45)
-        à esquerda: 28
+    for_all_statement (49)
+        à esquerda: 27 28
         à direita: 18
-    for_all_statement (46)
+    exists_statement (50)
         à esquerda: 29 30
-        à direita: 20
-    exists_statement (47)
+        à direita: 19
+    add_statement (51)
         à esquerda: 31 32
-        à direita: 21
-    add_statement (48)
+        à direita: 20
+    remove_statement (52)
         à esquerda: 33 34
-        à direita: 22
-    remove_statement (49)
-        à esquerda: 35 36
-        à direita: 23
-    exp (50)
-        à esquerda: 37 38 39
-        à direita: 13 25 26 27 28 29 30 31 32 33 34 35 36 44 50
-    setExp (51)
-        à esquerda: 40 41 42
+        à direita: 21
+    exp (53)
+        à esquerda: 35 36 37
+        à direita: 12 23 24 25 26 27 28 29 30 31 32 33 34 42 48
+    setExp (54)
+        à esquerda: 38 39 40
+        à direita: 35
+    opExp (55)
+        à esquerda: 41 42 43 44 45 46
+        à direita: 36
+    relExp (56)
+        à esquerda: 47 48
         à direita: 37
-    opExp (52)
-        à esquerda: 43 44 45 46 47 48
-        à direita: 38
-    relExp (53)
-        à esquerda: 49 50
-        à direita: 39
-    rel (54)
-        à esquerda: 51 52 53 54 55 56 57
-        à direita: 49 50
+    rel (57)
+        à esquerda: 49 50 51 52 53 54 55
+        à direita: 48
 
 
 Estado 0
 
-    0 $accept: . programa $end
+    0 $accept: • programa $end
 
     TYPE  deslocar, e ir ao estado 1
 
@@ -239,27 +219,27 @@ Estado 0
 
 Estado 1
 
-    6 variable_declaration: TYPE . ID
-    7 func_declaration: TYPE . ID '(' params ')' codeBlock
+    6 variable_declaration: TYPE • ID
+    7 func_declaration: TYPE • ID '(' params ')' codeBlock
 
     ID  deslocar, e ir ao estado 7
 
 
 Estado 2
 
-    0 $accept: programa . $end
+    0 $accept: programa • $end
 
     $end  deslocar, e ir ao estado 8
 
 
 Estado 3
 
-    1 programa: declarationList .
-    2 declarationList: declarationList . declaration
+    1 programa: declarationList •
+    2 declarationList: declarationList • declaration
 
     TYPE  deslocar, e ir ao estado 1
 
-    $padrão  reduzir usando a regra 1 (programa)
+    $end  reduzir usando a regra 1 (programa)
 
     declaration           ir ao estado 9
     variable_declaration  ir ao estado 5
@@ -268,52 +248,57 @@ Estado 3
 
 Estado 4
 
-    3 declarationList: declaration .
+    3 declarationList: declaration •
 
-    $padrão  reduzir usando a regra 3 (declarationList)
+    $end  reduzir usando a regra 3 (declarationList)
+    TYPE  reduzir usando a regra 3 (declarationList)
 
 
 Estado 5
 
-    4 declaration: variable_declaration .
+    4 declaration: variable_declaration •
 
-    $padrão  reduzir usando a regra 4 (declaration)
+    $end  reduzir usando a regra 4 (declaration)
+    TYPE  reduzir usando a regra 4 (declaration)
 
 
 Estado 6
 
-    5 declaration: func_declaration .
+    5 declaration: func_declaration •
 
-    $padrão  reduzir usando a regra 5 (declaration)
+    $end  reduzir usando a regra 5 (declaration)
+    TYPE  reduzir usando a regra 5 (declaration)
 
 
 Estado 7
 
-    6 variable_declaration: TYPE ID .
-    7 func_declaration: TYPE ID . '(' params ')' codeBlock
+    6 variable_declaration: TYPE ID •
+    7 func_declaration: TYPE ID • '(' params ')' codeBlock
 
     '('  deslocar, e ir ao estado 10
 
-    $padrão  reduzir usando a regra 6 (variable_declaration)
+    $end  reduzir usando a regra 6 (variable_declaration)
+    TYPE  reduzir usando a regra 6 (variable_declaration)
 
 
 Estado 8
 
-    0 $accept: programa $end .
+    0 $accept: programa $end •
 
     $padrão  aceitar
 
 
 Estado 9
 
-    2 declarationList: declarationList declaration .
+    2 declarationList: declarationList declaration •
 
-    $padrão  reduzir usando a regra 2 (declarationList)
+    $end  reduzir usando a regra 2 (declarationList)
+    TYPE  reduzir usando a regra 2 (declarationList)
 
 
 Estado 10
 
-    7 func_declaration: TYPE ID '(' . params ')' codeBlock
+    7 func_declaration: TYPE ID '(' • params ')' codeBlock
 
     TYPE  deslocar, e ir ao estado 11
 
@@ -324,45 +309,42 @@ Estado 10
 
 Estado 11
 
-   11 param: TYPE . ID
+   10 param: TYPE • ID
 
     ID  deslocar, e ir ao estado 15
 
 
 Estado 12
 
-    7 func_declaration: TYPE ID '(' params . ')' codeBlock
+    7 func_declaration: TYPE ID '(' params • ')' codeBlock
 
     ')'  deslocar, e ir ao estado 16
 
 
 Estado 13
 
-    8 params: params_list .
-    9 params_list: params_list .
+    8 params: params_list •
 
-    ')'       reduzir usando a regra 8 (params)
-    ')'       [reduzir usando a regra 9 (params_list)]
-    $padrão  reduzir usando a regra 8 (params)
+    ')'  reduzir usando a regra 8 (params)
 
 
 Estado 14
 
-   10 params_list: param .
+    9 params_list: param •
 
-    $padrão  reduzir usando a regra 10 (params_list)
+    ')'  reduzir usando a regra 9 (params_list)
 
 
 Estado 15
 
-   11 param: TYPE ID .
+   10 param: TYPE ID •
 
-    $padrão  reduzir usando a regra 11 (param)
+    ')'  reduzir usando a regra 10 (param)
 
 
 Estado 16
 
-    7 func_declaration: TYPE ID '(' params ')' . codeBlock
+    7 func_declaration: TYPE ID '(' params ')' • codeBlock
 
     TYPE    deslocar, e ir ao estado 17
     IF      deslocar, e ir ao estado 18
@@ -389,169 +371,169 @@ Estado 16
 
 Estado 17
 
-    6 variable_declaration: TYPE . ID
+    6 variable_declaration: TYPE • ID
 
     ID  deslocar, e ir ao estado 37
 
 
 Estado 18
 
-   26 if_statement: IF . '(' exp ')' codeBlock
-   27             | IF . '(' exp ')' codeBlock ELSE codeBlock
+   24 if_statement: IF • '(' exp ')' codeBlock
+   25             | IF • '(' exp ')' codeBlock ELSE codeBlock
 
     '('  deslocar, e ir ao estado 38
 
 
 Estado 19
 
-   25 while_statement: WHILE . '(' exp ')' codeBlock
+   23 while_statement: WHILE • '(' exp ')' codeBlock
 
     '('  deslocar, e ir ao estado 39
 
 
 Estado 20
 
-   31 exists_statement: EXISTS . '(' exp ')' codeBlock
-   32                 | EXISTS . '(' exp ')'
+   29 exists_statement: EXISTS • '(' exp ')' codeBlock
+   30                 | EXISTS • '(' exp ')'
 
     '('  deslocar, e ir ao estado 40
 
 
 Estado 21
 
-   33 add_statement: ADD . '(' exp ')' codeBlock
-   34              | ADD . '(' exp ')'
+   31 add_statement: ADD • '(' exp ')' codeBlock
+   32              | ADD • '(' exp ')'
 
     '('  deslocar, e ir ao estado 41
 
 
 Estado 22
 
-   35 remove_statement: REMOVE . '(' exp ')' codeBlock
-   36                 | REMOVE . '(' exp ')'
+   33 remove_statement: REMOVE • '(' exp ')' codeBlock
+   34                 | REMOVE • '(' exp ')'
 
     '('  deslocar, e ir ao estado 42
 
 
 Estado 23
 
-   28 for_statement: FOR . '(' exp ')' codeBlock
+   26 for_statement: FOR • '(' exp ')' codeBlock
 
     '('  deslocar, e ir ao estado 43
 
 
 Estado 24
 
-   29 for_all_statement: FORALL . '(' exp ')' codeBlock
-   30                  | FORALL . '(' exp ')'
+   27 for_all_statement: FORALL • '(' exp ')' codeBlock
+   28                  | FORALL • '(' exp ')'
 
     '('  deslocar, e ir ao estado 44
 
 
 Estado 25
 
-   24 declaration_statement: variable_declaration .
+   22 declaration_statement: variable_declaration •
 
-    $padrão  reduzir usando a regra 24 (declaration_statement)
+    RETURN  reduzir usando a regra 22 (declaration_statement)
 
 
 Estado 26
 
-    7 func_declaration: TYPE ID '(' params ')' codeBlock .
+    7 func_declaration: TYPE ID '(' params ')' codeBlock •
 
-    $padrão  reduzir usando a regra 7 (func_declaration)
+    $end  reduzir usando a regra 7 (func_declaration)
+    TYPE  reduzir usando a regra 7 (func_declaration)
 
 
 Estado 27
 
-   12 codeBlock: statements . returns
-   14 statements: statements .
+   11 codeBlock: statements • returns
 
     RETURN  deslocar, e ir ao estado 45
-
-    RETURN  [reduzir usando a regra 14 (statements)]
 
     returns  ir ao estado 46
 
 
 Estado 28
 
-   15 statements: statement .
+   13 statements: statement •
 
-    $padrão  reduzir usando a regra 15 (statements)
+    RETURN  reduzir usando a regra 13 (statements)
 
 
 Estado 29
 
-   19 statement: declaration_statement .
+   17 statement: declaration_statement •
 
-    $padrão  reduzir usando a regra 19 (statement)
+    RETURN  reduzir usando a regra 17 (statement)
 
 
 Estado 30
 
-   17 statement: while_statement .
+   15 statement: while_statement •
 
-    $padrão  reduzir usando a regra 17 (statement)
+    RETURN  reduzir usando a regra 15 (statement)
 
 
 Estado 31
 
-   16 statement: if_statement .
+   14 statement: if_statement •
 
-    $padrão  reduzir usando a regra 16 (statement)
+    RETURN  reduzir usando a regra 14 (statement)
 
 
 Estado 32
 
-   18 statement: for_statement .
+   16 statement: for_statement •
 
-    $padrão  reduzir usando a regra 18 (statement)
+    RETURN  reduzir usando a regra 16 (statement)
 
 
 Estado 33
 
-   20 statement: for_all_statement .
+   18 statement: for_all_statement •
 
-    $padrão  reduzir usando a regra 20 (statement)
+    RETURN  reduzir usando a regra 18 (statement)
 
 
 Estado 34
 
-   21 statement: exists_statement .
+   19 statement: exists_statement •
 
-    $padrão  reduzir usando a regra 21 (statement)
+    RETURN  reduzir usando a regra 19 (statement)
 
 
 Estado 35
 
-   22 statement: add_statement .
+   20 statement: add_statement •
 
-    $padrão  reduzir usando a regra 22 (statement)
+    RETURN  reduzir usando a regra 20 (statement)
 
 
 Estado 36
 
-   23 statement: remove_statement .
+   21 statement: remove_statement •
 
-    $padrão  reduzir usando a regra 23 (statement)
+    RETURN  reduzir usando a regra 21 (statement)
 
 
 Estado 37
 
-    6 variable_declaration: TYPE ID .
+    6 variable_declaration: TYPE ID •
 
-    $padrão  reduzir usando a regra 6 (variable_declaration)
+    RETURN  reduzir usando a regra 6 (variable_declaration)
 
 
 Estado 38
 
-   26 if_statement: IF '(' . exp ')' codeBlock
-   27             | IF '(' . exp ')' codeBlock ELSE codeBlock
+   24 if_statement: IF '(' • exp ')' codeBlock
+   25             | IF '(' • exp ')' codeBlock ELSE codeBlock
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 50
     setExp  ir ao estado 51
@@ -561,11 +543,13 @@ Estado 38
 
 Estado 39
 
-   25 while_statement: WHILE '(' . exp ')' codeBlock
+   23 while_statement: WHILE '(' • exp ')' codeBlock
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 54
     setExp  ir ao estado 51
@@ -575,12 +559,14 @@ Estado 39
 
 Estado 40
 
-   31 exists_statement: EXISTS '(' . exp ')' codeBlock
-   32                 | EXISTS '(' . exp ')'
+   29 exists_statement: EXISTS '(' • exp ')' codeBlock
+   30                 | EXISTS '(' • exp ')'
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 55
     setExp  ir ao estado 51
@@ -590,12 +576,14 @@ Estado 40
 
 Estado 41
 
-   33 add_statement: ADD '(' . exp ')' codeBlock
-   34              | ADD '(' . exp ')'
+   31 add_statement: ADD '(' • exp ')' codeBlock
+   32              | ADD '(' • exp ')'
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 56
     setExp  ir ao estado 51
@@ -605,12 +593,14 @@ Estado 41
 
 Estado 42
 
-   35 remove_statement: REMOVE '(' . exp ')' codeBlock
-   36                 | REMOVE '(' . exp ')'
+   33 remove_statement: REMOVE '(' • exp ')' codeBlock
+   34                 | REMOVE '(' • exp ')'
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 57
     setExp  ir ao estado 51
@@ -620,11 +610,13 @@ Estado 42
 
 Estado 43
 
-   28 for_statement: FOR '(' . exp ')' codeBlock
+   26 for_statement: FOR '(' • exp ')' codeBlock
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 58
     setExp  ir ao estado 51
@@ -634,12 +626,14 @@ Estado 43
 
 Estado 44
 
-   29 for_all_statement: FORALL '(' . exp ')' codeBlock
-   30                  | FORALL '(' . exp ')'
+   27 for_all_statement: FORALL '(' • exp ')' codeBlock
+   28                  | FORALL '(' • exp ')'
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
+
+    ')'  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 59
     setExp  ir ao estado 51
@@ -649,363 +643,311 @@ Estado 44
 
 Estado 45
 
-   13 returns: RETURN . exp
+   12 returns: RETURN • exp
 
-    ID       deslocar, e ir ao estado 47
-    WRITE    deslocar, e ir ao estado 48
-    WRITELN  deslocar, e ir ao estado 49
+    ID       deslocar, e ir ao estado 102
+    WRITE    deslocar, e ir ao estado 103
+    WRITELN  deslocar, e ir ao estado 104
+
+    $end  reduzir usando a regra 47 (relExp)
+    TYPE  reduzir usando a regra 47 (relExp)
 
     exp     ir ao estado 60
-    setExp  ir ao estado 51
-    opExp   ir ao estado 52
-    relExp  ir ao estado 53
+    setExp  ir ao estado 105
+    opExp   ir ao estado 106
+    relExp  ir ao estado 107
 
 
 Estado 46
 
-   12 codeBlock: statements returns .
+   11 codeBlock: statements returns •
 
-    $padrão  reduzir usando a regra 12 (codeBlock)
+    $end  reduzir usando a regra 11 (codeBlock)
+    TYPE  reduzir usando a regra 11 (codeBlock)
 
 
 Estado 47
 
-   40 setExp: ID . IN ID
-   43 opExp: ID .
-   44      | ID . '=' exp
-   45      | ID . '*' ID
-   46      | ID . '+' ID
-   47      | ID . '-' ID
-   48      | ID . '/' ID
-   49 relExp: ID . rel ID
-   50       | ID . rel exp
+   38 setExp: ID • IN ID
+   41 opExp: ID •
+   42      | ID • '=' exp
+   43      | ID • '*' ID
+   44      | ID • '+' ID
+   45      | ID • '-' ID
+   46      | ID • '/' ID
+   48 relExp: ID • rel exp
 
     IN   deslocar, e ir ao estado 61
-    '='  deslocar, e ir ao estado 62
-    '*'  deslocar, e ir ao estado 63
-    '+'  deslocar, e ir ao estado 64
-    '-'  deslocar, e ir ao estado 65
-    '/'  deslocar, e ir ao estado 66
-    '>'  deslocar, e ir ao estado 67
-    '<'  deslocar, e ir ao estado 68
-    '!'  deslocar, e ir ao estado 69
-    '&'  deslocar, e ir ao estado 70
+    CLE  deslocar, e ir ao estado 62
+    CLT  deslocar, e ir ao estado 63
+    CNE  deslocar, e ir ao estado 64
+    CGT  deslocar, e ir ao estado 65
+    AND  deslocar, e ir ao estado 66
+    CEQ  deslocar, e ir ao estado 67
+    CGE  deslocar, e ir ao estado 68
+    '='  deslocar, e ir ao estado 69
+    '*'  deslocar, e ir ao estado 70
+    '+'  deslocar, e ir ao estado 71
+    '-'  deslocar, e ir ao estado 72
+    '/'  deslocar, e ir ao estado 73
 
-    $padrão  reduzir usando a regra 43 (opExp)
+    ')'  reduzir usando a regra 41 (opExp)
 
-    rel  ir ao estado 71
+    rel  ir ao estado 74
 
 
 Estado 48
 
-   42 setExp: WRITE . IN ID
+   40 setExp: WRITE • IN ID
 
-    IN  deslocar, e ir ao estado 72
+    IN  deslocar, e ir ao estado 75
 
 
 Estado 49
 
-   41 setExp: WRITELN . IN ID
+   39 setExp: WRITELN • IN ID
 
-    IN  deslocar, e ir ao estado 73
+    IN  deslocar, e ir ao estado 76
 
 
 Estado 50
 
-   26 if_statement: IF '(' exp . ')' codeBlock
-   27             | IF '(' exp . ')' codeBlock ELSE codeBlock
-
-    ')'  deslocar, e ir ao estado 74
-
-
-Estado 51
-
-   37 exp: setExp .
-
-    $padrão  reduzir usando a regra 37 (exp)
-
-
-Estado 52
-
-   38 exp: opExp .
-
-    $padrão  reduzir usando a regra 38 (exp)
-
-
-Estado 53
-
-   39 exp: relExp .
-
-    $padrão  reduzir usando a regra 39 (exp)
-
-
-Estado 54
-
-   25 while_statement: WHILE '(' exp . ')' codeBlock
-
-    ')'  deslocar, e ir ao estado 75
-
-
-Estado 55
-
-   31 exists_statement: EXISTS '(' exp . ')' codeBlock
-   32                 | EXISTS '(' exp . ')'
-
-    ')'  deslocar, e ir ao estado 76
-
-
-Estado 56
-
-   33 add_statement: ADD '(' exp . ')' codeBlock
-   34              | ADD '(' exp . ')'
+   24 if_statement: IF '(' exp • ')' codeBlock
+   25             | IF '(' exp • ')' codeBlock ELSE codeBlock
 
     ')'  deslocar, e ir ao estado 77
 
 
-Estado 57
+Estado 51
 
-   35 remove_statement: REMOVE '(' exp . ')' codeBlock
-   36                 | REMOVE '(' exp . ')'
+   35 exp: setExp •
+
+    ')'  reduzir usando a regra 35 (exp)
+
+
+Estado 52
+
+   36 exp: opExp •
+
+    ')'  reduzir usando a regra 36 (exp)
+
+
+Estado 53
+
+   37 exp: relExp •
+
+    ')'  reduzir usando a regra 37 (exp)
+
+
+Estado 54
+
+   23 while_statement: WHILE '(' exp • ')' codeBlock
 
     ')'  deslocar, e ir ao estado 78
 
 
-Estado 58
+Estado 55
 
-   28 for_statement: FOR '(' exp . ')' codeBlock
+   29 exists_statement: EXISTS '(' exp • ')' codeBlock
+   30                 | EXISTS '(' exp • ')'
 
     ')'  deslocar, e ir ao estado 79
 
 
-Estado 59
+Estado 56
 
-   29 for_all_statement: FORALL '(' exp . ')' codeBlock
-   30                  | FORALL '(' exp . ')'
+   31 add_statement: ADD '(' exp • ')' codeBlock
+   32              | ADD '(' exp • ')'
 
     ')'  deslocar, e ir ao estado 80
 
 
+Estado 57
+
+   33 remove_statement: REMOVE '(' exp • ')' codeBlock
+   34                 | REMOVE '(' exp • ')'
+
+    ')'  deslocar, e ir ao estado 81
+
+
+Estado 58
+
+   26 for_statement: FOR '(' exp • ')' codeBlock
+
+    ')'  deslocar, e ir ao estado 82
+
+
+Estado 59
+
+   27 for_all_statement: FORALL '(' exp • ')' codeBlock
+   28                  | FORALL '(' exp • ')'
+
+    ')'  deslocar, e ir ao estado 83
+
+
 Estado 60
 
-   13 returns: RETURN exp .
+   12 returns: RETURN exp •
 
-    $padrão  reduzir usando a regra 13 (returns)
+    $end  reduzir usando a regra 12 (returns)
+    TYPE  reduzir usando a regra 12 (returns)
 
 
 Estado 61
 
-   40 setExp: ID IN . ID
+   38 setExp: ID IN • ID
 
-    ID  deslocar, e ir ao estado 81
+    ID  deslocar, e ir ao estado 84
 
 
 Estado 62
 
-   44 opExp: ID '=' . exp
-   54 rel: '=' .
+   54 rel: CLE •
+
+    ID       reduzir usando a regra 54 (rel)
+    WRITE    reduzir usando a regra 54 (rel)
+    WRITELN  reduzir usando a regra 54 (rel)
+    ')'      reduzir usando a regra 54 (rel)
+
+
+Estado 63
+
+   52 rel: CLT •
+
+    ID       reduzir usando a regra 52 (rel)
+    WRITE    reduzir usando a regra 52 (rel)
+    WRITELN  reduzir usando a regra 52 (rel)
+    ')'      reduzir usando a regra 52 (rel)
+
+
+Estado 64
+
+   51 rel: CNE •
+
+    ID       reduzir usando a regra 51 (rel)
+    WRITE    reduzir usando a regra 51 (rel)
+    WRITELN  reduzir usando a regra 51 (rel)
+    ')'      reduzir usando a regra 51 (rel)
+
+
+Estado 65
+
+   50 rel: CGT •
+
+    ID       reduzir usando a regra 50 (rel)
+    WRITE    reduzir usando a regra 50 (rel)
+    WRITELN  reduzir usando a regra 50 (rel)
+    ')'      reduzir usando a regra 50 (rel)
+
+
+Estado 66
+
+   53 rel: AND •
+
+    ID       reduzir usando a regra 53 (rel)
+    WRITE    reduzir usando a regra 53 (rel)
+    WRITELN  reduzir usando a regra 53 (rel)
+    ')'      reduzir usando a regra 53 (rel)
+
+
+Estado 67
+
+   55 rel: CEQ •
+
+    ID       reduzir usando a regra 55 (rel)
+    WRITE    reduzir usando a regra 55 (rel)
+    WRITELN  reduzir usando a regra 55 (rel)
+    ')'      reduzir usando a regra 55 (rel)
+
+
+Estado 68
+
+   49 rel: CGE •
+
+    ID       reduzir usando a regra 49 (rel)
+    WRITE    reduzir usando a regra 49 (rel)
+    WRITELN  reduzir usando a regra 49 (rel)
+    ')'      reduzir usando a regra 49 (rel)
+
+
+Estado 69
+
+   42 opExp: ID '=' • exp
 
     ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
 
-    ID       [reduzir usando a regra 54 (rel)]
-    WRITE    [reduzir usando a regra 54 (rel)]
-    WRITELN  [reduzir usando a regra 54 (rel)]
+    ')'  reduzir usando a regra 47 (relExp)
 
-    exp     ir ao estado 82
+    exp     ir ao estado 85
     setExp  ir ao estado 51
     opExp   ir ao estado 52
     relExp  ir ao estado 53
-
-
-Estado 63
-
-   45 opExp: ID '*' . ID
-
-    ID  deslocar, e ir ao estado 83
-
-
-Estado 64
-
-   46 opExp: ID '+' . ID
-
-    ID  deslocar, e ir ao estado 84
-
-
-Estado 65
-
-   47 opExp: ID '-' . ID
-
-    ID  deslocar, e ir ao estado 85
-
-
-Estado 66
-
-   48 opExp: ID '/' . ID
-
-    ID  deslocar, e ir ao estado 86
-
-
-Estado 67
-
-   51 rel: '>' .
-   57    | '>' .
-
-    ID        reduzir usando a regra 51 (rel)
-    ID        [reduzir usando a regra 57 (rel)]
-    WRITE     reduzir usando a regra 51 (rel)
-    WRITE     [reduzir usando a regra 57 (rel)]
-    WRITELN   reduzir usando a regra 51 (rel)
-    WRITELN   [reduzir usando a regra 57 (rel)]
-    $padrão  reduzir usando a regra 51 (rel)
-
-
-Estado 68
-
-   52 rel: '<' .
-   56    | '<' .
-
-    ID        reduzir usando a regra 52 (rel)
-    ID        [reduzir usando a regra 56 (rel)]
-    WRITE     reduzir usando a regra 52 (rel)
-    WRITE     [reduzir usando a regra 56 (rel)]
-    WRITELN   reduzir usando a regra 52 (rel)
-    WRITELN   [reduzir usando a regra 56 (rel)]
-    $padrão  reduzir usando a regra 52 (rel)
-
-
-Estado 69
-
-   53 rel: '!' .
-
-    $padrão  reduzir usando a regra 53 (rel)
 
 
 Estado 70
 
-   55 rel: '&' .
+   43 opExp: ID '*' • ID
 
-    $padrão  reduzir usando a regra 55 (rel)
+    ID  deslocar, e ir ao estado 86
 
 
 Estado 71
 
-   49 relExp: ID rel . ID
-   50       | ID rel . exp
+   44 opExp: ID '+' • ID
 
-    ID       deslocar, e ir ao estado 87
+    ID  deslocar, e ir ao estado 87
+
+
+Estado 72
+
+   45 opExp: ID '-' • ID
+
+    ID  deslocar, e ir ao estado 88
+
+
+Estado 73
+
+   46 opExp: ID '/' • ID
+
+    ID  deslocar, e ir ao estado 89
+
+
+Estado 74
+
+   48 relExp: ID rel • exp
+
+    ID       deslocar, e ir ao estado 47
     WRITE    deslocar, e ir ao estado 48
     WRITELN  deslocar, e ir ao estado 49
 
-    exp     ir ao estado 88
+    ')'  reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 90
     setExp  ir ao estado 51
     opExp   ir ao estado 52
     relExp  ir ao estado 53
 
 
-Estado 72
-
-   42 setExp: WRITE IN . ID
-
-    ID  deslocar, e ir ao estado 89
-
-
-Estado 73
-
-   41 setExp: WRITELN IN . ID
-
-    ID  deslocar, e ir ao estado 90
-
-
-Estado 74
-
-   26 if_statement: IF '(' exp ')' . codeBlock
-   27             | IF '(' exp ')' . codeBlock ELSE codeBlock
-
-    TYPE    deslocar, e ir ao estado 17
-    IF      deslocar, e ir ao estado 18
-    WHILE   deslocar, e ir ao estado 19
-    EXISTS  deslocar, e ir ao estado 20
-    ADD     deslocar, e ir ao estado 21
-    REMOVE  deslocar, e ir ao estado 22
-    FOR     deslocar, e ir ao estado 23
-    FORALL  deslocar, e ir ao estado 24
-
-    variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 91
-    statements             ir ao estado 27
-    statement              ir ao estado 28
-    declaration_statement  ir ao estado 29
-    while_statement        ir ao estado 30
-    if_statement           ir ao estado 31
-    for_statement          ir ao estado 32
-    for_all_statement      ir ao estado 33
-    exists_statement       ir ao estado 34
-    add_statement          ir ao estado 35
-    remove_statement       ir ao estado 36
-
-
 Estado 75
 
-   25 while_statement: WHILE '(' exp ')' . codeBlock
+   40 setExp: WRITE IN • ID
 
-    TYPE    deslocar, e ir ao estado 17
-    IF      deslocar, e ir ao estado 18
-    WHILE   deslocar, e ir ao estado 19
-    EXISTS  deslocar, e ir ao estado 20
-    ADD     deslocar, e ir ao estado 21
-    REMOVE  deslocar, e ir ao estado 22
-    FOR     deslocar, e ir ao estado 23
-    FORALL  deslocar, e ir ao estado 24
-
-    variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 92
-    statements             ir ao estado 27
-    statement              ir ao estado 28
-    declaration_statement  ir ao estado 29
-    while_statement        ir ao estado 30
-    if_statement           ir ao estado 31
-    for_statement          ir ao estado 32
-    for_all_statement      ir ao estado 33
-    exists_statement       ir ao estado 34
-    add_statement          ir ao estado 35
-    remove_statement       ir ao estado 36
+    ID  deslocar, e ir ao estado 91
 
 
 Estado 76
 
-   31 exists_statement: EXISTS '(' exp ')' . codeBlock
-   32                 | EXISTS '(' exp ')' .
+   39 setExp: WRITELN IN • ID
 
-    TYPE    deslocar, e ir ao estado 17
-    IF      deslocar, e ir ao estado 18
-    WHILE   deslocar, e ir ao estado 19
-    EXISTS  deslocar, e ir ao estado 20
-    ADD     deslocar, e ir ao estado 21
-    REMOVE  deslocar, e ir ao estado 22
-    FOR     deslocar, e ir ao estado 23
-    FORALL  deslocar, e ir ao estado 24
-
-    $padrão  reduzir usando a regra 32 (exists_statement)
-
-    variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 93
-    statements             ir ao estado 27
-    statement              ir ao estado 28
-    declaration_statement  ir ao estado 29
-    while_statement        ir ao estado 30
-    if_statement           ir ao estado 31
-    for_statement          ir ao estado 32
-    for_all_statement      ir ao estado 33
-    exists_statement       ir ao estado 34
-    add_statement          ir ao estado 35
-    remove_statement       ir ao estado 36
+    ID  deslocar, e ir ao estado 92
 
 
 Estado 77
 
-   33 add_statement: ADD '(' exp ')' . codeBlock
-   34              | ADD '(' exp ')' .
+   24 if_statement: IF '(' exp ')' • codeBlock
+   25             | IF '(' exp ')' • codeBlock ELSE codeBlock
 
     TYPE    deslocar, e ir ao estado 17
     IF      deslocar, e ir ao estado 18
@@ -1016,11 +958,9 @@ Estado 77
     FOR     deslocar, e ir ao estado 23
     FORALL  deslocar, e ir ao estado 24
 
-    $padrão  reduzir usando a regra 34 (add_statement)
-
     variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 94
-    statements             ir ao estado 27
+    codeBlock              ir ao estado 93
+    statements             ir ao estado 108
     statement              ir ao estado 28
     declaration_statement  ir ao estado 29
     while_statement        ir ao estado 30
@@ -1034,8 +974,7 @@ Estado 77
 
 Estado 78
 
-   35 remove_statement: REMOVE '(' exp ')' . codeBlock
-   36                 | REMOVE '(' exp ')' .
+   23 while_statement: WHILE '(' exp ')' • codeBlock
 
     TYPE    deslocar, e ir ao estado 17
     IF      deslocar, e ir ao estado 18
@@ -1046,11 +985,9 @@ Estado 78
     FOR     deslocar, e ir ao estado 23
     FORALL  deslocar, e ir ao estado 24
 
-    $padrão  reduzir usando a regra 36 (remove_statement)
-
     variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 95
-    statements             ir ao estado 27
+    codeBlock              ir ao estado 94
+    statements             ir ao estado 109
     statement              ir ao estado 28
     declaration_statement  ir ao estado 29
     while_statement        ir ao estado 30
@@ -1064,7 +1001,8 @@ Estado 78
 
 Estado 79
 
-   28 for_statement: FOR '(' exp ')' . codeBlock
+   29 exists_statement: EXISTS '(' exp ')' • codeBlock
+   30                 | EXISTS '(' exp ')' •
 
     TYPE    deslocar, e ir ao estado 17
     IF      deslocar, e ir ao estado 18
@@ -1075,9 +1013,11 @@ Estado 79
     FOR     deslocar, e ir ao estado 23
     FORALL  deslocar, e ir ao estado 24
 
+    RETURN  reduzir usando a regra 30 (exists_statement)
+
     variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 96
-    statements             ir ao estado 27
+    codeBlock              ir ao estado 95
+    statements             ir ao estado 109
     statement              ir ao estado 28
     declaration_statement  ir ao estado 29
     while_statement        ir ao estado 30
@@ -1091,8 +1031,8 @@ Estado 79
 
 Estado 80
 
-   29 for_all_statement: FORALL '(' exp ')' . codeBlock
-   30                  | FORALL '(' exp ')' .
+   31 add_statement: ADD '(' exp ')' • codeBlock
+   32              | ADD '(' exp ')' •
 
     TYPE    deslocar, e ir ao estado 17
     IF      deslocar, e ir ao estado 18
@@ -1103,11 +1043,11 @@ Estado 80
     FOR     deslocar, e ir ao estado 23
     FORALL  deslocar, e ir ao estado 24
 
-    $padrão  reduzir usando a regra 30 (for_all_statement)
+    RETURN  reduzir usando a regra 32 (add_statement)
 
     variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 97
-    statements             ir ao estado 27
+    codeBlock              ir ao estado 96
+    statements             ir ao estado 109
     statement              ir ao estado 28
     declaration_statement  ir ao estado 29
     while_statement        ir ao estado 30
@@ -1121,161 +1061,8 @@ Estado 80
 
 Estado 81
 
-   40 setExp: ID IN ID .
-
-    $padrão  reduzir usando a regra 40 (setExp)
-
-
-Estado 82
-
-   44 opExp: ID '=' exp .
-
-    $padrão  reduzir usando a regra 44 (opExp)
-
-
-Estado 83
-
-   45 opExp: ID '*' ID .
-
-    $padrão  reduzir usando a regra 45 (opExp)
-
-
-Estado 84
-
-   46 opExp: ID '+' ID .
-
-    $padrão  reduzir usando a regra 46 (opExp)
-
-
-Estado 85
-
-   47 opExp: ID '-' ID .
-
-    $padrão  reduzir usando a regra 47 (opExp)
-
-
-Estado 86
-
-   48 opExp: ID '/' ID .
-
-    $padrão  reduzir usando a regra 48 (opExp)
-
-
-Estado 87
-
-   40 setExp: ID . IN ID
-   43 opExp: ID .
-   44      | ID . '=' exp
-   45      | ID . '*' ID
-   46      | ID . '+' ID
-   47      | ID . '-' ID
-   48      | ID . '/' ID
-   49 relExp: ID . rel ID
-   49       | ID rel ID .
-   50       | ID . rel exp
-
-    IN   deslocar, e ir ao estado 61
-    '='  deslocar, e ir ao estado 62
-    '*'  deslocar, e ir ao estado 63
-    '+'  deslocar, e ir ao estado 64
-    '-'  deslocar, e ir ao estado 65
-    '/'  deslocar, e ir ao estado 66
-    '>'  deslocar, e ir ao estado 67
-    '<'  deslocar, e ir ao estado 68
-    '!'  deslocar, e ir ao estado 69
-    '&'  deslocar, e ir ao estado 70
-
-    $end      reduzir usando a regra 43 (opExp)
-    $end      [reduzir usando a regra 49 (relExp)]
-    TYPE      reduzir usando a regra 43 (opExp)
-    TYPE      [reduzir usando a regra 49 (relExp)]
-    RETURN    reduzir usando a regra 43 (opExp)
-    RETURN    [reduzir usando a regra 49 (relExp)]
-    ELSE      reduzir usando a regra 43 (opExp)
-    ELSE      [reduzir usando a regra 49 (relExp)]
-    ')'       reduzir usando a regra 43 (opExp)
-    ')'       [reduzir usando a regra 49 (relExp)]
-    $padrão  reduzir usando a regra 43 (opExp)
-
-    rel  ir ao estado 71
-
-
-Estado 88
-
-   50 relExp: ID rel exp .
-
-    $padrão  reduzir usando a regra 50 (relExp)
-
-
-Estado 89
-
-   42 setExp: WRITE IN ID .
-
-    $padrão  reduzir usando a regra 42 (setExp)
-
-
-Estado 90
-
-   41 setExp: WRITELN IN ID .
-
-    $padrão  reduzir usando a regra 41 (setExp)
-
-
-Estado 91
-
-   26 if_statement: IF '(' exp ')' codeBlock .
-   27             | IF '(' exp ')' codeBlock . ELSE codeBlock
-
-    ELSE  deslocar, e ir ao estado 98
-
-    $padrão  reduzir usando a regra 26 (if_statement)
-
-
-Estado 92
-
-   25 while_statement: WHILE '(' exp ')' codeBlock .
-
-    $padrão  reduzir usando a regra 25 (while_statement)
-
-
-Estado 93
-
-   31 exists_statement: EXISTS '(' exp ')' codeBlock .
-
-    $padrão  reduzir usando a regra 31 (exists_statement)
-
-
-Estado 94
-
-   33 add_statement: ADD '(' exp ')' codeBlock .
-
-    $padrão  reduzir usando a regra 33 (add_statement)
-
-
-Estado 95
-
-   35 remove_statement: REMOVE '(' exp ')' codeBlock .
-
-    $padrão  reduzir usando a regra 35 (remove_statement)
-
-
-Estado 96
-
-   28 for_statement: FOR '(' exp ')' codeBlock .
-
-    $padrão  reduzir usando a regra 28 (for_statement)
-
-
-Estado 97
-
-   29 for_all_statement: FORALL '(' exp ')' codeBlock .
-
-    $padrão  reduzir usando a regra 29 (for_all_statement)
-
-
-Estado 98
-
-   27 if_statement: IF '(' exp ')' codeBlock ELSE . codeBlock
+   33 remove_statement: REMOVE '(' exp ')' • codeBlock
+   34                 | REMOVE '(' exp ')' •
 
     TYPE    deslocar, e ir ao estado 17
     IF      deslocar, e ir ao estado 18
@@ -1286,9 +1073,11 @@ Estado 98
     FOR     deslocar, e ir ao estado 23
     FORALL  deslocar, e ir ao estado 24
 
+    RETURN  reduzir usando a regra 34 (remove_statement)
+
     variable_declaration   ir ao estado 25
-    codeBlock              ir ao estado 99
-    statements             ir ao estado 27
+    codeBlock              ir ao estado 97
+    statements             ir ao estado 109
     statement              ir ao estado 28
     declaration_statement  ir ao estado 29
     while_statement        ir ao estado 30
@@ -1300,8 +1089,1169 @@ Estado 98
     remove_statement       ir ao estado 36
 
 
+Estado 82
+
+   26 for_statement: FOR '(' exp ')' • codeBlock
+
+    TYPE    deslocar, e ir ao estado 17
+    IF      deslocar, e ir ao estado 18
+    WHILE   deslocar, e ir ao estado 19
+    EXISTS  deslocar, e ir ao estado 20
+    ADD     deslocar, e ir ao estado 21
+    REMOVE  deslocar, e ir ao estado 22
+    FOR     deslocar, e ir ao estado 23
+    FORALL  deslocar, e ir ao estado 24
+
+    variable_declaration   ir ao estado 25
+    codeBlock              ir ao estado 98
+    statements             ir ao estado 109
+    statement              ir ao estado 28
+    declaration_statement  ir ao estado 29
+    while_statement        ir ao estado 30
+    if_statement           ir ao estado 31
+    for_statement          ir ao estado 32
+    for_all_statement      ir ao estado 33
+    exists_statement       ir ao estado 34
+    add_statement          ir ao estado 35
+    remove_statement       ir ao estado 36
+
+
+Estado 83
+
+   27 for_all_statement: FORALL '(' exp ')' • codeBlock
+   28                  | FORALL '(' exp ')' •
+
+    TYPE    deslocar, e ir ao estado 17
+    IF      deslocar, e ir ao estado 18
+    WHILE   deslocar, e ir ao estado 19
+    EXISTS  deslocar, e ir ao estado 20
+    ADD     deslocar, e ir ao estado 21
+    REMOVE  deslocar, e ir ao estado 22
+    FOR     deslocar, e ir ao estado 23
+    FORALL  deslocar, e ir ao estado 24
+
+    RETURN  reduzir usando a regra 28 (for_all_statement)
+
+    variable_declaration   ir ao estado 25
+    codeBlock              ir ao estado 99
+    statements             ir ao estado 109
+    statement              ir ao estado 28
+    declaration_statement  ir ao estado 29
+    while_statement        ir ao estado 30
+    if_statement           ir ao estado 31
+    for_statement          ir ao estado 32
+    for_all_statement      ir ao estado 33
+    exists_statement       ir ao estado 34
+    add_statement          ir ao estado 35
+    remove_statement       ir ao estado 36
+
+
+Estado 84
+
+   38 setExp: ID IN ID •
+
+    ')'  reduzir usando a regra 38 (setExp)
+
+
+Estado 85
+
+   42 opExp: ID '=' exp •
+
+    ')'  reduzir usando a regra 42 (opExp)
+
+
+Estado 86
+
+   43 opExp: ID '*' ID •
+
+    ')'  reduzir usando a regra 43 (opExp)
+
+
+Estado 87
+
+   44 opExp: ID '+' ID •
+
+    ')'  reduzir usando a regra 44 (opExp)
+
+
+Estado 88
+
+   45 opExp: ID '-' ID •
+
+    ')'  reduzir usando a regra 45 (opExp)
+
+
+Estado 89
+
+   46 opExp: ID '/' ID •
+
+    ')'  reduzir usando a regra 46 (opExp)
+
+
+Estado 90
+
+   48 relExp: ID rel exp •
+
+    ')'  reduzir usando a regra 48 (relExp)
+
+
+Estado 91
+
+   40 setExp: WRITE IN ID •
+
+    ')'  reduzir usando a regra 40 (setExp)
+
+
+Estado 92
+
+   39 setExp: WRITELN IN ID •
+
+    ')'  reduzir usando a regra 39 (setExp)
+
+
+Estado 93
+
+   24 if_statement: IF '(' exp ')' codeBlock •
+   25             | IF '(' exp ')' codeBlock • ELSE codeBlock
+
+    ELSE  deslocar, e ir ao estado 100
+
+    RETURN  reduzir usando a regra 24 (if_statement)
+
+
+Estado 94
+
+   23 while_statement: WHILE '(' exp ')' codeBlock •
+
+    RETURN  reduzir usando a regra 23 (while_statement)
+
+
+Estado 95
+
+   29 exists_statement: EXISTS '(' exp ')' codeBlock •
+
+    RETURN  reduzir usando a regra 29 (exists_statement)
+
+
+Estado 96
+
+   31 add_statement: ADD '(' exp ')' codeBlock •
+
+    RETURN  reduzir usando a regra 31 (add_statement)
+
+
+Estado 97
+
+   33 remove_statement: REMOVE '(' exp ')' codeBlock •
+
+    RETURN  reduzir usando a regra 33 (remove_statement)
+
+
+Estado 98
+
+   26 for_statement: FOR '(' exp ')' codeBlock •
+
+    RETURN  reduzir usando a regra 26 (for_statement)
+
+
 Estado 99
 
-   27 if_statement: IF '(' exp ')' codeBlock ELSE codeBlock .
+   27 for_all_statement: FORALL '(' exp ')' codeBlock •
 
-    $padrão  reduzir usando a regra 27 (if_statement)
+    RETURN  reduzir usando a regra 27 (for_all_statement)
+
+
+Estado 100
+
+   25 if_statement: IF '(' exp ')' codeBlock ELSE • codeBlock
+
+    TYPE    deslocar, e ir ao estado 17
+    IF      deslocar, e ir ao estado 18
+    WHILE   deslocar, e ir ao estado 19
+    EXISTS  deslocar, e ir ao estado 20
+    ADD     deslocar, e ir ao estado 21
+    REMOVE  deslocar, e ir ao estado 22
+    FOR     deslocar, e ir ao estado 23
+    FORALL  deslocar, e ir ao estado 24
+
+    variable_declaration   ir ao estado 25
+    codeBlock              ir ao estado 101
+    statements             ir ao estado 109
+    statement              ir ao estado 28
+    declaration_statement  ir ao estado 29
+    while_statement        ir ao estado 30
+    if_statement           ir ao estado 31
+    for_statement          ir ao estado 32
+    for_all_statement      ir ao estado 33
+    exists_statement       ir ao estado 34
+    add_statement          ir ao estado 35
+    remove_statement       ir ao estado 36
+
+
+Estado 101
+
+   25 if_statement: IF '(' exp ')' codeBlock ELSE codeBlock •
+
+    RETURN  reduzir usando a regra 25 (if_statement)
+
+
+Estado 102
+
+   38 setExp: ID • IN ID
+   41 opExp: ID •
+   42      | ID • '=' exp
+   43      | ID • '*' ID
+   44      | ID • '+' ID
+   45      | ID • '-' ID
+   46      | ID • '/' ID
+   48 relExp: ID • rel exp
+
+    IN   deslocar, e ir ao estado 110
+    CLE  deslocar, e ir ao estado 111
+    CLT  deslocar, e ir ao estado 112
+    CNE  deslocar, e ir ao estado 113
+    CGT  deslocar, e ir ao estado 114
+    AND  deslocar, e ir ao estado 115
+    CEQ  deslocar, e ir ao estado 116
+    CGE  deslocar, e ir ao estado 117
+    '='  deslocar, e ir ao estado 118
+    '*'  deslocar, e ir ao estado 119
+    '+'  deslocar, e ir ao estado 120
+    '-'  deslocar, e ir ao estado 121
+    '/'  deslocar, e ir ao estado 122
+
+    $end  reduzir usando a regra 41 (opExp)
+    TYPE  reduzir usando a regra 41 (opExp)
+
+    rel  ir ao estado 123
+
+
+Estado 103
+
+   40 setExp: WRITE • IN ID
+
+    IN  deslocar, e ir ao estado 124
+
+
+Estado 104
+
+   39 setExp: WRITELN • IN ID
+
+    IN  deslocar, e ir ao estado 125
+
+
+Estado 105
+
+   35 exp: setExp •
+
+    $end  reduzir usando a regra 35 (exp)
+    TYPE  reduzir usando a regra 35 (exp)
+
+
+Estado 106
+
+   36 exp: opExp •
+
+    $end  reduzir usando a regra 36 (exp)
+    TYPE  reduzir usando a regra 36 (exp)
+
+
+Estado 107
+
+   37 exp: relExp •
+
+    $end  reduzir usando a regra 37 (exp)
+    TYPE  reduzir usando a regra 37 (exp)
+
+
+Estado 108
+
+   11 codeBlock: statements • returns
+
+    RETURN  deslocar, e ir ao estado 126
+
+    returns  ir ao estado 127
+
+
+Estado 109
+
+   11 codeBlock: statements • returns
+
+    RETURN  deslocar, e ir ao estado 128
+
+    returns  ir ao estado 129
+
+
+Estado 110
+
+   38 setExp: ID IN • ID
+
+    ID  deslocar, e ir ao estado 130
+
+
+Estado 111
+
+   54 rel: CLE •
+
+    $end     reduzir usando a regra 54 (rel)
+    TYPE     reduzir usando a regra 54 (rel)
+    ID       reduzir usando a regra 54 (rel)
+    WRITE    reduzir usando a regra 54 (rel)
+    WRITELN  reduzir usando a regra 54 (rel)
+
+
+Estado 112
+
+   52 rel: CLT •
+
+    $end     reduzir usando a regra 52 (rel)
+    TYPE     reduzir usando a regra 52 (rel)
+    ID       reduzir usando a regra 52 (rel)
+    WRITE    reduzir usando a regra 52 (rel)
+    WRITELN  reduzir usando a regra 52 (rel)
+
+
+Estado 113
+
+   51 rel: CNE •
+
+    $end     reduzir usando a regra 51 (rel)
+    TYPE     reduzir usando a regra 51 (rel)
+    ID       reduzir usando a regra 51 (rel)
+    WRITE    reduzir usando a regra 51 (rel)
+    WRITELN  reduzir usando a regra 51 (rel)
+
+
+Estado 114
+
+   50 rel: CGT •
+
+    $end     reduzir usando a regra 50 (rel)
+    TYPE     reduzir usando a regra 50 (rel)
+    ID       reduzir usando a regra 50 (rel)
+    WRITE    reduzir usando a regra 50 (rel)
+    WRITELN  reduzir usando a regra 50 (rel)
+
+
+Estado 115
+
+   53 rel: AND •
+
+    $end     reduzir usando a regra 53 (rel)
+    TYPE     reduzir usando a regra 53 (rel)
+    ID       reduzir usando a regra 53 (rel)
+    WRITE    reduzir usando a regra 53 (rel)
+    WRITELN  reduzir usando a regra 53 (rel)
+
+
+Estado 116
+
+   55 rel: CEQ •
+
+    $end     reduzir usando a regra 55 (rel)
+    TYPE     reduzir usando a regra 55 (rel)
+    ID       reduzir usando a regra 55 (rel)
+    WRITE    reduzir usando a regra 55 (rel)
+    WRITELN  reduzir usando a regra 55 (rel)
+
+
+Estado 117
+
+   49 rel: CGE •
+
+    $end     reduzir usando a regra 49 (rel)
+    TYPE     reduzir usando a regra 49 (rel)
+    ID       reduzir usando a regra 49 (rel)
+    WRITE    reduzir usando a regra 49 (rel)
+    WRITELN  reduzir usando a regra 49 (rel)
+
+
+Estado 118
+
+   42 opExp: ID '=' • exp
+
+    ID       deslocar, e ir ao estado 102
+    WRITE    deslocar, e ir ao estado 103
+    WRITELN  deslocar, e ir ao estado 104
+
+    $end  reduzir usando a regra 47 (relExp)
+    TYPE  reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 131
+    setExp  ir ao estado 105
+    opExp   ir ao estado 106
+    relExp  ir ao estado 107
+
+
+Estado 119
+
+   43 opExp: ID '*' • ID
+
+    ID  deslocar, e ir ao estado 132
+
+
+Estado 120
+
+   44 opExp: ID '+' • ID
+
+    ID  deslocar, e ir ao estado 133
+
+
+Estado 121
+
+   45 opExp: ID '-' • ID
+
+    ID  deslocar, e ir ao estado 134
+
+
+Estado 122
+
+   46 opExp: ID '/' • ID
+
+    ID  deslocar, e ir ao estado 135
+
+
+Estado 123
+
+   48 relExp: ID rel • exp
+
+    ID       deslocar, e ir ao estado 102
+    WRITE    deslocar, e ir ao estado 103
+    WRITELN  deslocar, e ir ao estado 104
+
+    $end  reduzir usando a regra 47 (relExp)
+    TYPE  reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 136
+    setExp  ir ao estado 105
+    opExp   ir ao estado 106
+    relExp  ir ao estado 107
+
+
+Estado 124
+
+   40 setExp: WRITE IN • ID
+
+    ID  deslocar, e ir ao estado 137
+
+
+Estado 125
+
+   39 setExp: WRITELN IN • ID
+
+    ID  deslocar, e ir ao estado 138
+
+
+Estado 126
+
+   12 returns: RETURN • exp
+
+    ID       deslocar, e ir ao estado 139
+    WRITE    deslocar, e ir ao estado 140
+    WRITELN  deslocar, e ir ao estado 141
+
+    RETURN  reduzir usando a regra 47 (relExp)
+    ELSE    reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 142
+    setExp  ir ao estado 143
+    opExp   ir ao estado 144
+    relExp  ir ao estado 145
+
+
+Estado 127
+
+   11 codeBlock: statements returns •
+
+    RETURN  reduzir usando a regra 11 (codeBlock)
+    ELSE    reduzir usando a regra 11 (codeBlock)
+
+
+Estado 128
+
+   12 returns: RETURN • exp
+
+    ID       deslocar, e ir ao estado 146
+    WRITE    deslocar, e ir ao estado 147
+    WRITELN  deslocar, e ir ao estado 148
+
+    RETURN  reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 149
+    setExp  ir ao estado 150
+    opExp   ir ao estado 151
+    relExp  ir ao estado 152
+
+
+Estado 129
+
+   11 codeBlock: statements returns •
+
+    RETURN  reduzir usando a regra 11 (codeBlock)
+
+
+Estado 130
+
+   38 setExp: ID IN ID •
+
+    $end  reduzir usando a regra 38 (setExp)
+    TYPE  reduzir usando a regra 38 (setExp)
+
+
+Estado 131
+
+   42 opExp: ID '=' exp •
+
+    $end  reduzir usando a regra 42 (opExp)
+    TYPE  reduzir usando a regra 42 (opExp)
+
+
+Estado 132
+
+   43 opExp: ID '*' ID •
+
+    $end  reduzir usando a regra 43 (opExp)
+    TYPE  reduzir usando a regra 43 (opExp)
+
+
+Estado 133
+
+   44 opExp: ID '+' ID •
+
+    $end  reduzir usando a regra 44 (opExp)
+    TYPE  reduzir usando a regra 44 (opExp)
+
+
+Estado 134
+
+   45 opExp: ID '-' ID •
+
+    $end  reduzir usando a regra 45 (opExp)
+    TYPE  reduzir usando a regra 45 (opExp)
+
+
+Estado 135
+
+   46 opExp: ID '/' ID •
+
+    $end  reduzir usando a regra 46 (opExp)
+    TYPE  reduzir usando a regra 46 (opExp)
+
+
+Estado 136
+
+   48 relExp: ID rel exp •
+
+    $end  reduzir usando a regra 48 (relExp)
+    TYPE  reduzir usando a regra 48 (relExp)
+
+
+Estado 137
+
+   40 setExp: WRITE IN ID •
+
+    $end  reduzir usando a regra 40 (setExp)
+    TYPE  reduzir usando a regra 40 (setExp)
+
+
+Estado 138
+
+   39 setExp: WRITELN IN ID •
+
+    $end  reduzir usando a regra 39 (setExp)
+    TYPE  reduzir usando a regra 39 (setExp)
+
+
+Estado 139
+
+   38 setExp: ID • IN ID
+   41 opExp: ID •
+   42      | ID • '=' exp
+   43      | ID • '*' ID
+   44      | ID • '+' ID
+   45      | ID • '-' ID
+   46      | ID • '/' ID
+   48 relExp: ID • rel exp
+
+    IN   deslocar, e ir ao estado 153
+    CLE  deslocar, e ir ao estado 154
+    CLT  deslocar, e ir ao estado 155
+    CNE  deslocar, e ir ao estado 156
+    CGT  deslocar, e ir ao estado 157
+    AND  deslocar, e ir ao estado 158
+    CEQ  deslocar, e ir ao estado 159
+    CGE  deslocar, e ir ao estado 160
+    '='  deslocar, e ir ao estado 161
+    '*'  deslocar, e ir ao estado 162
+    '+'  deslocar, e ir ao estado 163
+    '-'  deslocar, e ir ao estado 164
+    '/'  deslocar, e ir ao estado 165
+
+    RETURN  reduzir usando a regra 41 (opExp)
+    ELSE    reduzir usando a regra 41 (opExp)
+
+    rel  ir ao estado 166
+
+
+Estado 140
+
+   40 setExp: WRITE • IN ID
+
+    IN  deslocar, e ir ao estado 167
+
+
+Estado 141
+
+   39 setExp: WRITELN • IN ID
+
+    IN  deslocar, e ir ao estado 168
+
+
+Estado 142
+
+   12 returns: RETURN exp •
+
+    RETURN  reduzir usando a regra 12 (returns)
+    ELSE    reduzir usando a regra 12 (returns)
+
+
+Estado 143
+
+   35 exp: setExp •
+
+    RETURN  reduzir usando a regra 35 (exp)
+    ELSE    reduzir usando a regra 35 (exp)
+
+
+Estado 144
+
+   36 exp: opExp •
+
+    RETURN  reduzir usando a regra 36 (exp)
+    ELSE    reduzir usando a regra 36 (exp)
+
+
+Estado 145
+
+   37 exp: relExp •
+
+    RETURN  reduzir usando a regra 37 (exp)
+    ELSE    reduzir usando a regra 37 (exp)
+
+
+Estado 146
+
+   38 setExp: ID • IN ID
+   41 opExp: ID •
+   42      | ID • '=' exp
+   43      | ID • '*' ID
+   44      | ID • '+' ID
+   45      | ID • '-' ID
+   46      | ID • '/' ID
+   48 relExp: ID • rel exp
+
+    IN   deslocar, e ir ao estado 169
+    CLE  deslocar, e ir ao estado 170
+    CLT  deslocar, e ir ao estado 171
+    CNE  deslocar, e ir ao estado 172
+    CGT  deslocar, e ir ao estado 173
+    AND  deslocar, e ir ao estado 174
+    CEQ  deslocar, e ir ao estado 175
+    CGE  deslocar, e ir ao estado 176
+    '='  deslocar, e ir ao estado 177
+    '*'  deslocar, e ir ao estado 178
+    '+'  deslocar, e ir ao estado 179
+    '-'  deslocar, e ir ao estado 180
+    '/'  deslocar, e ir ao estado 181
+
+    RETURN  reduzir usando a regra 41 (opExp)
+
+    rel  ir ao estado 182
+
+
+Estado 147
+
+   40 setExp: WRITE • IN ID
+
+    IN  deslocar, e ir ao estado 183
+
+
+Estado 148
+
+   39 setExp: WRITELN • IN ID
+
+    IN  deslocar, e ir ao estado 184
+
+
+Estado 149
+
+   12 returns: RETURN exp •
+
+    RETURN  reduzir usando a regra 12 (returns)
+
+
+Estado 150
+
+   35 exp: setExp •
+
+    RETURN  reduzir usando a regra 35 (exp)
+
+
+Estado 151
+
+   36 exp: opExp •
+
+    RETURN  reduzir usando a regra 36 (exp)
+
+
+Estado 152
+
+   37 exp: relExp •
+
+    RETURN  reduzir usando a regra 37 (exp)
+
+
+Estado 153
+
+   38 setExp: ID IN • ID
+
+    ID  deslocar, e ir ao estado 185
+
+
+Estado 154
+
+   54 rel: CLE •
+
+    ID       reduzir usando a regra 54 (rel)
+    RETURN   reduzir usando a regra 54 (rel)
+    ELSE     reduzir usando a regra 54 (rel)
+    WRITE    reduzir usando a regra 54 (rel)
+    WRITELN  reduzir usando a regra 54 (rel)
+
+
+Estado 155
+
+   52 rel: CLT •
+
+    ID       reduzir usando a regra 52 (rel)
+    RETURN   reduzir usando a regra 52 (rel)
+    ELSE     reduzir usando a regra 52 (rel)
+    WRITE    reduzir usando a regra 52 (rel)
+    WRITELN  reduzir usando a regra 52 (rel)
+
+
+Estado 156
+
+   51 rel: CNE •
+
+    ID       reduzir usando a regra 51 (rel)
+    RETURN   reduzir usando a regra 51 (rel)
+    ELSE     reduzir usando a regra 51 (rel)
+    WRITE    reduzir usando a regra 51 (rel)
+    WRITELN  reduzir usando a regra 51 (rel)
+
+
+Estado 157
+
+   50 rel: CGT •
+
+    ID       reduzir usando a regra 50 (rel)
+    RETURN   reduzir usando a regra 50 (rel)
+    ELSE     reduzir usando a regra 50 (rel)
+    WRITE    reduzir usando a regra 50 (rel)
+    WRITELN  reduzir usando a regra 50 (rel)
+
+
+Estado 158
+
+   53 rel: AND •
+
+    ID       reduzir usando a regra 53 (rel)
+    RETURN   reduzir usando a regra 53 (rel)
+    ELSE     reduzir usando a regra 53 (rel)
+    WRITE    reduzir usando a regra 53 (rel)
+    WRITELN  reduzir usando a regra 53 (rel)
+
+
+Estado 159
+
+   55 rel: CEQ •
+
+    ID       reduzir usando a regra 55 (rel)
+    RETURN   reduzir usando a regra 55 (rel)
+    ELSE     reduzir usando a regra 55 (rel)
+    WRITE    reduzir usando a regra 55 (rel)
+    WRITELN  reduzir usando a regra 55 (rel)
+
+
+Estado 160
+
+   49 rel: CGE •
+
+    ID       reduzir usando a regra 49 (rel)
+    RETURN   reduzir usando a regra 49 (rel)
+    ELSE     reduzir usando a regra 49 (rel)
+    WRITE    reduzir usando a regra 49 (rel)
+    WRITELN  reduzir usando a regra 49 (rel)
+
+
+Estado 161
+
+   42 opExp: ID '=' • exp
+
+    ID       deslocar, e ir ao estado 139
+    WRITE    deslocar, e ir ao estado 140
+    WRITELN  deslocar, e ir ao estado 141
+
+    RETURN  reduzir usando a regra 47 (relExp)
+    ELSE    reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 186
+    setExp  ir ao estado 143
+    opExp   ir ao estado 144
+    relExp  ir ao estado 145
+
+
+Estado 162
+
+   43 opExp: ID '*' • ID
+
+    ID  deslocar, e ir ao estado 187
+
+
+Estado 163
+
+   44 opExp: ID '+' • ID
+
+    ID  deslocar, e ir ao estado 188
+
+
+Estado 164
+
+   45 opExp: ID '-' • ID
+
+    ID  deslocar, e ir ao estado 189
+
+
+Estado 165
+
+   46 opExp: ID '/' • ID
+
+    ID  deslocar, e ir ao estado 190
+
+
+Estado 166
+
+   48 relExp: ID rel • exp
+
+    ID       deslocar, e ir ao estado 139
+    WRITE    deslocar, e ir ao estado 140
+    WRITELN  deslocar, e ir ao estado 141
+
+    RETURN  reduzir usando a regra 47 (relExp)
+    ELSE    reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 191
+    setExp  ir ao estado 143
+    opExp   ir ao estado 144
+    relExp  ir ao estado 145
+
+
+Estado 167
+
+   40 setExp: WRITE IN • ID
+
+    ID  deslocar, e ir ao estado 192
+
+
+Estado 168
+
+   39 setExp: WRITELN IN • ID
+
+    ID  deslocar, e ir ao estado 193
+
+
+Estado 169
+
+   38 setExp: ID IN • ID
+
+    ID  deslocar, e ir ao estado 194
+
+
+Estado 170
+
+   54 rel: CLE •
+
+    ID       reduzir usando a regra 54 (rel)
+    RETURN   reduzir usando a regra 54 (rel)
+    WRITE    reduzir usando a regra 54 (rel)
+    WRITELN  reduzir usando a regra 54 (rel)
+
+
+Estado 171
+
+   52 rel: CLT •
+
+    ID       reduzir usando a regra 52 (rel)
+    RETURN   reduzir usando a regra 52 (rel)
+    WRITE    reduzir usando a regra 52 (rel)
+    WRITELN  reduzir usando a regra 52 (rel)
+
+
+Estado 172
+
+   51 rel: CNE •
+
+    ID       reduzir usando a regra 51 (rel)
+    RETURN   reduzir usando a regra 51 (rel)
+    WRITE    reduzir usando a regra 51 (rel)
+    WRITELN  reduzir usando a regra 51 (rel)
+
+
+Estado 173
+
+   50 rel: CGT •
+
+    ID       reduzir usando a regra 50 (rel)
+    RETURN   reduzir usando a regra 50 (rel)
+    WRITE    reduzir usando a regra 50 (rel)
+    WRITELN  reduzir usando a regra 50 (rel)
+
+
+Estado 174
+
+   53 rel: AND •
+
+    ID       reduzir usando a regra 53 (rel)
+    RETURN   reduzir usando a regra 53 (rel)
+    WRITE    reduzir usando a regra 53 (rel)
+    WRITELN  reduzir usando a regra 53 (rel)
+
+
+Estado 175
+
+   55 rel: CEQ •
+
+    ID       reduzir usando a regra 55 (rel)
+    RETURN   reduzir usando a regra 55 (rel)
+    WRITE    reduzir usando a regra 55 (rel)
+    WRITELN  reduzir usando a regra 55 (rel)
+
+
+Estado 176
+
+   49 rel: CGE •
+
+    ID       reduzir usando a regra 49 (rel)
+    RETURN   reduzir usando a regra 49 (rel)
+    WRITE    reduzir usando a regra 49 (rel)
+    WRITELN  reduzir usando a regra 49 (rel)
+
+
+Estado 177
+
+   42 opExp: ID '=' • exp
+
+    ID       deslocar, e ir ao estado 146
+    WRITE    deslocar, e ir ao estado 147
+    WRITELN  deslocar, e ir ao estado 148
+
+    RETURN  reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 195
+    setExp  ir ao estado 150
+    opExp   ir ao estado 151
+    relExp  ir ao estado 152
+
+
+Estado 178
+
+   43 opExp: ID '*' • ID
+
+    ID  deslocar, e ir ao estado 196
+
+
+Estado 179
+
+   44 opExp: ID '+' • ID
+
+    ID  deslocar, e ir ao estado 197
+
+
+Estado 180
+
+   45 opExp: ID '-' • ID
+
+    ID  deslocar, e ir ao estado 198
+
+
+Estado 181
+
+   46 opExp: ID '/' • ID
+
+    ID  deslocar, e ir ao estado 199
+
+
+Estado 182
+
+   48 relExp: ID rel • exp
+
+    ID       deslocar, e ir ao estado 146
+    WRITE    deslocar, e ir ao estado 147
+    WRITELN  deslocar, e ir ao estado 148
+
+    RETURN  reduzir usando a regra 47 (relExp)
+
+    exp     ir ao estado 200
+    setExp  ir ao estado 150
+    opExp   ir ao estado 151
+    relExp  ir ao estado 152
+
+
+Estado 183
+
+   40 setExp: WRITE IN • ID
+
+    ID  deslocar, e ir ao estado 201
+
+
+Estado 184
+
+   39 setExp: WRITELN IN • ID
+
+    ID  deslocar, e ir ao estado 202
+
+
+Estado 185
+
+   38 setExp: ID IN ID •
+
+    RETURN  reduzir usando a regra 38 (setExp)
+    ELSE    reduzir usando a regra 38 (setExp)
+
+
+Estado 186
+
+   42 opExp: ID '=' exp •
+
+    RETURN  reduzir usando a regra 42 (opExp)
+    ELSE    reduzir usando a regra 42 (opExp)
+
+
+Estado 187
+
+   43 opExp: ID '*' ID •
+
+    RETURN  reduzir usando a regra 43 (opExp)
+    ELSE    reduzir usando a regra 43 (opExp)
+
+
+Estado 188
+
+   44 opExp: ID '+' ID •
+
+    RETURN  reduzir usando a regra 44 (opExp)
+    ELSE    reduzir usando a regra 44 (opExp)
+
+
+Estado 189
+
+   45 opExp: ID '-' ID •
+
+    RETURN  reduzir usando a regra 45 (opExp)
+    ELSE    reduzir usando a regra 45 (opExp)
+
+
+Estado 190
+
+   46 opExp: ID '/' ID •
+
+    RETURN  reduzir usando a regra 46 (opExp)
+    ELSE    reduzir usando a regra 46 (opExp)
+
+
+Estado 191
+
+   48 relExp: ID rel exp •
+
+    RETURN  reduzir usando a regra 48 (relExp)
+    ELSE    reduzir usando a regra 48 (relExp)
+
+
+Estado 192
+
+   40 setExp: WRITE IN ID •
+
+    RETURN  reduzir usando a regra 40 (setExp)
+    ELSE    reduzir usando a regra 40 (setExp)
+
+
+Estado 193
+
+   39 setExp: WRITELN IN ID •
+
+    RETURN  reduzir usando a regra 39 (setExp)
+    ELSE    reduzir usando a regra 39 (setExp)
+
+
+Estado 194
+
+   38 setExp: ID IN ID •
+
+    RETURN  reduzir usando a regra 38 (setExp)
+
+
+Estado 195
+
+   42 opExp: ID '=' exp •
+
+    RETURN  reduzir usando a regra 42 (opExp)
+
+
+Estado 196
+
+   43 opExp: ID '*' ID •
+
+    RETURN  reduzir usando a regra 43 (opExp)
+
+
+Estado 197
+
+   44 opExp: ID '+' ID •
+
+    RETURN  reduzir usando a regra 44 (opExp)
+
+
+Estado 198
+
+   45 opExp: ID '-' ID •
+
+    RETURN  reduzir usando a regra 45 (opExp)
+
+
+Estado 199
+
+   46 opExp: ID '/' ID •
+
+    RETURN  reduzir usando a regra 46 (opExp)
+
+
+Estado 200
+
+   48 relExp: ID rel exp •
+
+    RETURN  reduzir usando a regra 48 (relExp)
+
+
+Estado 201
+
+   40 setExp: WRITE IN ID •
+
+    RETURN  reduzir usando a regra 40 (setExp)
+
+
+Estado 202
+
+   39 setExp: WRITELN IN ID •
+
+    RETURN  reduzir usando a regra 39 (setExp)

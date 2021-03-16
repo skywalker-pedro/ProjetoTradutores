@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.7.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_SKYLANG_TAB_H_INCLUDED
 # define YY_YY_SKYLANG_TAB_H_INCLUDED
@@ -44,39 +45,51 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TYPE = 258,
-    ID = 259,
-    RETURN = 260,
-    IF = 261,
-    ELSE = 262,
-    WHILE = 263,
-    WRITE = 264,
-    WRITELN = 265,
-    READ = 266,
-    EXISTS = 267,
-    ADD = 268,
-    REMOVE = 269,
-    FOR = 270,
-    FORALL = 271,
-    IN = 272
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    TYPE = 258,                    /* TYPE  */
+    ID = 259,                      /* ID  */
+    RETURN = 260,                  /* RETURN  */
+    IF = 261,                      /* IF  */
+    ELSE = 262,                    /* ELSE  */
+    WHILE = 263,                   /* WHILE  */
+    WRITE = 264,                   /* WRITE  */
+    WRITELN = 265,                 /* WRITELN  */
+    READ = 266,                    /* READ  */
+    EXISTS = 267,                  /* EXISTS  */
+    ADD = 268,                     /* ADD  */
+    REMOVE = 269,                  /* REMOVE  */
+    FOR = 270,                     /* FOR  */
+    FORALL = 271,                  /* FORALL  */
+    IN = 272,                      /* IN  */
+    CLE = 273,                     /* CLE  */
+    CLT = 274,                     /* CLT  */
+    CNE = 275,                     /* CNE  */
+    CGT = 276,                     /* CGT  */
+    AND = 277,                     /* AND  */
+    CEQ = 278,                     /* CEQ  */
+    CGE = 279                      /* CGE  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 17 "skylang.y"
+#line 18 "skylang.y"
 
 	char type;
 	char id;
 
-#line 80 "skylang.tab.h"
+#line 93 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

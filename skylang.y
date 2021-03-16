@@ -1,7 +1,7 @@
 %define parse.error verbose
 %debug
 %locations
-
+%define lr.type canonical-lr
 %{
 
 #include <stdio.h>
@@ -13,6 +13,7 @@ extern int yylex_destroy(void);
 
 %}
 
+
 %union 
 {
 	char type;
@@ -22,6 +23,7 @@ extern int yylex_destroy(void);
 %token<type>TYPE
 %token<id>ID
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN
+%token CLE CLT CNE CGT AND CEQ CGE
 
 %%
 
@@ -52,8 +54,7 @@ params:
 	params_list
 ;
 params_list:
-	params_list
-	| param
+	 param
 ;
 param:
 	TYPE ID
@@ -65,8 +66,7 @@ returns:
 	RETURN exp;
 ;
 statements:
-	statements
-	| statement
+	statement
 ;
 statement:
 	if_statement
@@ -126,18 +126,19 @@ opExp:
 	|ID '/' ID
 ;
 relExp:
-	ID rel ID
 	| ID rel exp
 ;
+
 rel:
-	'>'
-	| '<'
-	| '!='
-	| '=='
-	| '&&'
-	| '<='
-	| '>='
+	CGE
+	| CGT
+	| CNE
+	| CLT
+	| AND
+	| CLE
+	| CEQ
 ;
+
 %%
 
 void yyerror(char const* msg){
