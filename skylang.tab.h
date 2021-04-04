@@ -69,13 +69,17 @@ extern int yydebug;
     FOR = 270,                     /* FOR  */
     FORALL = 271,                  /* FORALL  */
     IN = 272,                      /* IN  */
-    CLE = 273,                     /* CLE  */
-    CLT = 274,                     /* CLT  */
-    CNE = 275,                     /* CNE  */
-    CGT = 276,                     /* CGT  */
-    AND = 277,                     /* AND  */
-    CEQ = 278,                     /* CEQ  */
-    CGE = 279                      /* CGE  */
+    IS_IN = 273,                   /* IS_IN  */
+    IS_SET = 274,                  /* IS_SET  */
+    CLE = 275,                     /* CLE  */
+    CLT = 276,                     /* CLT  */
+    CNE = 277,                     /* CNE  */
+    CGT = 278,                     /* CGT  */
+    AND = 279,                     /* AND  */
+    CEQ = 280,                     /* CEQ  */
+    CGE = 281,                     /* CGE  */
+    LETTER = 282,                  /* LETTER  */
+    DIGIT = 283                    /* DIGIT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -84,12 +88,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "skylang.y"
+#line 16 "skylang.y"
 
-	char type;
+	char *type;
 	char id;
 
-#line 93 "skylang.tab.h"
+#line 97 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -97,23 +101,9 @@ typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
-/* Location type.  */
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-};
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
-#endif
-
 
 extern YYSTYPE yylval;
-extern YYLTYPE yylloc;
+
 int yyparse (void);
 
 #endif /* !YY_YY_SKYLANG_TAB_H_INCLUDED  */

@@ -12,4 +12,5 @@ int main(){
         forall (val in sumsWithX) add (val in possibleSums);
         if (13 in possibleSums) writeln('y'); else writeln('n');
     }
+return 0;
 }

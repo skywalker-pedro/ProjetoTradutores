@@ -1,30 +1,29 @@
 %define parse.error verbose
 %debug
-%locations
 %define lr.type canonical-lr
 %{
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "uthash.h"
 extern int yylex();
-extern void yyerror(char const* msg)
-extern int yylex_destroy(void);
+extern void yyerror(const char* msg);
+extern int yylex_destroy();
+extern FILE *yyin;
 
 %}
 
-
 %union 
 {
-	char type;
+	char *type;
 	char id;
 };
 
 %token<type>TYPE
 %token<id>ID
-%token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN
+%token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET
 %token CLE CLT CNE CGT AND CEQ CGE
-
+%token LETTER
+%token DIGIT
 %%
 
 /*rule section*/
@@ -54,7 +53,8 @@ params:
 	params_list
 ;
 params_list:
-	 param
+	 param ','	params_list
+	|param
 ;
 param:
 	TYPE ID
@@ -66,7 +66,8 @@ returns:
 	RETURN exp;
 ;
 statements:
-	statement
+	statement','statements
+	|statement
 ;
 statement:
 	if_statement
@@ -141,6 +142,18 @@ rel:
 
 %%
 
-void yyerror(char const* msg){
-	printf("Erro sintatico: %s",msg)
+extern void yyerror(const char* a) {
+    printf("ERRO SINTATICO\n");
+}
+
+
+int main(){
+char fname[100];
+    printf("\nDigite o nome do arquivo a ser analisado:\n-> ");
+    scanf("%s",fname);
+    yyin=fopen(fname,"r+");
+    yyparse();
+    fclose(yyin);
+    yylex_destroy();
+    return 0;
 }

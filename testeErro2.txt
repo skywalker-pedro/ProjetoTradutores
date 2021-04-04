@@ -2,7 +2,7 @@ int main() {
     set s;
     s = $;
 
-    add(! in s);
+    add($$$ in s);
     add(2 in s);
     add(5 in s);
     add(8 in s);
@@ -13,6 +13,6 @@ int main() {
     add(56 in s);
     add(6 in s);
  
-return ;
+return 0;
 
 }

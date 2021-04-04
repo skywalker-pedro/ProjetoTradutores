@@ -1,8 +1,12 @@
+%option noinput
+%option nounput
+%option noyywrap
+
 %{
 
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "skylang.tab.h"
 
 int num_linha = 1;
 int posicao_linha = 0;
@@ -32,7 +36,7 @@ div  "/"
 is_in "in"
 is_set "is_set"
 
-type "int"|"float"|"char"|"set"|"elem"
+type "int"|"float"|"set"|"elem"
 equals "="
 or "||"
 and "&&"
@@ -44,7 +48,7 @@ else "else"
 for "for"
 forall "forall"
 write "write"
-writeIn "writeIn"
+writeLn "writeLn"
 read	"read"
 
 cle "<="
@@ -59,65 +63,59 @@ empty "EMPTY"
 
 %%
 
-
-
 "]"		{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return ']';
    
 }
 
 "["		{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '[';
    
 }
 
 "&"		{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '&';
    
 }
 
 ","		{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
-   
-}
-
-"\""		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
-}
-
-"\\"		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+			return ',';
    
 }
 
 {read}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return READ;;
    
 }
 
-{writeIn}	{
-    		printf("Token valido: -> %s\n", yytext);
+{writeLn}	{
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return WRITELN;
    
 }
 
 {write}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return WRITE;
    
 }
 
 {add}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return ADD;
    
 }
 
@@ -127,64 +125,73 @@ empty "EMPTY"
 }
 
 {forall}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return FORALL;
    
 }
 
 {plus}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
-   
+			return '+';
 }
 
 {cgt}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return CGT;
    
 }
 
 
 {for}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return FOR;
    
 }
 
 {else}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return ELSE;
    
 }
 
 {while}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
    			posicao_linha += 1;
+			return WHILE;
 }
 
 {if}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
    			posicao_linha += 1;
+			return IF;
 }
 
 {is_in}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
    			posicao_linha += 1;
+			return IS_IN;
 }
 
 {type}	{
     		printf("Token valido: -> %s\n", yytext);
    			posicao_linha += 1;
+			return TYPE;
 }
 
 
 {return}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
    			posicao_linha += 1;
+			return RETURN;
 }
 
 {tabulacao}	{
-    		printf(" ");
+    		//printf(" ");
 }	
 
 {new_line}	{
@@ -194,141 +201,158 @@ empty "EMPTY"
 }
 
 {letter}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return LETTER;
    
 }
 
 {digit}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;  
+			return DIGIT;
 }
 
 {id}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return ID;
    
 }
 
 {sub}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '-';
    
 }
 
 
 {div}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '/';
    
 }
 
 
 {equals}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '=';
    
 }
 
 {or}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '||';
    
 }
 
 {and}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return AND;
    
 }
 
 
 {cle}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
-   
+			return CLE;
 }
 
 {ceq}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return CEQ;
    
 }
 
 {cne}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return CNE;
    
 }
 
 {clt}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return CLT;
    
 }
 
 {is_set}	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return IS_SET;
    
 }
 
 "("	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '(';
    
 }
 
 ")"	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
-   
+			return '(';
 }
-
 "{"	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
-   
+			return '{';
 }
 
 "}"	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '}';
    
 }
 
 ";"	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return ';';
    
 }
 
 "_"	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
    
 }
 
 "."	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return '.';
    
 }
 
 ":"		{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
+			return ':';
+
    
 }
 
 "%"		{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
    
 }
 
 "'"	{
-    		printf("Token valido: -> %s\n", yytext);
+    		//printf("Token valido: -> %s\n", yytext);
     		posicao_linha += 1;
    
 }
@@ -336,23 +360,9 @@ empty "EMPTY"
 
 . { 
 	posicao_linha += 1;
+	printf("Token invalido: -> %s\n", yytext);
     LexicalError();
 }
 
 
 %%
-
-int yywrap(){
-	return 1;
-}
-
-
-int main(){
-char fname[100];
-    printf("\nDigite o nome do arquivo a ser analisado:\n-> ");
-    scanf("%s",fname);
-    yyin=fopen(fname,"r+");
-    yylex();
-    return 0;
-}
-
