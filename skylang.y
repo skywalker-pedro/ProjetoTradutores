@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "skylang.h"
 extern int yylex();
 extern void yyerror(const char* msg);
 extern int yylex_destroy();
@@ -20,10 +21,11 @@ extern FILE *yyin;
 
 %token<type>TYPE
 %token<id>ID
-%token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET
+%token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
 %token CLE CLT CNE CGT AND CEQ CGE
-%token LETTER
-%token DIGIT
+%token LETTER STRING
+%token DIGIT APOST
+%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON EQUALS COLON
 %%
 
 /*rule section*/
@@ -42,92 +44,123 @@ declaration:
 ;
 
 variable_declaration:
-	TYPE ID
+	TYPE ID SEMICOLON
 ;
 
 func_declaration:
-	TYPE ID '('params')' codeBlock
+	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM
 ;
 
 params:
 	params_list
 ;
 params_list:
-	 param ','	params_list
+	 param COLON params_list
 	|param
+	|
 ;
 param:
 	TYPE ID
 ;
 codeBlock:
-	statements returns
+	codeBlock statement
+	|	
 ;
-returns:
-	RETURN exp;
-;
-statements:
-	statement','statements
-	|statement
-;
+
 statement:
-	if_statement
-	|while_statement
-	|for_statement
-	|declaration_statement
-	|for_all_statement
-	|exists_statement
-	|add_statement
-	|remove_statement
-;
-declaration_statement:
+	
 	variable_declaration
+	|variable_assignment SEMICOLON
+	|exp SEMICOLON
+	|ifStatement
+	|forAllStatement
+	|outPutStatement SEMICOLON
+	|inputStatement SEMICOLON
+	|callFuncStatement SEMICOLON
+	|RETURN exp SEMICOLON
+	
 ;
-while_statement:
-	WHILE '('exp')'codeBlock
+
+callFuncStatement:
+
+	ID PARENTESES_INI call_params PARENTESES_FIM 
+
 ;
-if_statement:
-	IF '('exp')' codeBlock
-	| IF '('exp')' codeBlock ELSE codeBlock
+
+call_params:
+	call_params_list
 ;
-for_statement:
-	FOR '('exp')' codeBlock
+call_params_list:
+	 call_param COLON call_params_list
+	|call_param
+	|
 ;
-for_all_statement:
-	FORALL '('exp')' codeBlock
-	| FORALL '('exp')'	
+call_param:
+	terminal
 ;
-exists_statement:
-	EXISTS '('exp')' codeBlock
-	| EXISTS '('exp')'
+
+inputStatement:
+
+	READ PARENTESES_INI exp PARENTESES_FIM 
+
 ;
-add_statement:
-	ADD '('exp')' codeBlock
-	| ADD '('exp')'
+
+
+outPutStatement:
+	WRITE PARENTESES_INI exp PARENTESES_FIM
+	|WRITELN PARENTESES_INI exp PARENTESES_FIM
 ;
-remove_statement:
-	REMOVE '('exp')' codeBlock
-	| REMOVE '('exp')'
+
+forAllStatement:
+	
+	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM
+
 ;
+
+ifStatement:
+
+	IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM
+	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM ELSE CHAVES_INI codeBlock CHAVES_FIM
+
+;
+
+variable_assignment:
+	ID EQUALS exp
+
+;
+
 exp:
 	setExp
-	|opExp
+	|aritExp
 	|relExp
+	|terminal
 ;
+
 setExp:
-	ID IN ID
-	| WRITELN IN ID
-	| WRITE IN ID
+	ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+	| REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM 
+	| EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM 
 ;
-opExp:
-	ID
-	|ID '=' exp
-	|ID '*' ID
-	|ID '+' ID
-	|ID '-' ID
-	|ID '/' ID
+
+terms_set:
+	aritSetExp
+;
+
+aritSetExp:
+	terminal
+	|PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+
+	
+;
+
+aritExp:
+	terminal '*' exp
+	|terminal '+' exp
+	|terminal '-' exp
+	|terminal '/' exp
 ;
 relExp:
-	| ID rel exp
+	terminal rel exp 
 ;
 
 rel:
@@ -140,10 +173,16 @@ rel:
 	| CEQ
 ;
 
+terminal:
+	ID
+	|DIGIT
+;
+
 %%
 
 extern void yyerror(const char* a) {
-    printf("ERRO SINTATICO\n");
+    printf("ERRO SINTATICO linha %d\n",num_linha);
+	printf("-->%s\n",a);
 }
 
 
@@ -153,7 +192,8 @@ char fname[100];
     scanf("%s",fname);
     yyin=fopen(fname,"r+");
     yyparse();
-    fclose(yyin);
+    //yylex();
+	fclose(yyin);
     yylex_destroy();
     return 0;
 }

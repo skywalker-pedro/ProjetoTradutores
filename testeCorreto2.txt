@@ -1,24 +1,19 @@
-int main() {
-  long int a,b,c;
-  int cont;
-  int n = 5;
-  double r;
+int soma(int a1,int b2){
 
-    
-  a = 1;
-  b = 1;
-  cont = 2;
+	int resultado;
+	resultado = a1+b1;
+	write(resultado);
 
-  while(cont < n) {
-     c = a + b;
-     r = c;
-     r = r/b;
-     writeln(c);
-     writeln(r);
-     a = b;
-     b = c;
-     cont = cont + 1;
-  }
- 
+}
+
+int main(){
+
+	int x1;
+	int x2;
+	
+	soma(x1,x2);
+	
+
 return 0;
+
 }
