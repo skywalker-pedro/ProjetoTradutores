@@ -99,12 +99,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 17 "skylang.y"
+#line 29 "skylang.y"
 
-	char *type;
-	char id;
+	char *str;
 
-#line 108 "skylang.tab.h"
+#line 107 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

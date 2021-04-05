@@ -73,13 +73,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "skylang.h"
+#include "symbol_table.h"
 extern int yylex();
 extern void yyerror(const char* msg);
 extern int yylex_destroy();
 extern FILE *yyin;
+extern Hash_table * hashed_symbol_table;
+int symbol_ID = 0;
+
+void printTS(){
+    while(hashed_symbol_table!=NULL){
+        printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s",hashed_symbol_table->id,hashed_symbol_table->name,hashed_symbol_table->type,hashed_symbol_table->varType);
+        hashed_symbol_table = hashed_symbol_table -> hh.next;
+    }
+
+}
 
 
-#line 83 "skylang.tab.c"
+
+#line 95 "skylang.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -550,13 +562,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    38,    39,    42,    43,    47,    51,    55,
-      58,    59,    60,    63,    66,    67,    72,    73,    74,    75,
-      76,    77,    78,    79,    80,    86,    91,    94,    95,    96,
-      99,   104,   110,   111,   116,   122,   123,   128,   133,   134,
-     135,   136,   140,   141,   142,   146,   150,   151,   157,   158,
-     159,   160,   163,   167,   168,   169,   170,   171,   172,   173,
-     177,   178
+       0,    45,    45,    49,    50,    53,    54,    58,    65,    72,
+      75,    76,    77,    80,    83,    84,    89,    90,    91,    92,
+      93,    94,    95,    96,    97,   103,   108,   111,   112,   113,
+     116,   121,   127,   128,   133,   139,   140,   145,   150,   151,
+     152,   153,   157,   158,   159,   163,   167,   168,   174,   175,
+     176,   177,   180,   184,   185,   186,   187,   188,   189,   190,
+     194,   195
 };
 #endif
 
@@ -1635,8 +1647,26 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 7: /* variable_declaration: TYPE ID SEMICOLON  */
+#line 58 "skylang.y"
+                          {insert_symbol(symbol_ID, (yyvsp[-1].str),"VARIAVEL",(yyvsp[-2].str) );
+						symbol_ID ++;
+						//printf("\nAQUI %s\n",$2);
+						}
+#line 1657 "skylang.tab.c"
+    break;
 
-#line 1640 "skylang.tab.c"
+  case 8: /* func_declaration: TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  */
+#line 65 "skylang.y"
+                                                                                      {insert_symbol(symbol_ID, (yyvsp[-6].str),"FUNCAO",(yyvsp[-7].str) );
+																					symbol_ID ++;
+																					//printf("\nAQUI %s\n",$2);
+																					}
+#line 1666 "skylang.tab.c"
+    break;
+
+
+#line 1670 "skylang.tab.c"
 
       default: break;
     }
@@ -1861,7 +1891,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 181 "skylang.y"
+#line 198 "skylang.y"
 
 
 extern void yyerror(const char* a) {
@@ -1878,6 +1908,10 @@ char fname[100];
     yyparse();
     //yylex();
 	fclose(yyin);
+	printf("\n---------> Fim da Analise Sintatica <----------");
+	printf("\n---------> Tabela de Simbolos <---------\n");
+	printTS();
+	printf("\n");
     yylex_destroy();
     return 0;
 }

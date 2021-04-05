@@ -111,8 +111,8 @@ Terminais, com as regras onde eles aparecem
     '-' (45) 49
     '/' (47) 50
     error (256)
-    TYPE <type> (258) 6 7 12
-    ID <id> (259) 6 7 12 24 33 36 59
+    TYPE <str> (258) 6 7 12
+    ID <str> (259) 6 7 12 24 33 36 59
     RETURN (260) 23
     IF (261) 34 35
     ELSE (262) 35

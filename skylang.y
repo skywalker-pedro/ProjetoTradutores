@@ -6,21 +6,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "skylang.h"
+#include "symbol_table.h"
 extern int yylex();
 extern void yyerror(const char* msg);
 extern int yylex_destroy();
 extern FILE *yyin;
+extern Hash_table * hashed_symbol_table;
+int symbol_ID = 0;
+
+void printTS(){
+    while(hashed_symbol_table!=NULL){
+        printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s",hashed_symbol_table->id,hashed_symbol_table->name,hashed_symbol_table->type,hashed_symbol_table->varType);
+        hashed_symbol_table = hashed_symbol_table -> hh.next;
+    }
+
+}
+
 
 %}
 
 %union 
 {
-	char *type;
-	char id;
+	char *str;
 };
 
-%token<type>TYPE
-%token<id>ID
+%token<str>TYPE
+%token<str>ID
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
 %token CLE CLT CNE CGT AND CEQ CGE
 %token LETTER STRING
@@ -44,11 +55,17 @@ declaration:
 ;
 
 variable_declaration:
-	TYPE ID SEMICOLON
+	TYPE ID SEMICOLON {insert_symbol(symbol_ID, $2,"VARIAVEL",$1 );
+						symbol_ID ++;
+						//printf("\nAQUI %s\n",$2);
+						}
 ;
 
 func_declaration:
-	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM
+	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM {insert_symbol(symbol_ID, $2,"FUNCAO",$1 );
+																					symbol_ID ++;
+																					//printf("\nAQUI %s\n",$2);
+																					}
 ;
 
 params:
@@ -194,6 +211,10 @@ char fname[100];
     yyparse();
     //yylex();
 	fclose(yyin);
+	printf("\n---------> Fim da Analise Sintatica <----------");
+	printf("\n---------> Tabela de Simbolos <---------\n");
+	printTS();
+	printf("\n");
     yylex_destroy();
     return 0;
 }
