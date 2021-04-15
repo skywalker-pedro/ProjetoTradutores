@@ -14,6 +14,8 @@ extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 
+
+/* Print TS Function*/
 void printTS(){
     while(hashed_symbol_table!=NULL){
         printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s",hashed_symbol_table->id,hashed_symbol_table->name,hashed_symbol_table->type,hashed_symbol_table->varType);
@@ -21,7 +23,6 @@ void printTS(){
     }
 
 }
-
 
 %}
 
@@ -56,14 +57,14 @@ declaration:
 
 variable_declaration:
 	TYPE ID SEMICOLON {insert_symbol(symbol_ID, $2,"VARIAVEL",$1 );
-						symbol_ID ++;
+						symbol_ID = symbol_ID +1;
 						//printf("\nAQUI %s\n",$2);
 						}
 ;
 
 func_declaration:
 	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM {insert_symbol(symbol_ID, $2,"FUNCAO",$1 );
-																					symbol_ID ++;
+																					symbol_ID = symbol_ID +1 ;
 																					//printf("\nAQUI %s\n",$2);
 																					}
 ;
@@ -121,7 +122,6 @@ inputStatement:
 	READ PARENTESES_INI exp PARENTESES_FIM 
 
 ;
-
 
 outPutStatement:
 	WRITE PARENTESES_INI exp PARENTESES_FIM
@@ -198,8 +198,8 @@ terminal:
 %%
 
 extern void yyerror(const char* a) {
-    printf("ERRO SINTATICO linha %d\n",num_linha);
-	printf("-->%s\n",a);
+    printf("\n-->ERRO SINTATICO na linha %d, coluna %d\n",num_linha,posicao_linha);
+	printf("-->  %s\n",a);
 }
 
 

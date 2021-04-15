@@ -81,6 +81,8 @@ extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 
+
+/* Print TS Function*/
 void printTS(){
     while(hashed_symbol_table!=NULL){
         printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s",hashed_symbol_table->id,hashed_symbol_table->name,hashed_symbol_table->type,hashed_symbol_table->varType);
@@ -90,8 +92,7 @@ void printTS(){
 }
 
 
-
-#line 95 "skylang.tab.c"
+#line 96 "skylang.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -562,10 +563,10 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    49,    50,    53,    54,    58,    65,    72,
-      75,    76,    77,    80,    83,    84,    89,    90,    91,    92,
-      93,    94,    95,    96,    97,   103,   108,   111,   112,   113,
-     116,   121,   127,   128,   133,   139,   140,   145,   150,   151,
+       0,    46,    46,    50,    51,    54,    55,    59,    66,    73,
+      76,    77,    78,    81,    84,    85,    90,    91,    92,    93,
+      94,    95,    96,    97,    98,   104,   109,   112,   113,   114,
+     117,   122,   127,   128,   133,   139,   140,   145,   150,   151,
      152,   153,   157,   158,   159,   163,   167,   168,   174,   175,
      176,   177,   180,   184,   185,   186,   187,   188,   189,   190,
      194,   195
@@ -1648,25 +1649,25 @@ yyreduce:
   switch (yyn)
     {
   case 7: /* variable_declaration: TYPE ID SEMICOLON  */
-#line 58 "skylang.y"
+#line 59 "skylang.y"
                           {insert_symbol(symbol_ID, (yyvsp[-1].str),"VARIAVEL",(yyvsp[-2].str) );
-						symbol_ID ++;
+						symbol_ID = symbol_ID +1;
 						//printf("\nAQUI %s\n",$2);
 						}
-#line 1657 "skylang.tab.c"
+#line 1658 "skylang.tab.c"
     break;
 
   case 8: /* func_declaration: TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  */
-#line 65 "skylang.y"
+#line 66 "skylang.y"
                                                                                       {insert_symbol(symbol_ID, (yyvsp[-6].str),"FUNCAO",(yyvsp[-7].str) );
-																					symbol_ID ++;
+																					symbol_ID = symbol_ID +1 ;
 																					//printf("\nAQUI %s\n",$2);
 																					}
-#line 1666 "skylang.tab.c"
+#line 1667 "skylang.tab.c"
     break;
 
 
-#line 1670 "skylang.tab.c"
+#line 1671 "skylang.tab.c"
 
       default: break;
     }
@@ -1895,8 +1896,8 @@ yyreturn:
 
 
 extern void yyerror(const char* a) {
-    printf("ERRO SINTATICO linha %d\n",num_linha);
-	printf("-->%s\n",a);
+    printf("\n-->ERRO SINTATICO na linha %d, coluna %d\n",num_linha,posicao_linha);
+	printf("-->  %s\n",a);
 }
 
 
