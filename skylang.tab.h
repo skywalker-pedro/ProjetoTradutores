@@ -79,9 +79,9 @@ extern int yydebug;
     AND = 280,                     /* AND  */
     CEQ = 281,                     /* CEQ  */
     CGE = 282,                     /* CGE  */
-    LETTER = 283,                  /* LETTER  */
-    STRING = 284,                  /* STRING  */
-    DIGIT = 285,                   /* DIGIT  */
+    DIGIT = 283,                   /* DIGIT  */
+    LETTER = 284,                  /* LETTER  */
+    STRING = 285,                  /* STRING  */
     APOST = 286,                   /* APOST  */
     CHAVES_INI = 287,              /* CHAVES_INI  */
     CHAVES_FIM = 288,              /* CHAVES_FIM  */
@@ -99,11 +99,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 30 "skylang.y"
+#line 33 "skylang.y"
 
 	char *str;
+	struct node* tree;
 
-#line 107 "skylang.tab.h"
+#line 108 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -129,16 +129,16 @@ Terminais, com as regras onde eles aparecem
     IS_IN (273)
     IS_SET (274)
     OR (275)
-    CLE (276) 57
-    CLT (277) 55
-    CNE (278) 54
-    CGT (279) 53
-    AND (280) 56
-    CEQ (281) 58
-    CGE (282) 52
-    LETTER (283)
-    STRING (284)
-    DIGIT (285) 60
+    CLE <tree> (276) 57
+    CLT <tree> (277) 55
+    CNE <tree> (278) 54
+    CGT <tree> (279) 53
+    AND <tree> (280) 56
+    CEQ <tree> (281) 58
+    CGE <tree> (282) 52
+    DIGIT <tree> (283) 60
+    LETTER (284)
+    STRING (285)
     APOST (286)
     CHAVES_INI (287) 7 33 34 35
     CHAVES_FIM (288) 7 33 34 35
@@ -154,85 +154,85 @@ Não terminais com as regras onde eles aparecem
 
     $accept (44)
         à esquerda: 0
-    programa (45)
+    programa <tree> (45)
         à esquerda: 1
         à direita: 0
-    declarationList (46)
+    declarationList <tree> (46)
         à esquerda: 2 3
         à direita: 1 2
-    declaration (47)
+    declaration <tree> (47)
         à esquerda: 4 5
         à direita: 2 3
-    variable_declaration (48)
+    variable_declaration <tree> (48)
         à esquerda: 6
         à direita: 4 15
-    func_declaration (49)
+    func_declaration <tree> (49)
         à esquerda: 7
         à direita: 5
-    params (50)
+    params <tree> (50)
         à esquerda: 8
         à direita: 7
-    params_list (51)
+    params_list <tree> (51)
         à esquerda: 9 10 11
         à direita: 8 9
-    param (52)
+    param <tree> (52)
         à esquerda: 12
         à direita: 9 10
-    codeBlock (53)
+    codeBlock <tree> (53)
         à esquerda: 13 14
         à direita: 7 13 33 34 35
-    statement (54)
+    statement <tree> (54)
         à esquerda: 15 16 17 18 19 20 21 22 23
         à direita: 13
-    callFuncStatement (55)
+    callFuncStatement <tree> (55)
         à esquerda: 24
         à direita: 22
-    call_params (56)
+    call_params <tree> (56)
         à esquerda: 25
         à direita: 24
-    call_params_list (57)
+    call_params_list <tree> (57)
         à esquerda: 26 27 28
         à direita: 25 26
-    call_param (58)
+    call_param <tree> (58)
         à esquerda: 29
         à direita: 26 27
-    inputStatement (59)
+    inputStatement <tree> (59)
         à esquerda: 30
         à direita: 21
-    outPutStatement (60)
+    outPutStatement <tree> (60)
         à esquerda: 31 32
         à direita: 20
-    forAllStatement (61)
+    forAllStatement <tree> (61)
         à esquerda: 33
         à direita: 19
-    ifStatement (62)
+    ifStatement <tree> (62)
         à esquerda: 34 35
         à direita: 18
-    variable_assignment (63)
+    variable_assignment <tree> (63)
         à esquerda: 36
         à direita: 16
-    exp (64)
+    exp <tree> (64)
         à esquerda: 37 38 39 40
         à direita: 17 23 30 31 32 34 35 36 47 48 49 50 51
-    setExp (65)
+    setExp <tree> (65)
         à esquerda: 41 42 43
         à direita: 37
-    terms_set (66)
+    terms_set <tree> (66)
         à esquerda: 44
         à direita: 41 42 43 46
-    aritSetExp (67)
+    aritSetExp <tree> (67)
         à esquerda: 45 46
         à direita: 44
-    aritExp (68)
+    aritExp <tree> (68)
         à esquerda: 47 48 49 50
         à direita: 38
-    relExp (69)
+    relExp <tree> (69)
         à esquerda: 51
         à direita: 39
-    rel (70)
+    rel <tree> (70)
         à esquerda: 52 53 54 55 56 57 58
         à direita: 51
-    terminal (71)
+    terminal <tree> (71)
         à esquerda: 59 60
         à direita: 29 40 45 47 48 49 50 51
 

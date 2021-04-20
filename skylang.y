@@ -7,12 +7,15 @@
 #include <stdlib.h>
 #include "skylang.h"
 #include "symbol_table.h"
+#include "skylangTree.h"
+
 extern int yylex();
 extern void yyerror(const char* msg);
 extern int yylex_destroy();
 extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
+treeNode* tree = NULL;
 
 
 /* Print TS Function*/
@@ -29,73 +32,149 @@ void printTS(){
 %union 
 {
 	char *str;
+	struct node* tree;
 };
 
 %token<str>TYPE
 %token<str>ID
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
-%token CLE CLT CNE CGT AND CEQ CGE
+%token <tree> CLE CLT CNE CGT AND CEQ CGE DIGIT
 %token LETTER STRING
-%token DIGIT APOST
+%token APOST
 %token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON EQUALS COLON
-%%
+%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock
+%type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement
+%type<tree> ifStatement variable_assignment exp setExp terms_set aritSetExp relExp rel terminal aritExp
+%%  
 
+ 
 /*rule section*/
 
 programa:
-	declarationList
+	declarationList {
+		$$ = add_tree_node("programa");
+		$$ -> leaf1 = $1;
+		tree = $$;
+	}
 ;
 
 declarationList: 
-	declarationList declaration 
-	| declaration
+	declarationList declaration {
+		$$ = add_tree_node("declarationList");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $2;
+	}
+	| declaration {
+		$$ = add_tree_node("declarationList");
+		$$ -> leaf1 = $1;
+	}
 ;
 declaration:
-	variable_declaration
-	| func_declaration
+	variable_declaration{
+		$$ = add_tree_node("declaration");
+		$$ -> leaf1 = $1;
+	}
+	| func_declaration{
+		$$ = add_tree_node("declaration");
+		$$ -> leaf1 = $1;
+	}
 ;
 
 variable_declaration:
 	TYPE ID SEMICOLON {insert_symbol(symbol_ID, $2,"VARIAVEL",$1 );
 						symbol_ID = symbol_ID +1;
 						//printf("\nAQUI %s\n",$2);
-						}
+						$$ = add_tree_node("variable_declaration - Type ID");
+	}
 ;
 
 func_declaration:
 	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM {insert_symbol(symbol_ID, $2,"FUNCAO",$1 );
 																					symbol_ID = symbol_ID +1 ;
 																					//printf("\nAQUI %s\n",$2);
-																					}
+																					$$ = add_tree_node("func_declaration");
+																					$$ -> leaf1 = $4;
+																					$$ -> leaf2 = $7;
+																				
+}
 ;
 
 params:
-	params_list
+	params_list {
+		$$ = add_tree_node("params");
+		$$ -> leaf1 = $1;
+	}
 ;
 params_list:
-	 param COLON params_list
-	|param
-	|
+	param COLON params_list {
+		$$ = add_tree_node("params_list");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	}
+	|param {
+		$$ = add_tree_node("params_list");
+		$$ -> leaf1 = $1;
+	}
+	|{
+		$$ = add_tree_node("Vazio");
+	
+	}
 ;
 param:
-	TYPE ID
+	TYPE ID {
+		$$ = add_tree_node("param - TYPE ID");
+	 }
 ;
 codeBlock:
-	codeBlock statement
-	|	
+	codeBlock statement{
+		$$ = add_tree_node("codeBlock");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $2;
+	}
+	| {
+		$$ = add_tree_node("codeBlock VAZIO");
+	}
 ;
 
 statement:
 	
-	variable_declaration
-	|variable_assignment SEMICOLON
-	|exp SEMICOLON
-	|ifStatement
-	|forAllStatement
-	|outPutStatement SEMICOLON
-	|inputStatement SEMICOLON
-	|callFuncStatement SEMICOLON
-	|RETURN exp SEMICOLON
+	variable_declaration {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|variable_assignment SEMICOLON {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|exp SEMICOLON {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|ifStatement {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|forAllStatement {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|outPutStatement SEMICOLON {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|inputStatement SEMICOLON {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|callFuncStatement SEMICOLON {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $1;
+	 }
+	|RETURN exp SEMICOLON {
+		$$ = add_tree_node("statement");
+		$$ -> leaf1 = $2;
+
+	 }
 	
 ;
 
@@ -124,75 +203,175 @@ inputStatement:
 ;
 
 outPutStatement:
-	WRITE PARENTESES_INI exp PARENTESES_FIM
-	|WRITELN PARENTESES_INI exp PARENTESES_FIM
+	WRITE PARENTESES_INI exp PARENTESES_FIM  {
+		$$ = add_tree_node("outPutStatement");
+		$$ -> leaf1 = $3;
+	 }
+	|WRITELN PARENTESES_INI exp PARENTESES_FIM  {
+		$$ = add_tree_node("outPutStatement");
+		$$ -> leaf1 = $3;
+	 }
 ;
 
 forAllStatement:
 	
-	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM
+	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM {
+		$$ = add_tree_node("forAllStatement");
+		$$ -> leaf1 = $8;
+	 }
 
 ;
 
 ifStatement:
 
-	IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM
-	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM ELSE CHAVES_INI codeBlock CHAVES_FIM
+	IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  {
+		$$ = add_tree_node("ifStatement");
+		$$ -> leaf1 = $3;
+		$$ -> leaf2 = $6;
+	 }
+	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM ELSE CHAVES_INI codeBlock CHAVES_FIM {
+		$$ = add_tree_node("ifStatement");
+		$$ -> leaf1 = $3;
+		$$ -> leaf2 = $6;
+		$$ -> leaf3 = $10;
+	 }
 
 ;
 
 variable_assignment:
-	ID EQUALS exp
+	ID EQUALS exp {
+		$$ = add_tree_node("var_assign");
+		$$ -> leaf1 = $3;
+	 }
 
 ;
 
 exp:
-	setExp
-	|aritExp
-	|relExp
-	|terminal
+	setExp  {
+		$$ = add_tree_node("exp");
+		$$ -> leaf1 = $1;
+	 }
+	|aritExp {
+		$$ = add_tree_node("exp");
+		$$ -> leaf1 = $1;
+	 }
+	|relExp {
+		$$ = add_tree_node("exp");
+		$$ -> leaf1 = $1;
+	 }
+	|terminal {
+		$$ = add_tree_node("exp");
+		$$ -> leaf1 = $1;
+	 }
 ;
 
 setExp:
-	ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
-	| REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM 
-	| EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM 
+	ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM {
+		$$ = add_tree_node("setExp");
+		$$ -> leaf1 = $3;
+		$$ -> leaf2 = $5;
+	}
+	| REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM {
+		$$ = add_tree_node("setExp");
+		$$ -> leaf1 = $3;
+		$$ -> leaf2 = $5;
+	}
+	| EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM {
+		$$ = add_tree_node("setExp");
+		$$ -> leaf1 = $3;
+		$$ -> leaf2 = $5;
+	}
 ;
 
 terms_set:
-	aritSetExp
+	aritSetExp {
+		$$ = add_tree_node("terms_set");
+		$$ -> leaf1 = $1;
+	}
 ;
 
 aritSetExp:
-	terminal
-	|PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+	terminal {
+		$$ = add_tree_node("aritSetExp");
+		$$ -> leaf1 = $1;
+	}
+	|PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM {
+		$$ = add_tree_node("aritSetExp");
+		$$ -> leaf1 = $4;
+		$$ -> leaf2 = $6;
+	}
 
-	
 ;
 
 aritExp:
-	terminal '*' exp
-	|terminal '+' exp
-	|terminal '-' exp
-	|terminal '/' exp
+	terminal '*' exp {
+		$$ = add_tree_node("aritExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	 }
+	|terminal '+' exp {
+		$$ = add_tree_node("aritExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	 }
+	|terminal '-' exp {
+		$$ = add_tree_node("aritExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	 }
+	|terminal '/' exp {
+		$$ = add_tree_node("aritExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	 }
 ;
 relExp:
-	terminal rel exp 
+	terminal rel exp {
+		$$ = add_tree_node("relExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $2;
+		$$ -> leaf3 = $3;
+	 }
 ;
 
 rel:
-	CGE
-	| CGT
-	| CNE
-	| CLT
-	| AND
-	| CLE
-	| CEQ
+	CGE {
+		$$ = add_tree_node("rel CGE");
+		$$ -> leaf1 = $1;
+	 }
+	| CGT {
+		$$ = add_tree_node("rel");
+		$$ -> leaf1 = $1;
+	 }
+	| CNE {
+		$$ = add_tree_node("rel");
+		$$ -> leaf1 = $1;
+	 }
+	| CLT {
+		$$ = add_tree_node("rel");
+		$$ -> leaf1 = $1;
+	 }
+	| AND {
+		$$ = add_tree_node("rel");
+		$$ -> leaf1 = $1;
+	 }
+	| CLE {
+		$$ = add_tree_node("rel");
+		$$ -> leaf1 = $1;
+	 }
+	| CEQ {
+		$$ = add_tree_node("rel");
+		$$ -> leaf1 = $1;
+	 }
 ;
 
 terminal:
-	ID
-	|DIGIT
+	ID {
+		$$ = add_tree_node("terminal ID");
+	 }
+	|DIGIT {
+		$$ = add_tree_node("terminal DIGIT");
+	 }
 ;
 
 %%
@@ -211,10 +390,11 @@ char fname[100];
     yyparse();
     //yylex();
 	fclose(yyin);
-	printf("\n---------> Fim da Analise Sintatica <----------");
 	printf("\n---------> Tabela de Simbolos <---------\n");
 	printTS();
 	printf("\n");
+	printf("\n---------> ABSss <---------\n");
+	print_tree(tree);
     yylex_destroy();
     return 0;
 }

@@ -1,4 +1,4 @@
-int main(){
+int main(int as, int bgfd, int ada){
     int x1;
     int y1;
     x1 = x1 + 8;
