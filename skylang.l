@@ -22,8 +22,9 @@ tabulacao	\t
 espaco " "
 letter [a-zA-Z]
 digit [0-9]
-id   {letter}+({letter}|{digit}|_|-)*
+id {letter}+({letter}|{digit}|_|-)*
 num  {digit}+
+char      (\'([^(\"\')])+\')
 
 sub  "-"
 mult  "*"

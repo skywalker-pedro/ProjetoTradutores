@@ -171,7 +171,7 @@ statement:
 		$$ -> leaf1 = $1;
 	 }
 	|RETURN exp SEMICOLON {
-		$$ = add_tree_node("statement");
+		$$ = add_tree_node("RETURN statement");
 		$$ -> leaf1 = $2;
 
 	 }
@@ -198,7 +198,10 @@ call_param:
 
 inputStatement:
 
-	READ PARENTESES_INI exp PARENTESES_FIM 
+	READ PARENTESES_INI exp PARENTESES_FIM {
+		$$ = add_tree_node("inputStatement");
+		$$ -> leaf1 = $3;
+	}
 
 ;
 
@@ -230,7 +233,7 @@ ifStatement:
 		$$ -> leaf2 = $6;
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM ELSE CHAVES_INI codeBlock CHAVES_FIM {
-		$$ = add_tree_node("ifStatement");
+		$$ = add_tree_node("ifElseStatement");
 		$$ -> leaf1 = $3;
 		$$ -> leaf2 = $6;
 		$$ -> leaf3 = $10;
