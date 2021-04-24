@@ -1,15 +1,28 @@
-int main(){
+int main(int w, int y, int z){
+    int x1;
+    int y1;
+    x1 = x1 + -8;
+    set SET1;
+    set SET2;
+    add(8 in SET2);
+    add(x1 in SET1);
+    remove(x1 in SET1);
+    !exists(x1 in SET1);
+    remove((exists (x1 in SET1)) in SET2);
 
- set possibleSums;
-    possibleSums = EMPTY;
-    int x;
-    
-    forall (x in s) {
-        set sumsWithX;   
-        sumsWithX = EMPTY;
-        int val;
-        forall (val in possibleSums) add((x + val) in sumsWithX);
-        forall (val in sumsWithX) add (val in possibleSums);
-        if (13 in possibleSums) writeln('y'); else writeln('n');
+    forall(x1 in SET1){
+        x1 = x1 + 2;
+        writeln("\r");
     }
+
+    if(x1 >= 0){
+        x1 = 8;
+    }else{
+        x1 = -2.2;
+        read(x1);
+    }
+    w = x1;
+    y = y1;
+    z = w;
+return 0;
 }

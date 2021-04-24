@@ -1,3 +1,6 @@
+%option noinput
+%option nounput
+
 %{
 
 #include <string.h>
@@ -13,13 +16,16 @@ void LexicalError(){
 
 %}
 
-str  \"(\\.|[^"\\])*\"
+string \"(\\.|[^"\\])*\"
+char (\'([^(\"\')])+\')
 new_line  \n
 tabulacao	\t
 espaco " "
 letter [a-zA-Z]
 digit [0-9]
-id   {letter}({letter}|{digit})*
+integer -?{digit}+
+float_ -?{digit}*[.]{digit}+
+id   {letter}+({letter}|{digit}|_|-)*
 num  {digit}+
 
 sub  "-"
@@ -36,6 +42,7 @@ type "int"|"float"|"char"|"set"|"elem"
 equals "="
 or "||"
 and "&&"
+negation "!"
 
 return "return"
 if "if"
@@ -63,124 +70,130 @@ empty "EMPTY"
 
 "]"		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "["		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
+   
+}
+
+{negation}		{
+    		printf("Token valido negation: -> %s\n", yytext);
+    		posicao_linha += yyleng;;
    
 }
 
 "&"		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 ","		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "\""		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "\\"		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {read}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {writeIn}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {write}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {add}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {espaco}	{
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {forall}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {plus}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {cgt}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 
 {for}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {else}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {while}	{
     		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+   			posicao_linha += yyleng;;
 }
 
 {if}	{
     		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+   			posicao_linha += yyleng;;
 }
 
 {is_in}	{
     		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+   			posicao_linha += yyleng;;
 }
 
 {type}	{
     		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+   			posicao_linha += yyleng;;
 }
 
 
 {return}	{
     		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+   			posicao_linha += yyleng;;
 }
 
 {tabulacao}	{
@@ -193,152 +206,156 @@ empty "EMPTY"
    
 }
 
-{letter}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+{integer}	{
+    		printf("Token valido Inteiro: -> %s\n", yytext);
+    		posicao_linha += yyleng;;  
 }
 
-{digit}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;  
+{float_}	{
+    		printf("Token valido float_: -> %s\n", yytext);
+    		posicao_linha += yyleng;;  
 }
 
 {id}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		printf("Token valido ID: -> %s\n", yytext);
+    		posicao_linha += yyleng;;
+   
+}
+
+{char}	{
+    		printf("Token valido CHAR: -> %s\n", yytext);
+    		posicao_linha += yyleng;;
+   
+}
+
+{string}	{
+    		printf("Token valido STRING: -> %s\n", yytext);
+    		posicao_linha += yyleng;;
    
 }
 
 {sub}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 
 {div}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 
 {equals}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {or}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {and}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 
 {cle}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {ceq}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {cne}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 {clt}	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
-}
-
-{is_set}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "("	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 ")"	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "{"	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "}"	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 ";"	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "_"	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "."	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 ":"		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "%"		{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 "'"	{
     		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		posicao_linha += yyleng;;
    
 }
 
 
 . { 
-	posicao_linha += 1;
+	posicao_linha += yyleng;;
     LexicalError();
 }
-
 
 %%
 
