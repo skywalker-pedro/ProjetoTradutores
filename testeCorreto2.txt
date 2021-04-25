@@ -2,7 +2,7 @@ int soma(int a1,int b2){
 
 	int resultado;
 	resultado = a1+b1;
-	write(resultado);
+	write("resultado");
 
 }
 
@@ -11,7 +11,7 @@ int main(){
 	int x1;
 	int x2;
 	
-	soma(x1,x2);
+	soma(x1,x2,D);
 	
 
 return 0;

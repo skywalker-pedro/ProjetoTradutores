@@ -14,7 +14,6 @@ typedef struct node {
     struct node * leaf5;
 }treeNode;
 
-
 /*add a tree node to the tree*/
 treeNode*add_tree_node(char*name){
     treeNode * node = (treeNode*)malloc(sizeof(treeNode));
@@ -27,30 +26,41 @@ treeNode*add_tree_node(char*name){
     return node;
 }
 
-void print_tree(struct node * node){
+void print_tree(int conta_identacao,struct node * node){
 
-   /* if(node==NULL){
-        current_node_ident = 0;
-        printf("\n");
-        return;
-    }else{
-        current_node_ident ++;
-    }
-    
-    for(i=0;i<current_node_ident;i++){
-        printf("->");
-    }*/
-
+int i;
+   
     if(node==NULL){
         return;
     }
-
-    printf("\n%s",node->node_name);
-    print_tree(node->leaf1);
-    print_tree(node->leaf2);
-    print_tree(node->leaf3);
-    print_tree(node->leaf4);
-    print_tree(node->leaf5);
-    
+    if (conta_identacao == 0) {
+        printf("\n%s",node->node_name);
+    }else{
+        printf("\n");
+        for(i=0;i<conta_identacao+1;i++){
+            printf("->");
+        }
+        printf("%s",node->node_name);
+    }
+    if(node->leaf1!=NULL){
+        conta_identacao = conta_identacao + 1;
+        print_tree(conta_identacao,node->leaf1);
+    };
+    if(node->leaf2!=NULL){
+        conta_identacao = conta_identacao + 1;
+        print_tree(conta_identacao,node->leaf2);
+    };
+    if(node->leaf3!=NULL){
+        conta_identacao = conta_identacao + 1;
+        print_tree(conta_identacao,node->leaf3);
+    };
+    if(node->leaf4!=NULL){
+        conta_identacao = conta_identacao + 1;
+        print_tree(conta_identacao,node->leaf4);
+    };
+    if(node->leaf5!=NULL){
+        conta_identacao = conta_identacao + 1;
+        print_tree(conta_identacao,node->leaf5);
+    };
     //printf("\nNada\n");
 }

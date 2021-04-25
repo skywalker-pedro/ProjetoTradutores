@@ -5,8 +5,9 @@
 typedef struct hash_table {
     int id;
     char * type; //if it is a variable, or function    
-    char * varType;      //if it is int, set , elem or float
+    char * varType; //if it is int, set , elem or float
     char *name;
+    char* escopo;
     UT_hash_handle hh; 
 }Hash_table;
 

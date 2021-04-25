@@ -354,8 +354,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 54
-#define YY_END_OF_BUFFER 55
+#define YY_NUM_RULES 55
+#define YY_END_OF_BUFFER 56
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,20 +363,20 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[109] =
+static const flex_int16_t yy_accept[110] =
     {   0,
-        0,    0,   55,   53,   28,   29,   16,   53,   10,   51,
-        8,   52,   43,   44,   18,    9,   33,   49,   34,   31,
-       50,   47,   42,   37,   19,   30,   30,    7,   11,    6,
-       48,   30,   30,   30,   30,   30,   30,   30,   45,   53,
-       46,   41,    0,    1,    0,   39,   40,   36,   35,   32,
-       32,   32,   32,   32,   32,   32,   32,   23,    4,   32,
-       32,   32,   32,   32,   38,   32,   15,   32,   32,   32,
-       32,   20,   24,   32,   32,   32,   32,   32,   32,   32,
-       21,   32,   32,   32,   32,   32,   12,   32,   32,   32,
-       32,    5,   32,   32,   25,   32,   32,   32,   22,   14,
+        0,    0,   56,   54,   27,   28,   16,    5,   10,   52,
+        8,   53,   44,   45,   18,    9,   34,   50,   35,   29,
+       51,   48,   43,   38,   19,   31,   31,    7,   11,    6,
+       49,   31,   31,   31,   31,   31,   31,   31,   46,   54,
+       47,   42,    0,   33,    0,   40,    0,    0,   29,   30,
+       41,   37,   36,   31,   31,   31,   31,   31,   31,   31,
+       31,   22,    3,   31,   31,   31,   31,   39,   32,   31,
+       15,   31,   31,   31,   31,   20,   23,   31,   31,   31,
+       31,   31,   31,   21,   31,   31,   31,   31,   31,   12,
+       31,   31,   31,    4,   31,   31,   24,   31,   31,   31,
 
-        2,   17,   26,    3,   27,   32,   13,    0
+       14,    1,   17,   25,    2,   26,   31,   13,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -392,9 +392,9 @@ static const YY_CHAR yy_ec[256] =
        23,   23,   23,   27,   23,   23,   23,   23,   28,   23,
        29,   30,   31,    1,   32,    1,   33,   23,   23,   34,
 
-       35,   36,   23,   37,   38,   23,   23,   39,   40,   41,
-       42,   23,   23,   43,   44,   45,   46,   47,   48,   49,
-       23,   23,   50,   51,   52,    1,    1,    1,    1,    1,
+       35,   36,   23,   23,   37,   23,   23,   38,   39,   40,
+       41,   23,   23,   42,   43,   44,   45,   46,   47,   48,
+       23,   23,   49,   50,   51,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -411,136 +411,122 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[53] =
+static const YY_CHAR yy_meta[52] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    2,    1,    1,    2,    1,    1,    1,
-        1,    1,    2,    2,    2,    2,    2,    2,    1,    1,
-        1,    2,    2,    2,    2,    2,    2,    2,    2,    2,
-        2,    2,    2,    2,    2,    2,    2,    2,    2,    1,
-        1,    1
+        1,    1,    1,    1,    1,    2,    1,    1,    2,    2,
+        2,    1,    1,    3,    1,    1,    3,    1,    1,    1,
+        1,    1,    3,    3,    3,    3,    3,    3,    1,    1,
+        1,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    3,    3,    3,    3,    3,    3,    1,    1,
+        1
     } ;
 
-static const flex_int16_t yy_base[112] =
+static const flex_int16_t yy_base[114] =
     {   0,
-        0,    0,  161,  314,  314,  314,  314,  130,   47,  314,
-      141,  314,  314,  314,  314,  314,  314,  314,  314,  314,
-      314,  314,  116,  115,  107,   40,   41,  314,  314,  314,
-      314,   42,   46,   47,   66,   73,   74,   79,  314,   76,
-      314,  314,   62,  314,  114,  314,  314,  314,  314,    0,
-       67,   86,   87,   79,   88,   89,   26,   98,   99,  124,
-      131,  113,  114,  117,  314,  133,  132,  134,  135,  145,
-      150,  151,  152,   27,  154,  160,  168,  170,  171,  179,
-      185,  187,  188,  196,   72,   62,  198,  204,  207,  213,
-      221,  222,  198,  224,    0,   49,  234,  235,  236,  245,
+        0,    0,  244,  245,  245,  245,  245,  222,   46,  245,
+      234,    0,  245,  245,  245,  245,   38,  224,  245,   39,
+      245,  245,  219,  218,  216,   43,   45,  245,  245,  245,
+      245,   47,   51,   25,   42,   36,   53,   54,  245,  178,
+      245,  245,   63,  245,  224,  245,  183,  169,   80,   88,
+      245,  245,  245,    0,   56,   60,   69,   71,   73,   74,
+       78,   75,   80,   93,   94,   91,   99,  245,  245,  107,
+       92,  105,  111,  113,  119,  125,  112,  111,  128,  127,
+      126,  134,  141,  132,  139,  146,  143,   60,   52,  147,
+      150,  155,  164,  162,  163,  166,    0,   28,  170,  169,
 
-      246,  247,    0,  256,  257,  258,  267,  314,  311,   80,
-       73
+      175,  177,  178,    0,  181,  182,  184,  183,  245,  232,
+      235,   64,   55
     } ;
 
-static const flex_int16_t yy_def[112] =
+static const flex_int16_t yy_def[114] =
     {   0,
-      108,    1,  108,  108,  108,  108,  108,  108,  109,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  110,  110,  108,  108,  108,
-      108,  110,  110,  110,  110,  110,  110,  110,  108,  108,
-      108,  108,  109,  108,  109,  108,  108,  108,  108,  111,
-      110,  110,  110,   35,   35,   35,   35,   35,   35,  110,
-      110,   61,   61,   61,  108,   61,   61,   61,   61,   35,
-       61,   61,   61,  111,   61,   61,   61,   61,   61,   61,
-       61,   61,   61,   61,  111,  111,   61,   61,   61,   61,
-       61,   61,   35,   35,  111,  111,   35,   35,   35,   35,
+      109,    1,  109,  109,  109,  109,  109,  109,  110,  109,
+      109,  111,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  112,  112,  109,  109,  109,
+      109,  112,  112,   33,   33,   33,   33,   33,  109,  109,
+      109,  109,  110,  109,  110,  109,  111,  109,  109,  109,
+      109,  109,  109,  113,   33,   33,   33,   33,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,  109,  109,   33,
+       33,   33,   33,   33,   33,   33,   33,  113,   33,   33,
+       33,   33,   33,   33,   33,   33,   33,  113,  113,   33,
+       33,   33,   33,   33,   33,   33,  113,  113,   33,   33,
 
-       35,   35,  111,   35,   35,   35,   35,    0,  108,  108,
-      108
+       33,   33,   33,  113,   33,   33,   33,   33,    0,  109,
+      109,  109,  109
     } ;
 
-static const flex_int16_t yy_nxt[367] =
+static const flex_int16_t yy_nxt[297] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   16,   17,   18,   19,   20,   21,   22,   23,
        24,   25,   26,   27,   26,   26,   26,   26,   28,   29,
-       30,   31,   32,   26,   33,   34,   26,   35,   26,   26,
-       26,   26,   36,   37,   26,   26,   26,   38,   26,   39,
-       40,   41,   44,   50,   50,   50,   50,   50,   50,   50,
-       50,   51,   50,   50,   85,   52,   51,   44,   72,   51,
-       86,   50,   50,   50,   50,   53,   45,   50,   50,   50,
-       50,   51,   50,   50,   54,   56,   50,   50,   57,   50,
-       50,   45,   50,  103,   55,   50,   96,   50,   50,   50,
+       30,   31,   32,   26,   33,   34,   35,   26,   26,   26,
+       26,   36,   37,   26,   26,   26,   38,   26,   39,   40,
+       41,   44,   48,   48,   49,   49,   54,   54,   54,   54,
+       54,   54,   60,   54,   54,   61,   55,   54,   44,   56,
+       65,  104,   55,   55,   54,   45,   54,   62,   54,   55,
+       57,   63,   54,   55,   64,   70,   98,   66,   58,   55,
+       55,   55,   45,   55,   48,   67,   49,   55,   59,   97,
 
-       50,   58,   50,   50,   50,   50,   59,   61,   62,   60,
-       50,   66,   95,   68,   51,   63,  108,   50,   50,   51,
-       67,   64,   69,   51,   51,   70,   65,   49,   51,   51,
-       71,   51,   51,   51,   51,   48,   47,   50,   51,   51,
-       50,   51,   51,   73,   50,   51,   51,   50,   46,   51,
-       42,   78,   51,   51,   79,   74,   51,   73,   51,   80,
-      108,   51,   50,   75,   51,   51,   51,   51,  108,   81,
-       76,   51,   51,   73,   51,   77,   51,   51,   51,   51,
-       51,  108,   83,   84,   51,   51,   51,   87,   82,   51,
-       51,   51,   51,   51,   51,   51,   51,  108,   51,   51,
+       55,   55,   71,   55,   50,   72,   55,   55,   55,   74,
+       55,   55,   55,   73,   75,   55,   55,   55,   55,   76,
+       55,   55,   55,   77,   78,   55,   79,   55,   55,   55,
+       55,   55,   80,   83,   77,   82,   55,   81,   55,   55,
+       55,   55,   55,   77,   55,   84,   55,   88,   55,   55,
+       55,   86,   55,   89,   55,   85,   55,   87,   55,   55,
+       55,   90,   55,   55,   55,   55,   55,   91,   94,   55,
+       92,   55,   55,   55,   55,   55,   55,   93,   55,   55,
+       96,   55,   95,   55,   55,   50,   55,   55,   55,   77,
+       55,   69,   55,   55,   55,   99,  100,   55,  101,   55,
 
-       51,   88,   51,   51,   51,  108,   92,   51,   90,   51,
-       51,   51,   51,   89,   51,   91,  108,   51,   51,   51,
-       51,  108,  108,   51,   51,  108,   51,   51,   51,   51,
-       51,   93,   73,   51,   94,   51,   51,   51,   51,   51,
-       51,  101,   51,   51,  108,   51,   51,   99,   51,   98,
-       97,   51,   51,   51,   51,  100,  108,   51,  108,   51,
-       51,   51,  102,  108,   51,   51,   51,   51,  104,   51,
-       51,   51,  108,  108,   51,  105,   51,   51,   51,   51,
-       51,   51,   51,  106,  108,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,  108,  108,   51,   51,  107,   51,
+       55,   55,   55,  103,  105,  102,   55,   55,  106,   55,
+       55,   55,  107,   55,   55,   55,   55,   55,   55,   55,
+       55,   55,   55,  108,   55,   55,  109,   68,   55,   55,
+       55,   55,   43,   43,   43,   47,   53,   47,   52,   51,
+       50,   46,   42,  109,    3,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109
 
-       51,   51,   51,  108,  108,  108,  108,   51,  108,  108,
-       51,   43,   43,    3,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108
     } ;
 
-static const flex_int16_t yy_chk[367] =
+static const flex_int16_t yy_chk[297] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    9,   26,   27,   32,   26,   27,   32,   33,
-       34,   57,   33,   34,   74,   27,   57,   43,   57,   57,
-       74,   26,   27,   32,  111,   32,    9,   33,   34,   35,
-       51,  110,   35,   51,   33,   34,   36,   37,   34,   36,
-       37,   43,   38,   96,   33,   38,   86,   35,   51,   52,
+        1,    9,   17,   20,   17,   20,   26,  113,   27,   26,
+       32,   27,   34,   32,   33,   34,  112,   33,   43,   27,
+       36,   98,   34,   36,   26,    9,   27,   35,   32,   35,
+       32,   35,   33,   36,   35,   56,   89,   37,   33,   35,
+       37,   38,   43,   55,   49,   38,   49,   56,   33,   88,
 
-       53,   35,   52,   53,   36,   37,   35,   36,   37,   35,
-       38,   52,   85,   54,   54,   38,   45,   52,   53,   54,
-       53,   38,   54,   55,   56,   55,   40,   25,   55,   56,
-       56,   55,   56,   58,   59,   24,   23,   60,   58,   59,
-       60,   58,   59,   59,   61,   62,   63,   61,   11,   64,
-        8,   63,   62,   63,   64,   60,   64,   62,   63,   66,
-        3,   64,   61,   61,   67,   66,   68,   69,    0,   69,
-       61,   67,   66,   68,   69,   61,   67,   66,   68,   69,
-       70,    0,   71,   72,   73,   70,   75,   75,   70,   71,
-       72,   73,   76,   75,   71,   72,   73,    0,   75,   76,
+       37,   38,   57,   55,   50,   58,   57,   56,   58,   59,
+       59,   60,   62,   58,   60,   61,   57,   63,   58,   61,
+       59,   60,   62,   63,   64,   61,   65,   63,   66,   71,
+       64,   65,   65,   70,   66,   67,   67,   65,   66,   71,
+       64,   65,   72,   72,   70,   73,   67,   78,   73,   77,
+       74,   75,   72,   78,   70,   74,   75,   76,   73,   77,
+       74,   79,   76,   81,   80,   79,   75,   80,   83,   84,
+       81,   82,   76,   81,   80,   79,   85,   82,   83,   84,
+       87,   82,   85,   86,   90,   48,   85,   91,   83,   86,
+       87,   47,   92,   86,   90,   91,   92,   91,   93,   94,
 
-       77,   76,   78,   79,   76,    0,   80,   77,   78,   78,
-       79,   80,   77,   77,   78,   79,    0,   81,   80,   82,
-       83,    0,    0,   80,   81,    0,   82,   83,   84,   81,
-       87,   82,   83,   93,   84,   84,   88,   87,   93,   89,
-       84,   93,   87,   88,    0,   90,   89,   90,   88,   89,
-       88,   89,   90,   91,   92,   91,    0,   90,    0,   94,
-       91,   92,   94,    0,   94,   91,   92,   94,   97,   97,
-       98,   99,    0,    0,   97,   98,   99,   97,   98,   99,
-      100,  101,  102,  100,    0,  100,  101,  102,  100,  101,
-      102,  104,  105,  106,    0,    0,  104,  105,  106,  104,
+       95,   93,   92,   96,   99,   95,  100,   99,  100,   94,
+       95,   93,  101,   96,  102,  103,  100,   99,  105,  106,
+      108,  107,  101,  107,  102,  103,   45,   40,  105,  106,
+      108,  107,  110,  110,  110,  111,   25,  111,   24,   23,
+       18,   11,    8,    3,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109,  109,  109,  109,  109,
+      109,  109,  109,  109,  109,  109
 
-      105,  106,  107,    0,    0,    0,    0,  107,    0,    0,
-      107,  109,  109,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108,  108,  108,  108,  108,
-      108,  108,  108,  108,  108,  108
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -572,8 +558,8 @@ void LexicalError(){
 	printf("\nERROR: Token %s nao reconhecido na linha %d\n",yytext,num_linha);
 }
 
-#line 576 "lex.yy.c"
-#line 577 "lex.yy.c"
+#line 562 "lex.yy.c"
+#line 563 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -788,11 +774,10 @@ YY_DECL
 		}
 
 	{
-#line 72 "skylang.l"
+#line 74 "skylang.l"
 
 
-
-#line 796 "lex.yy.c"
+#line 781 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -819,13 +804,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 109 )
+				if ( yy_current_state >= 110 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 314 );
+		while ( yy_base[yy_current_state] != 245 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -850,19 +835,8 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 75 "skylang.l"
-{
-            printf("Token valido string: -> %s\n",yytext);
-			posicao_linha += yyleng;
-			yylval.str = (char *) strdup(yytext);
-            return STRING;
-}
-	YY_BREAK
-case 2:
-YY_RULE_SETUP
-#line 82 "skylang.l"
+#line 76 "skylang.l"
 {
 		printf("Token valido exists: -> %s\n",yytext);
 		posicao_linha += yyleng;
@@ -871,9 +845,9 @@ YY_RULE_SETUP
 
 }
 	YY_BREAK
-case 3:
+case 2:
 YY_RULE_SETUP
-#line 90 "skylang.l"
+#line 84 "skylang.l"
 {
 		printf("Token valido remove: -> %s\n",yytext);
 		posicao_linha += yyleng;
@@ -882,9 +856,9 @@ YY_RULE_SETUP
 
 }
 	YY_BREAK
-case 4:
+case 3:
 YY_RULE_SETUP
-#line 98 "skylang.l"
+#line 92 "skylang.l"
 {
 
 		printf("Token valido IN: -> %s\n",yytext);
@@ -895,9 +869,9 @@ YY_RULE_SETUP
 
 }
 	YY_BREAK
-case 5:
+case 4:
 YY_RULE_SETUP
-#line 108 "skylang.l"
+#line 102 "skylang.l"
 {
 
 			printf("Token valido EMPTY: -> %s\n",yytext);
@@ -907,9 +881,20 @@ YY_RULE_SETUP
 
 }
 	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 111 "skylang.l"
+{
+    		printf("Token valido negation: -> %s\n", yytext);
+    		posicao_linha += yyleng;
+			yylval.str = (char *) strdup(yytext);
+			return NEGATION;
+   
+}
+	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 117 "skylang.l"
+#line 119 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -918,7 +903,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 123 "skylang.l"
+#line 125 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -927,7 +912,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 129 "skylang.l"
+#line 131 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -936,7 +921,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 135 "skylang.l"
+#line 137 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -946,7 +931,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 142 "skylang.l"
+#line 144 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -955,7 +940,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 148 "skylang.l"
+#line 150 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -964,7 +949,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 154 "skylang.l"
+#line 156 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -974,7 +959,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 161 "skylang.l"
+#line 163 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			yylval.str = (char *) strdup(yytext);
@@ -986,7 +971,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 170 "skylang.l"
+#line 172 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -995,7 +980,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 176 "skylang.l"
+#line 178 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1005,7 +990,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 183 "skylang.l"
+#line 185 "skylang.l"
 {
     		posicao_linha += yyleng;
    
@@ -1013,7 +998,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 188 "skylang.l"
+#line 190 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1023,7 +1008,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 195 "skylang.l"
+#line 197 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1033,7 +1018,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 202 "skylang.l"
+#line 204 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1044,7 +1029,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 211 "skylang.l"
+#line 213 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1055,7 +1040,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 219 "skylang.l"
+#line 221 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1066,17 +1051,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 227 "skylang.l"
-{
-    		 printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-   			posicao_linha += yyleng;
-			return WHILE;
-}
-	YY_BREAK
-case 23:
-YY_RULE_SETUP
-#line 234 "skylang.l"
+#line 229 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1085,9 +1060,9 @@ YY_RULE_SETUP
 			
 }
 	YY_BREAK
-case 24:
+case 23:
 YY_RULE_SETUP
-#line 242 "skylang.l"
+#line 237 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1095,9 +1070,9 @@ YY_RULE_SETUP
 			return TYPE;
 }
 	YY_BREAK
-case 25:
+case 24:
 YY_RULE_SETUP
-#line 250 "skylang.l"
+#line 245 "skylang.l"
 {
     		printf("Token valido: -> %s\n", yytext);
 			yylval.str = (char *) strdup(yytext);
@@ -1105,9 +1080,9 @@ YY_RULE_SETUP
 			return IS_IN;
 }
 	YY_BREAK
-case 26:
+case 25:
 YY_RULE_SETUP
-#line 257 "skylang.l"
+#line 252 "skylang.l"
 {
     		printf("Token valido: -> %s\n", yytext);
 			yylval.str = (char *) strdup(yytext);
@@ -1117,9 +1092,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 27:
+case 26:
 YY_RULE_SETUP
-#line 267 "skylang.l"
+#line 262 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1127,59 +1102,81 @@ YY_RULE_SETUP
 			return RETURN;
 }
 	YY_BREAK
-case 28:
+case 27:
 YY_RULE_SETUP
-#line 274 "skylang.l"
+#line 269 "skylang.l"
 {
     		 printf(" ");
 			 posicao_linha += yyleng;
 }	
 	YY_BREAK
-case 29:
-/* rule 29 can match eol */
+case 28:
+/* rule 28 can match eol */
 YY_RULE_SETUP
-#line 279 "skylang.l"
+#line 274 "skylang.l"
 {
     		num_linha += 1;
     		posicao_linha = 0;
    
 }
 	YY_BREAK
-case 30:
+case 29:
 YY_RULE_SETUP
-#line 285 "skylang.l"
+#line 280 "skylang.l"
 {
-    		 printf("Token valido: -> %s\n", yytext);
+    		printf("Token valido INTEIRO: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
     		posicao_linha += yyleng;
-			return LETTER;
-   
+			return INTEGER;
+}
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 287 "skylang.l"
+{
+    		printf("Token valido FLOAT: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		posicao_linha += yyleng;
+			return FLOAT;
 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 293 "skylang.l"
+#line 294 "skylang.l"
 {
-    		 printf("Token valido digito: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-    		posicao_linha += yyleng;
-			return DIGIT; 
-}
-	YY_BREAK
-case 32:
-YY_RULE_SETUP
-#line 300 "skylang.l"
-{
-    		 printf("Token valido tipo ID: -> %s\n", yytext);
+    		printf("Token valido ID: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
     		posicao_linha += yyleng;
 			return ID;
    
 }
 	YY_BREAK
-case 33:
+case 32:
+/* rule 32 can match eol */
 YY_RULE_SETUP
-#line 308 "skylang.l"
+#line 302 "skylang.l"
+{
+    		printf("Token valido CHAR: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		posicao_linha += yyleng;
+			return CHAR;
+   
+}
+	YY_BREAK
+case 33:
+/* rule 33 can match eol */
+YY_RULE_SETUP
+#line 310 "skylang.l"
+{
+    		printf("Token valido STRING: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		posicao_linha += yyleng;
+			return STRING;
+}
+	YY_BREAK
+case 34:
+YY_RULE_SETUP
+#line 318 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1188,9 +1185,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 34:
+case 35:
 YY_RULE_SETUP
-#line 317 "skylang.l"
+#line 327 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1200,9 +1197,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 35:
+case 36:
 YY_RULE_SETUP
-#line 327 "skylang.l"
+#line 337 "skylang.l"
 {
     		printf("Token valido eq or greater: -> %s\n", yytext);
 			yylval.str = (char *) strdup(yytext);
@@ -1211,9 +1208,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 36:
+case 37:
 YY_RULE_SETUP
-#line 335 "skylang.l"
+#line 345 "skylang.l"
 {
     		 printf("Token valido equals: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1222,9 +1219,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 37:
+case 38:
 YY_RULE_SETUP
-#line 345 "skylang.l"
+#line 355 "skylang.l"
 {
     		 printf("Token valido assign: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1233,9 +1230,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 38:
+case 39:
 YY_RULE_SETUP
-#line 353 "skylang.l"
+#line 363 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1244,9 +1241,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 39:
+case 40:
 YY_RULE_SETUP
-#line 361 "skylang.l"
+#line 371 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1255,9 +1252,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 40:
+case 41:
 YY_RULE_SETUP
-#line 370 "skylang.l"
+#line 380 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1266,9 +1263,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 41:
+case 42:
 YY_RULE_SETUP
-#line 379 "skylang.l"
+#line 389 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1277,9 +1274,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 42:
+case 43:
 YY_RULE_SETUP
-#line 387 "skylang.l"
+#line 397 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1288,9 +1285,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 43:
+case 44:
 YY_RULE_SETUP
-#line 396 "skylang.l"
+#line 406 "skylang.l"
 {
     		 printf("Token valido parenteses ini: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1299,9 +1296,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 44:
+case 45:
 YY_RULE_SETUP
-#line 404 "skylang.l"
+#line 414 "skylang.l"
 {
     		 printf("Token valido parenteses fim: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1310,9 +1307,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 45:
+case 46:
 YY_RULE_SETUP
-#line 412 "skylang.l"
+#line 422 "skylang.l"
 {
     		 printf("Token valido chaves ini: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1322,9 +1319,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 46:
+case 47:
 YY_RULE_SETUP
-#line 421 "skylang.l"
+#line 431 "skylang.l"
 {
     		 printf("Token valido chaves fim: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1333,9 +1330,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 47:
+case 48:
 YY_RULE_SETUP
-#line 429 "skylang.l"
+#line 439 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -1344,18 +1341,18 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 48:
+case 49:
 YY_RULE_SETUP
-#line 437 "skylang.l"
+#line 447 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
    
 }
 	YY_BREAK
-case 49:
+case 50:
 YY_RULE_SETUP
-#line 443 "skylang.l"
+#line 453 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -1363,9 +1360,9 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 50:
+case 51:
 YY_RULE_SETUP
-#line 450 "skylang.l"
+#line 460 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -1373,18 +1370,18 @@ YY_RULE_SETUP
 
 }
 	YY_BREAK
-case 51:
+case 52:
 YY_RULE_SETUP
-#line 457 "skylang.l"
+#line 467 "skylang.l"
 {
     		 printf("Token valido: -> %s\n", yytext);
     		posicao_linha += yyleng;
    
 }
 	YY_BREAK
-case 52:
+case 53:
 YY_RULE_SETUP
-#line 463 "skylang.l"
+#line 473 "skylang.l"
 {
     		 printf("Token valido apost: -> %s\n", yytext);
     		posicao_linha += yyleng;
@@ -1392,20 +1389,20 @@ YY_RULE_SETUP
    
 }
 	YY_BREAK
-case 53:
+case 54:
 YY_RULE_SETUP
-#line 471 "skylang.l"
+#line 481 "skylang.l"
 { 
 	posicao_linha += yyleng;
     LexicalError();
 }
 	YY_BREAK
-case 54:
+case 55:
 YY_RULE_SETUP
-#line 477 "skylang.l"
+#line 487 "skylang.l"
 ECHO;
 	YY_BREAK
-#line 1409 "lex.yy.c"
+#line 1406 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1702,7 +1699,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 109 )
+			if ( yy_current_state >= 110 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1730,11 +1727,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 109 )
+		if ( yy_current_state >= 110 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 108);
+	yy_is_jam = (yy_current_state == 109);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2373,5 +2370,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 477 "skylang.l"
+#line 487 "skylang.l"
 

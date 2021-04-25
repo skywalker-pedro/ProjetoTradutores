@@ -16,15 +16,16 @@ void LexicalError(){
 
 %}
 
-str  \"(\\.|[^"\\])*\"
+string \"(\\.|[^"\\])*\"
+char (\'([^(\"\')])+\')
 new_line  \n
 tabulacao	\t
 espaco " "
 letter [a-zA-Z]
 digit [0-9]
-id {letter}+({letter}|{digit}|_|-)*
-num  {digit}+
-char      (\'([^(\"\')])+\')
+integer -?{digit}+
+float_ -?{digit}*[.]{digit}+
+id   {letter}+({letter}|{digit}|_|-)*
 
 sub  "-"
 mult  "*"
@@ -40,6 +41,7 @@ type "int"|"float"|"set"|"elem"
 equals "="
 or "||"
 and "&&"
+negation "!"
 
 
 chaves_ini "{"
@@ -70,14 +72,6 @@ empty "EMPTY"
 
 
 %%
-
-
-{str}  {
-            printf("Token valido string: -> %s\n",yytext);
-			posicao_linha += yyleng;
-			yylval.str = (char *) strdup(yytext);
-            return STRING;
-}
 
 {exists} {
 		printf("Token valido exists: -> %s\n",yytext);
@@ -112,6 +106,14 @@ empty "EMPTY"
 			yylval.str = (char *) strdup(yytext);
 			return EMPTY;
 
+}
+
+{negation}		{
+    		printf("Token valido negation: -> %s\n", yytext);
+    		posicao_linha += yyleng;
+			yylval.str = (char *) strdup(yytext);
+			return NEGATION;
+   
 }
 
 "]"		{
@@ -224,13 +226,6 @@ empty "EMPTY"
    
 }
 
-{while}	{
-    		 printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-   			posicao_linha += yyleng;
-			return WHILE;
-}
-
 {if}	{
     		 printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
@@ -282,28 +277,43 @@ empty "EMPTY"
    
 }
 
-{letter}	{
-    		 printf("Token valido: -> %s\n", yytext);
+{integer}	{
+    		printf("Token valido INTEIRO: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
     		posicao_linha += yyleng;
-			return LETTER;
-   
+			return INTEGER;
 }
 
-{digit}	{
-    		 printf("Token valido digito: -> %s\n", yytext);
+{float_}	{
+    		printf("Token valido FLOAT: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
     		posicao_linha += yyleng;
-			return DIGIT; 
+			return FLOAT;
 }
 
 {id}	{
-    		 printf("Token valido tipo ID: -> %s\n", yytext);
+    		printf("Token valido ID: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
     		posicao_linha += yyleng;
 			return ID;
    
 }
+
+{char}	{
+    		printf("Token valido CHAR: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		posicao_linha += yyleng;
+			return CHAR;
+   
+}
+
+{string}	{
+    		printf("Token valido STRING: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		posicao_linha += yyleng;
+			return STRING;
+}
+
 
 {sub}	{
     		 printf("Token valido: -> %s\n", yytext);

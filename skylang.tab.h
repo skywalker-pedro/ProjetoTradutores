@@ -79,18 +79,20 @@ extern int yydebug;
     AND = 280,                     /* AND  */
     CEQ = 281,                     /* CEQ  */
     CGE = 282,                     /* CGE  */
-    DIGIT = 283,                   /* DIGIT  */
-    LETTER = 284,                  /* LETTER  */
-    STRING = 285,                  /* STRING  */
-    APOST = 286,                   /* APOST  */
-    CHAVES_INI = 287,              /* CHAVES_INI  */
-    CHAVES_FIM = 288,              /* CHAVES_FIM  */
-    PARENTESES_INI = 289,          /* PARENTESES_INI  */
-    PARENTESES_FIM = 290,          /* PARENTESES_FIM  */
-    EMPTY = 291,                   /* EMPTY  */
-    SEMICOLON = 292,               /* SEMICOLON  */
-    EQUALS = 293,                  /* EQUALS  */
-    COLON = 294                    /* COLON  */
+    INTEGER = 283,                 /* INTEGER  */
+    FLOAT = 284,                   /* FLOAT  */
+    CHAR = 285,                    /* CHAR  */
+    STRING = 286,                  /* STRING  */
+    NEGATION = 287,                /* NEGATION  */
+    APOST = 288,                   /* APOST  */
+    CHAVES_INI = 289,              /* CHAVES_INI  */
+    CHAVES_FIM = 290,              /* CHAVES_FIM  */
+    PARENTESES_INI = 291,          /* PARENTESES_INI  */
+    PARENTESES_FIM = 292,          /* PARENTESES_FIM  */
+    EMPTY = 293,                   /* EMPTY  */
+    SEMICOLON = 294,               /* SEMICOLON  */
+    EQUALS = 295,                  /* EQUALS  */
+    COLON = 296                    /* COLON  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -99,12 +101,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "skylang.y"
+#line 31 "skylang.y"
 
 	char *str;
 	struct node* tree;
 
-#line 108 "skylang.tab.h"
+#line 110 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

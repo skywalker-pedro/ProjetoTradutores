@@ -17,14 +17,12 @@ extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 treeNode* tree = NULL;
 
-
 /* Print TS Function*/
 void printTS(){
     while(hashed_symbol_table!=NULL){
         printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s",hashed_symbol_table->id,hashed_symbol_table->name,hashed_symbol_table->type,hashed_symbol_table->varType);
         hashed_symbol_table = hashed_symbol_table -> hh.next;
     }
-
 }
 
 %}
@@ -38,8 +36,8 @@ void printTS(){
 %token<str>TYPE
 %token<str>ID
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
-%token <tree> CLE CLT CNE CGT AND CEQ CGE DIGIT
-%token LETTER STRING
+%token <tree> CLE CLT CNE CGT AND CEQ CGE INTEGER FLOAT
+%token CHAR STRING NEGATION
 %token APOST
 %token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON EQUALS COLON
 %type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock
@@ -47,7 +45,6 @@ void printTS(){
 %type<tree> ifStatement variable_assignment exp setExp terms_set aritSetExp relExp rel terminal aritExp
 %%  
 
- 
 /*rule section*/
 
 programa:
@@ -81,49 +78,44 @@ declaration:
 ;
 
 variable_declaration:
-	TYPE ID SEMICOLON {insert_symbol(symbol_ID, $2,"VARIAVEL",$1 );
+	TYPE ID SEMICOLON { insert_symbol(symbol_ID, $2,"VARIAVEL",$1 );
 						symbol_ID = symbol_ID +1;
 						//printf("\nAQUI %s\n",$2);
 						$$ = add_tree_node("variable_declaration - Type ID");
+						 
 	}
 ;
 
 func_declaration:
-	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM {insert_symbol(symbol_ID, $2,"FUNCAO",$1 );
-																					symbol_ID = symbol_ID +1 ;
-																					//printf("\nAQUI %s\n",$2);
-																					$$ = add_tree_node("func_declaration");
+	TYPE ID PARENTESES_INI params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { insert_symbol(symbol_ID, $2,"FUNCAO",$1 );
+																					symbol_ID = symbol_ID +1 ;																	
+																					$$ = add_tree_node("func_declaration");																		
 																					$$ -> leaf1 = $4;
 																					$$ -> leaf2 = $7;
-																				
-}
+	}
 ;
 
 params:
-	params_list {
-		$$ = add_tree_node("params");
-		$$ -> leaf1 = $1;
+	params_list { $$ = add_tree_node("params");
+		 		  $$ -> leaf1 = $1;
 	}
 ;
 params_list:
-	param COLON params_list {
-		$$ = add_tree_node("params_list");
-		$$ -> leaf1 = $1;
-		$$ -> leaf2 = $3;
+	param COLON params_list { $$ = add_tree_node("params_list_n");
+		 					  $$ -> leaf1 = $1;
+							  $$ -> leaf2 = $3;
 	}
-	|param {
-		$$ = add_tree_node("params_list");
-		$$ -> leaf1 = $1;
+	|param { $$ = add_tree_node("params_lis_1");
+		 	 $$ -> leaf1 = $1;
 	}
-	|{
-		$$ = add_tree_node("Vazio");
-	
+	|{ $$ = add_tree_node("Vazio");
 	}
 ;
 param:
-	TYPE ID {
-		$$ = add_tree_node("param - TYPE ID");
-	 }
+	TYPE ID { insert_symbol(symbol_ID, $2,"PARAMETRO_FUNCAO",$1 );
+		      symbol_ID = symbol_ID +1;
+			  $$ = add_tree_node("param - TYPE ID");
+	}
 ;
 codeBlock:
 	codeBlock statement{
@@ -133,6 +125,7 @@ codeBlock:
 	}
 	| {
 		$$ = add_tree_node("codeBlock VAZIO");
+		 
 	}
 ;
 
@@ -180,39 +173,57 @@ statement:
 
 callFuncStatement:
 
-	ID PARENTESES_INI call_params PARENTESES_FIM 
-
-;
-
-call_params:
-	call_params_list
-;
-call_params_list:
-	 call_param COLON call_params_list
-	|call_param
-	|
-;
-call_param:
-	terminal
-;
-
-inputStatement:
-
-	READ PARENTESES_INI exp PARENTESES_FIM {
-		$$ = add_tree_node("inputStatement");
+	ID PARENTESES_INI call_params PARENTESES_FIM {
+		$$ = add_tree_node("CallFunStatement");
 		$$ -> leaf1 = $3;
 	}
 
 ;
 
-outPutStatement:
-	WRITE PARENTESES_INI exp PARENTESES_FIM  {
-		$$ = add_tree_node("outPutStatement");
+call_params:
+	call_params_list{
+		$$ = add_tree_node("CallParams");
+		$$ -> leaf1 = $1;
+	}
+;
+call_params_list:
+	 call_param COLON call_params_list{
+		$$ = add_tree_node("call_params_list");
+		$$ -> leaf1 = $1;
 		$$ -> leaf1 = $3;
+	}
+	|call_param {
+		$$ = add_tree_node("call_params_list");
+		$$ -> leaf1 = $1;
+	}
+	|{
+		$$ = add_tree_node("Vazio");
 	 }
-	|WRITELN PARENTESES_INI exp PARENTESES_FIM  {
+;
+call_param:
+	terminal {
+		$$ = add_tree_node("call_param");
+		$$ -> leaf1 = $1;
+	}
+;
+
+inputStatement:
+
+	READ PARENTESES_INI STRING PARENTESES_FIM {
+		$$ = add_tree_node("inputStatement");	 
+		//$$ -> leaf1 = $3;
+	}
+
+;
+
+outPutStatement:
+	WRITE PARENTESES_INI STRING PARENTESES_FIM  {
 		$$ = add_tree_node("outPutStatement");
-		$$ -> leaf1 = $3;
+		//$$ -> leaf1 = $3;
+	 }
+	|WRITELN PARENTESES_INI STRING PARENTESES_FIM  {
+		$$ = add_tree_node("outPutStatement");
+		//$$ -> leaf1 = $3;
 	 }
 ;
 
@@ -222,7 +233,6 @@ forAllStatement:
 		$$ = add_tree_node("forAllStatement");
 		$$ -> leaf1 = $8;
 	 }
-
 ;
 
 ifStatement:
@@ -238,7 +248,6 @@ ifStatement:
 		$$ -> leaf2 = $6;
 		$$ -> leaf3 = $10;
 	 }
-
 ;
 
 variable_assignment:
@@ -246,7 +255,6 @@ variable_assignment:
 		$$ = add_tree_node("var_assign");
 		$$ -> leaf1 = $3;
 	 }
-
 ;
 
 exp:
@@ -300,6 +308,7 @@ aritSetExp:
 	}
 	|PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM {
 		$$ = add_tree_node("aritSetExp");
+		 
 		$$ -> leaf1 = $4;
 		$$ -> leaf2 = $6;
 	}
@@ -309,11 +318,13 @@ aritSetExp:
 aritExp:
 	terminal '*' exp {
 		$$ = add_tree_node("aritExp");
+		 
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
 	 }
 	|terminal '+' exp {
 		$$ = add_tree_node("aritExp");
+		 
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
 	 }
@@ -371,9 +382,15 @@ rel:
 terminal:
 	ID {
 		$$ = add_tree_node("terminal ID");
+		 
 	 }
-	|DIGIT {
-		$$ = add_tree_node("terminal DIGIT");
+	|FLOAT {
+		$$ = add_tree_node("terminal FLOAT");
+		 
+	 }
+	|INTEGER {
+		$$ = add_tree_node("terminal INTEGER");
+		 
 	 }
 ;
 
@@ -396,8 +413,12 @@ char fname[100];
 	printf("\n---------> Tabela de Simbolos <---------\n");
 	printTS();
 	printf("\n");
-	printf("\n---------> ABSss <---------\n");
-	print_tree(tree);
+	printf("\n---------> ARVORE: <---------\n");
+	print_tree(0,tree);
+	printf("\n");
+	//yyin=fopen(fname,"r+");
+	//yyparse();
+	//fclose(yyin);
     yylex_destroy();
     return 0;
 }
