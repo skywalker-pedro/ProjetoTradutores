@@ -43,9 +43,9 @@ void printTS(){
 
 %left PLUS MINUS MULT DIV
 
-%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock 
+%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock assignmentExp
 %type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement //forRel
-%type<tree> ifStatement variable_assignment exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement //forExp expTerminal
+%type<tree> ifStatement exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement //forExp expTerminal
 %%  
 
 /*rule section*/
@@ -135,10 +135,6 @@ codeBlock:
 statement:
 	
 	variable_declaration {
-		$$ = add_tree_node("statement");
-		$$ -> leaf1 = $1;
-	 }
-	|variable_assignment SEMICOLON {
 		$$ = add_tree_node("statement");
 		$$ -> leaf1 = $1;
 	 }
@@ -271,12 +267,6 @@ ifStatement:
 	 }
 ;
 
-variable_assignment:
-	ID EQUALS exp {
-		$$ = add_tree_node("var_assign");
-		$$ -> leaf1 = $3;
-	 }
-;
 
 /*forExp:
 
@@ -352,8 +342,21 @@ exp:
 		$$ = add_tree_node("exp");
 		$$ -> leaf1 = $1;
 	 }
+
+	|assignmentExp{
+		$$ = add_tree_node("exp");
+		$$ -> leaf1 = $1;
+	}
 ;
 
+assignmentExp:
+	terminal EQUALS exp {
+		$$ = add_tree_node("assigmentExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	}
+;
+	 
 setExp:
 	ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM {
 		$$ = add_tree_node("setExp");
@@ -420,12 +423,6 @@ aritExp:
 		$$ -> leaf2 = $3;
 	 }
 	|terminal DIV exp {
-		$$ = add_tree_node("aritExp");
-		$$ -> leaf1 = $1;
-		$$ -> leaf2 = $3;
-	 }
-
-	 |terminal EQUALS exp {
 		$$ = add_tree_node("aritExp");
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
