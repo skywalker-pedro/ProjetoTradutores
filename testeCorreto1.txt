@@ -1,25 +1,24 @@
 int main(int as, int sad, int sdaas){
     int x1;
     int y1;
-    x1 = x1 + 8;
+    x1 = x1 + 8 + 5;
     set SET1;
     set SET2;
     add(8 in SET2);
     add(x1 in SET1);
     remove(x1 in SET1);
     exists(x1 in SET1);
-    remove((exists (x1 in SET1)) in SET2);
+    remove((exists (el in SET1)) in SET2);
 
     forall(x1 in SET1){
         x1 = x1 + 2;
         writeln("x1fsdjfksjdflkj");
     }
 
-    if(x1 >= 0){
-        x1 = 8;
+    if(x==1){
+        writeln("Funcionou");
     }else{
-        x1 = 2;
-        read("1");
+        writeln("Funcionou2");
     }
 
 return 0;

@@ -351,31 +351,25 @@ relExp:
 rel:
 	CGE {
 		$$ = add_tree_node("rel CGE");
-		$$ -> leaf1 = $1;
 	 }
 	| CGT {
 		$$ = add_tree_node("rel");
-		$$ -> leaf1 = $1;
 	 }
 	| CNE {
 		$$ = add_tree_node("rel");
-		$$ -> leaf1 = $1;
 	 }
 	| CLT {
 		$$ = add_tree_node("rel");
-		$$ -> leaf1 = $1;
+		
 	 }
 	| AND {
 		$$ = add_tree_node("rel");
-		$$ -> leaf1 = $1;
 	 }
 	| CLE {
 		$$ = add_tree_node("rel");
-		$$ -> leaf1 = $1;
 	 }
 	| CEQ {
-		$$ = add_tree_node("rel");
-		$$ -> leaf1 = $1;
+		$$ = add_tree_node("rel CEQ");
 	 }
 ;
 

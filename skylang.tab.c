@@ -571,8 +571,8 @@ static const yytype_int16 yyrline[] =
      150,   154,   158,   162,   166,   176,   184,   190,   195,   199,
      204,   212,   220,   224,   232,   240,   245,   254,   261,   265,
      269,   273,   280,   285,   290,   298,   305,   309,   319,   325,
-     331,   336,   343,   352,   356,   360,   364,   368,   372,   376,
-     383,   387,   391
+     331,   336,   343,   352,   355,   358,   361,   365,   368,   371,
+     377,   381,   385
 };
 #endif
 
@@ -2157,94 +2157,88 @@ yyreduce:
 #line 352 "skylang.y"
             {
 		(yyval.tree) = add_tree_node("rel CGE");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 	 }
-#line 2163 "skylang.tab.c"
+#line 2162 "skylang.tab.c"
     break;
 
   case 54: /* rel: CGT  */
-#line 356 "skylang.y"
+#line 355 "skylang.y"
               {
 		(yyval.tree) = add_tree_node("rel");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 	 }
-#line 2172 "skylang.tab.c"
+#line 2170 "skylang.tab.c"
     break;
 
   case 55: /* rel: CNE  */
-#line 360 "skylang.y"
+#line 358 "skylang.y"
               {
 		(yyval.tree) = add_tree_node("rel");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 	 }
-#line 2181 "skylang.tab.c"
+#line 2178 "skylang.tab.c"
     break;
 
   case 56: /* rel: CLT  */
-#line 364 "skylang.y"
+#line 361 "skylang.y"
               {
 		(yyval.tree) = add_tree_node("rel");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
+		
 	 }
-#line 2190 "skylang.tab.c"
+#line 2187 "skylang.tab.c"
     break;
 
   case 57: /* rel: AND  */
-#line 368 "skylang.y"
+#line 365 "skylang.y"
               {
 		(yyval.tree) = add_tree_node("rel");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 	 }
-#line 2199 "skylang.tab.c"
+#line 2195 "skylang.tab.c"
     break;
 
   case 58: /* rel: CLE  */
-#line 372 "skylang.y"
+#line 368 "skylang.y"
               {
 		(yyval.tree) = add_tree_node("rel");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 	 }
-#line 2208 "skylang.tab.c"
+#line 2203 "skylang.tab.c"
     break;
 
   case 59: /* rel: CEQ  */
-#line 376 "skylang.y"
+#line 371 "skylang.y"
               {
-		(yyval.tree) = add_tree_node("rel");
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
+		(yyval.tree) = add_tree_node("rel CEQ");
 	 }
-#line 2217 "skylang.tab.c"
+#line 2211 "skylang.tab.c"
     break;
 
   case 60: /* terminal: ID  */
-#line 383 "skylang.y"
+#line 377 "skylang.y"
            {
 		(yyval.tree) = add_tree_node("terminal ID");
 		 
 	 }
-#line 2226 "skylang.tab.c"
+#line 2220 "skylang.tab.c"
     break;
 
   case 61: /* terminal: FLOAT  */
-#line 387 "skylang.y"
+#line 381 "skylang.y"
                {
 		(yyval.tree) = add_tree_node("terminal FLOAT");
 		 
 	 }
-#line 2235 "skylang.tab.c"
+#line 2229 "skylang.tab.c"
     break;
 
   case 62: /* terminal: INTEGER  */
-#line 391 "skylang.y"
+#line 385 "skylang.y"
                  {
 		(yyval.tree) = add_tree_node("terminal INTEGER");
 		 
 	 }
-#line 2244 "skylang.tab.c"
+#line 2238 "skylang.tab.c"
     break;
 
 
-#line 2248 "skylang.tab.c"
+#line 2242 "skylang.tab.c"
 
       default: break;
     }
@@ -2469,7 +2463,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 397 "skylang.y"
+#line 391 "skylang.y"
 
 
 extern void yyerror(const char* a) {
