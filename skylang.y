@@ -37,15 +37,15 @@ void printTS(){
 %token<str>ID
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
 %token <tree> CLE CLT CNE CGT AND CEQ CGE INTEGER FLOAT
-%token CHAR STRING NEGATION
+%token CHAR STRING NEGATION EQUALS
 %token APOST
-%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON EQUALS COLON
+%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON COLON
 
 %left PLUS MINUS MULT DIV
 
-%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock
-%type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement
-%type<tree> ifStatement variable_assignment exp setExp terms_set aritSetExp relExp rel terminal aritExp
+%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock 
+%type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement //forRel
+%type<tree> ifStatement variable_assignment exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement //forExp expTerminal
 %%  
 
 /*rule section*/
@@ -142,6 +142,7 @@ statement:
 		$$ = add_tree_node("statement");
 		$$ -> leaf1 = $1;
 	 }
+	
 	|exp SEMICOLON {
 		$$ = add_tree_node("statement");
 		$$ -> leaf1 = $1;
@@ -166,13 +167,30 @@ statement:
 		$$ = add_tree_node("statement");
 		$$ -> leaf1 = $1;
 	 }
-	|RETURN exp SEMICOLON {
+
+    |RETURN exp SEMICOLON {
 		$$ = add_tree_node("RETURN statement");
 		$$ -> leaf1 = $2;
-
 	 }
-	
+
+	|forStatement {
+		$$ = add_tree_node("forStatement");
+		$$ -> leaf1 = $1;
+	}
+
 ;
+
+
+forStatement:
+		FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM{
+			$$ = add_tree_node("ForStatement");
+			$$ -> leaf1 = $3;
+			$$ -> leaf2 = $5;
+			$$ -> leaf3 = $7;
+			$$ -> leaf4 = $10;
+	}
+;
+
 
 callFuncStatement:
 
@@ -260,6 +278,63 @@ variable_assignment:
 	 }
 ;
 
+/*forExp:
+
+	expTerminal forRel expTerminal{
+		$$ = add_tree_node("forExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $2;
+		$$ -> leaf3 = $3;
+	 }
+
+;
+
+forRel:
+
+	EQUALS{
+		$$ = add_tree_node("rel EQUALS");
+	}
+
+	|CGE {
+		$$ = add_tree_node("rel CGE");
+	 }
+	| CGT {
+		$$ = add_tree_node("rel");
+	 }
+	| CNE {
+		$$ = add_tree_node("rel");
+	 }
+	| CLT {
+		$$ = add_tree_node("rel");
+	 }
+	| AND {
+		$$ = add_tree_node("rel");
+	 }
+	| CLE {
+		$$ = add_tree_node("rel");
+	 }
+	| CEQ {
+		$$ = add_tree_node("rel CEQ");
+	}
+;
+
+expTerminal:
+
+	ID {
+		$$ = add_tree_node("terminal ID");
+		 
+	 }
+	|FLOAT {
+		$$ = add_tree_node("terminal FLOAT");
+		 
+	 }
+	|INTEGER {
+		$$ = add_tree_node("terminal INTEGER");
+		 
+	 }
+
+;
+*/
 exp:
 	setExp  {
 		$$ = add_tree_node("exp");
@@ -349,6 +424,12 @@ aritExp:
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
 	 }
+
+	 |terminal EQUALS exp {
+		$$ = add_tree_node("aritExp");
+		$$ -> leaf1 = $1;
+		$$ -> leaf2 = $3;
+	 }
 ;
 relExp:
 	terminal rel exp {
@@ -371,7 +452,6 @@ rel:
 	 }
 	| CLT {
 		$$ = add_tree_node("rel");
-		
 	 }
 	| AND {
 		$$ = add_tree_node("rel");
@@ -381,7 +461,8 @@ rel:
 	 }
 	| CEQ {
 		$$ = add_tree_node("rel CEQ");
-	 }
+	}
+
 ;
 
 terminal:
