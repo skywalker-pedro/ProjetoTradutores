@@ -190,7 +190,7 @@ call_params_list:
 	 call_param COLON call_params_list{
 		$$ = add_tree_node("call_params_list");
 		$$ -> leaf1 = $1;
-		$$ -> leaf1 = $3;
+		$$ -> leaf2 = $3;
 	}
 	|call_param {
 		$$ = add_tree_node("call_params_list");
@@ -202,7 +202,7 @@ call_params_list:
 ;
 call_param:
 	terminal {
-		$$ = add_tree_node("call_param");
+		$$ = add_tree_node("call_param terminal");
 		$$ -> leaf1 = $1;
 	}
 ;
@@ -416,6 +416,7 @@ char fname[100];
 	printf("\n---------> ARVORE: <---------\n");
 	print_tree(0,tree);
 	printf("\n");
+	free_tree(tree);
 	//yyin=fopen(fname,"r+");
 	//yyparse();
 	//fclose(yyin);

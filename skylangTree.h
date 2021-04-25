@@ -64,3 +64,30 @@ int i;
     };
     //printf("\nNada\n");
 }
+
+
+void free_tree(struct node * node){
+
+    if(node==NULL){
+        return;
+    }
+
+    free(node);
+    //printf("\nNode desalocado\n");
+    if(node->leaf1!=NULL){
+        free_tree(node->leaf1);
+    };
+    if(node->leaf2!=NULL){
+        free_tree(node->leaf2);
+    };
+    if(node->leaf3!=NULL){
+        free_tree(node->leaf3);
+    };
+    if(node->leaf4!=NULL){
+        free_tree(node->leaf4);
+    };
+    if(node->leaf5!=NULL){
+        free_tree(node->leaf5);
+    };
+
+}

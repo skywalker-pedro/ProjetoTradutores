@@ -1908,7 +1908,7 @@ yyreduce:
                                           {
 		(yyval.tree) = add_tree_node("call_params_list");
 		(yyval.tree) -> leaf1 = (yyvsp[-2].tree);
-		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
+		(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 	}
 #line 1914 "skylang.tab.c"
     break;
@@ -1933,7 +1933,7 @@ yyreduce:
   case 30: /* call_param: terminal  */
 #line 204 "skylang.y"
                  {
-		(yyval.tree) = add_tree_node("call_param");
+		(yyval.tree) = add_tree_node("call_param terminal");
 		(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 	}
 #line 1940 "skylang.tab.c"
@@ -2492,6 +2492,7 @@ char fname[100];
 	printf("\n---------> ARVORE: <---------\n");
 	print_tree(0,tree);
 	printf("\n");
+	free_tree(tree);
 	//yyin=fopen(fname,"r+");
 	//yyparse();
 	//fclose(yyin);
