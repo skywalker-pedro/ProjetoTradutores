@@ -92,7 +92,11 @@ extern int yydebug;
     EMPTY = 293,                   /* EMPTY  */
     SEMICOLON = 294,               /* SEMICOLON  */
     EQUALS = 295,                  /* EQUALS  */
-    COLON = 296                    /* COLON  */
+    COLON = 296,                   /* COLON  */
+    PLUS = 297,                    /* PLUS  */
+    MINUS = 298,                   /* MINUS  */
+    MULT = 299,                    /* MULT  */
+    DIV = 300                      /* DIV  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -106,7 +110,7 @@ union YYSTYPE
 	char *str;
 	struct node* tree;
 
-#line 110 "skylang.tab.h"
+#line 114 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

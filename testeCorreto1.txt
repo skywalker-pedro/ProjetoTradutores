@@ -11,7 +11,7 @@ int main(int as, int sad, int sdaas){
     remove((exists (el in SET1)) in SET2);
 
     forall(x1 in SET1){
-        x1 = x1 + 2;
+        x1 = (x1 + 2)*3;
         writeln("x1fsdjfksjdflkj");
     }
 

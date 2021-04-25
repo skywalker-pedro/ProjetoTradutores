@@ -40,6 +40,9 @@ void printTS(){
 %token CHAR STRING NEGATION
 %token APOST
 %token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON EQUALS COLON
+
+%left PLUS MINUS MULT DIV
+
 %type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock
 %type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement
 %type<tree> ifStatement variable_assignment exp setExp terms_set aritSetExp relExp rel terminal aritExp
@@ -302,10 +305,18 @@ terms_set:
 ;
 
 aritSetExp:
-	terminal {
-		$$ = add_tree_node("aritSetExp");
-		$$ -> leaf1 = $1;
-	}
+	ID {
+		$$ = add_tree_node("terminal ID");
+		 
+	 }
+	|FLOAT {
+		$$ = add_tree_node("terminal FLOAT");
+		 
+	 }
+	|INTEGER {
+		$$ = add_tree_node("terminal INTEGER");
+		 
+	 }
 	|PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM {
 		$$ = add_tree_node("aritSetExp");
 		 
@@ -316,24 +327,24 @@ aritSetExp:
 ;
 
 aritExp:
-	terminal '*' exp {
+	terminal MULT exp {
 		$$ = add_tree_node("aritExp");
 		 
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
 	 }
-	|terminal '+' exp {
+	|terminal PLUS exp {
 		$$ = add_tree_node("aritExp");
 		 
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
 	 }
-	|terminal '-' exp {
+	|terminal MINUS exp {
 		$$ = add_tree_node("aritExp");
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
 	 }
-	|terminal '/' exp {
+	|terminal DIV exp {
 		$$ = add_tree_node("aritExp");
 		$$ -> leaf1 = $1;
 		$$ -> leaf2 = $3;
@@ -386,6 +397,12 @@ terminal:
 		$$ = add_tree_node("terminal INTEGER");
 		 
 	 }
+
+	| PARENTESES_INI exp PARENTESES_FIM {
+		$$ = add_tree_node("terminal EXP");
+		$$->leaf1 =$2;
+	}
+
 ;
 
 %%
