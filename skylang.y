@@ -18,6 +18,9 @@ extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 treeNode* tree = NULL;
 int existe_simbolo;
+int existe_main = 0;
+int aux=1;
+int escopo_correto;
 char * escopoAtual = "Global";
 /* Print TS Function*/
 void printTS(){
@@ -37,6 +40,30 @@ int searchSymbol(char*symbol){
 		//strcmp retorna 0 caso as strings sejam iguais
         if (strcmp(aux->name,symbol)==0){
 			retorno = 1;
+		}
+        aux = aux -> hh.next;
+    }
+	free(aux);
+	if(retorno == 1){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+//Search symbol scope in symbol table
+int searchScope(char*symbol,char*symbol_scope){
+	Hash_table* aux = hashed_symbol_table;
+	int retorno = 0;
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,symbol)==0){
+			if (strcmp(aux->escopo,"Global")==0){
+				retorno = 1;
+			}
+			if (strcmp(aux->escopo,symbol_scope)==0){
+				retorno = 1;
+			}
 		}
         aux = aux -> hh.next;
     }
@@ -90,6 +117,8 @@ declarationList:
 			$$ = add_tree_node("declarationList");
 			$$ -> leaf1 = $1;
 			$$ -> leaf2 = $2;
+			free($1);
+			free($2);
 		}
 	}
 	| declaration {
@@ -134,6 +163,12 @@ func_declaration:
 																						$$ = add_tree_node("func_declaration");																		
 																						$$ -> leaf1 = $5;
 																						$$ -> leaf2 = $8;
+																					}
+																					if(passagem ==2 ){
+																						aux = strcmp($2,"main");
+																						if(aux == 0 ){
+																							existe_main = 1;
+																						}
 																					}
 																					//printf("\nESCOPO ATUAL: %s\n",escopoAtual);
 	}
@@ -352,10 +387,20 @@ forAllStatement:
 			existe_simbolo = searchSymbol($3);
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope($3,escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 			existe_simbolo = searchSymbol($5);
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope($3,escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 		}
 	 }
@@ -467,10 +512,15 @@ aritSetExp:
 			existe_simbolo = searchSymbol($1);
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope($1,escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 		}
 
-	 }
+	}
 	|FLOAT {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal FLOAT");
@@ -583,10 +633,15 @@ terminal:
 			existe_simbolo = searchSymbol($1);
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope($1,escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 		}
 		 
-	 }
+	}
 	|FLOAT {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal FLOAT");
@@ -637,7 +692,10 @@ char fname[100];
 	printf("\n========== Segunda Passagem ===========\n\n");
 	yyparse();
 	fclose(yyin);
-	free_tree(tree);
+	if(existe_main!=1){
+		printf("\nERRO: O codigo nao possui uma funcao main()\n");
+	}
+	free(escopoAtual);
     yylex_destroy();
     return 0;
 }

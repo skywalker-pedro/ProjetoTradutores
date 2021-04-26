@@ -1,6 +1,7 @@
 elem semEscopo;
 int var2;
 
+
 float teste(int a, int b){
     float x;
     return (a+b);

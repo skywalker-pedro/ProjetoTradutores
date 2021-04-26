@@ -85,6 +85,9 @@ extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 treeNode* tree = NULL;
 int existe_simbolo;
+int existe_main = 0;
+int aux=1;
+int escopo_correto;
 char * escopoAtual = "Global";
 /* Print TS Function*/
 void printTS(){
@@ -115,8 +118,32 @@ int searchSymbol(char*symbol){
 	}
 }
 
+//Search symbol scope in symbol table
+int searchScope(char*symbol,char*symbol_scope){
+	Hash_table* aux = hashed_symbol_table;
+	int retorno = 0;
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,symbol)==0){
+			if (strcmp(aux->escopo,"Global")==0){
+				retorno = 1;
+			}
+			if (strcmp(aux->escopo,symbol_scope)==0){
+				retorno = 1;
+			}
+		}
+        aux = aux -> hh.next;
+    }
+	free(aux);
+	if(retorno == 1){
+		return 1;
+	}else{
+		return 0;
+	}
+}
 
-#line 120 "skylang.tab.c"
+
+#line 147 "skylang.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -592,13 +619,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    77,    77,    88,    95,   103,   109,   118,   130,   130,
-     143,   151,   158,   164,   171,   180,   187,   197,   204,   210,
-     216,   222,   228,   234,   241,   248,   258,   272,   282,   290,
-     297,   303,   310,   320,   330,   336,   346,   366,   373,   384,
-     390,   396,   402,   409,   418,   428,   435,   442,   452,   461,
-     474,   480,   486,   497,   504,   511,   518,   527,   538,   543,
-     548,   553,   558,   563,   568,   577,   590,   596,   603
+       0,   104,   104,   115,   122,   130,   136,   145,   157,   157,
+     176,   184,   191,   197,   204,   213,   220,   230,   237,   243,
+     249,   255,   261,   267,   274,   281,   291,   305,   315,   323,
+     330,   336,   343,   353,   363,   369,   379,   409,   416,   427,
+     433,   439,   445,   452,   461,   471,   478,   485,   495,   504,
+     522,   528,   534,   545,   552,   559,   566,   575,   586,   591,
+     596,   601,   606,   611,   616,   625,   643,   649,   656
 };
 #endif
 
@@ -1766,7 +1793,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* programa: declarationList  */
-#line 77 "skylang.y"
+#line 104 "skylang.y"
                         {
 		//printf("\nESCOPO ATUAL: %s\n",escopoAtual);
 		if(passagem == 1){
@@ -1775,11 +1802,11 @@ yyreduce:
 			tree = (yyval.tree);
 		}
 	}
-#line 1779 "skylang.tab.c"
+#line 1806 "skylang.tab.c"
     break;
 
   case 3: /* declarationList: declarationList declaration  */
-#line 88 "skylang.y"
+#line 115 "skylang.y"
                                     {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("declarationList");
@@ -1787,44 +1814,44 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	}
-#line 1791 "skylang.tab.c"
+#line 1818 "skylang.tab.c"
     break;
 
   case 4: /* declarationList: declaration  */
-#line 95 "skylang.y"
+#line 122 "skylang.y"
                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("declarationList");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 1802 "skylang.tab.c"
+#line 1829 "skylang.tab.c"
     break;
 
   case 5: /* declaration: variable_declaration  */
-#line 103 "skylang.y"
+#line 130 "skylang.y"
                             {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("declaration");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 1813 "skylang.tab.c"
+#line 1840 "skylang.tab.c"
     break;
 
   case 6: /* declaration: func_declaration  */
-#line 109 "skylang.y"
+#line 136 "skylang.y"
                           {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("declaration");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 1824 "skylang.tab.c"
+#line 1851 "skylang.tab.c"
     break;
 
   case 7: /* variable_declaration: TYPE ID SEMICOLON  */
-#line 118 "skylang.y"
+#line 145 "skylang.y"
                           { 
 						if(passagem == 1){
 							insert_symbol(symbol_ID, (yyvsp[-1].str),"VARIAVEL",(yyvsp[-2].str), escopoAtual);
@@ -1834,17 +1861,17 @@ yyreduce:
 						}
 						 
 	}
-#line 1838 "skylang.tab.c"
+#line 1865 "skylang.tab.c"
     break;
 
   case 8: /* $@1: %empty  */
-#line 130 "skylang.y"
+#line 157 "skylang.y"
                                {escopoAtual = (yyvsp[-1].str);}
-#line 1844 "skylang.tab.c"
+#line 1871 "skylang.tab.c"
     break;
 
   case 9: /* func_declaration: TYPE ID PARENTESES_INI $@1 params PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  */
-#line 130 "skylang.y"
+#line 157 "skylang.y"
                                                                                                           { 
 																					if(passagem == 1){
 																						insert_symbol(symbol_ID, (yyvsp[-7].str),"FUNCAO",(yyvsp[-8].str),escopoAtual );
@@ -1853,24 +1880,30 @@ yyreduce:
 																						(yyval.tree) -> leaf1 = (yyvsp[-4].tree);
 																						(yyval.tree) -> leaf2 = (yyvsp[-1].tree);
 																					}
+																					if(passagem ==2 ){
+																						aux = strcmp((yyvsp[-7].str),"main");
+																						if(aux == 0 ){
+																							existe_main = 1;
+																						}
+																					}
 																					//printf("\nESCOPO ATUAL: %s\n",escopoAtual);
 	}
-#line 1859 "skylang.tab.c"
+#line 1892 "skylang.tab.c"
     break;
 
   case 10: /* params: params_list  */
-#line 143 "skylang.y"
+#line 176 "skylang.y"
                     { 
 				if(passagem == 1){
 					(yyval.tree) = add_tree_node("params");
 		 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 				}
 	}
-#line 1870 "skylang.tab.c"
+#line 1903 "skylang.tab.c"
     break;
 
   case 11: /* params_list: param COLON params_list  */
-#line 151 "skylang.y"
+#line 184 "skylang.y"
                                 {
 							if(passagem == 1){ 
 								(yyval.tree) = add_tree_node("params_list_n");
@@ -1878,32 +1911,32 @@ yyreduce:
 							  	(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 							}
 	}
-#line 1882 "skylang.tab.c"
+#line 1915 "skylang.tab.c"
     break;
 
   case 12: /* params_list: param  */
-#line 158 "skylang.y"
+#line 191 "skylang.y"
                { 
 			if(passagem == 1){
 				(yyval.tree) = add_tree_node("params_lis_1");
 		 	 	(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 			}
 	}
-#line 1893 "skylang.tab.c"
+#line 1926 "skylang.tab.c"
     break;
 
   case 13: /* params_list: %empty  */
-#line 164 "skylang.y"
+#line 197 "skylang.y"
          { 
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("Vazio");
 		}
 	}
-#line 1903 "skylang.tab.c"
+#line 1936 "skylang.tab.c"
     break;
 
   case 14: /* param: TYPE ID  */
-#line 171 "skylang.y"
+#line 204 "skylang.y"
                 { 
 				if(passagem == 1){
 					insert_symbol(symbol_ID, (yyvsp[0].str),"PARAMETRO_FUNCAO",(yyvsp[-1].str),escopoAtual);
@@ -1911,11 +1944,11 @@ yyreduce:
 			 		(yyval.tree) = add_tree_node("param - TYPE ID");
 				}
 	}
-#line 1915 "skylang.tab.c"
+#line 1948 "skylang.tab.c"
     break;
 
   case 15: /* codeBlock: codeBlock statement  */
-#line 180 "skylang.y"
+#line 213 "skylang.y"
                            {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("codeBlock");
@@ -1923,56 +1956,23 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	}
-#line 1927 "skylang.tab.c"
+#line 1960 "skylang.tab.c"
     break;
 
   case 16: /* codeBlock: %empty  */
-#line 187 "skylang.y"
+#line 220 "skylang.y"
           {	
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("codeBlock VAZIO");
 		}
 		 
 	}
-#line 1938 "skylang.tab.c"
-    break;
-
-  case 17: /* statement: variable_declaration  */
-#line 197 "skylang.y"
-                             {
-		if(passagem == 1){
-			(yyval.tree) = add_tree_node("statement");
-			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
-		}
-	 }
-#line 1949 "skylang.tab.c"
-    break;
-
-  case 18: /* statement: exp SEMICOLON  */
-#line 204 "skylang.y"
-                       {
-		if(passagem == 1){
-			(yyval.tree) = add_tree_node("statement");
-			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
-		}
-	 }
-#line 1960 "skylang.tab.c"
-    break;
-
-  case 19: /* statement: ifStatement  */
-#line 210 "skylang.y"
-                     {
-		if(passagem == 1){
-			(yyval.tree) = add_tree_node("statement");
-			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
-		}
-	 }
 #line 1971 "skylang.tab.c"
     break;
 
-  case 20: /* statement: forAllStatement  */
-#line 216 "skylang.y"
-                         {
+  case 17: /* statement: variable_declaration  */
+#line 230 "skylang.y"
+                             {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("statement");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
@@ -1981,9 +1981,9 @@ yyreduce:
 #line 1982 "skylang.tab.c"
     break;
 
-  case 21: /* statement: outPutStatement SEMICOLON  */
-#line 222 "skylang.y"
-                                   {
+  case 18: /* statement: exp SEMICOLON  */
+#line 237 "skylang.y"
+                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("statement");
 			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
@@ -1992,52 +1992,85 @@ yyreduce:
 #line 1993 "skylang.tab.c"
     break;
 
-  case 22: /* statement: inputStatement SEMICOLON  */
-#line 228 "skylang.y"
-                                  {
+  case 19: /* statement: ifStatement  */
+#line 243 "skylang.y"
+                     {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("statement");
-			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
+			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	 }
 #line 2004 "skylang.tab.c"
     break;
 
-  case 23: /* statement: callFuncStatement SEMICOLON  */
-#line 234 "skylang.y"
-                                     {
+  case 20: /* statement: forAllStatement  */
+#line 249 "skylang.y"
+                         {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("statement");
-			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
+			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	 }
 #line 2015 "skylang.tab.c"
     break;
 
-  case 24: /* statement: RETURN exp SEMICOLON  */
-#line 241 "skylang.y"
-                          {
+  case 21: /* statement: outPutStatement SEMICOLON  */
+#line 255 "skylang.y"
+                                   {
 		if(passagem == 1){
-			(yyval.tree) = add_tree_node("RETURN statement");
+			(yyval.tree) = add_tree_node("statement");
 			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
 		}
 	 }
 #line 2026 "skylang.tab.c"
     break;
 
+  case 22: /* statement: inputStatement SEMICOLON  */
+#line 261 "skylang.y"
+                                  {
+		if(passagem == 1){
+			(yyval.tree) = add_tree_node("statement");
+			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
+		}
+	 }
+#line 2037 "skylang.tab.c"
+    break;
+
+  case 23: /* statement: callFuncStatement SEMICOLON  */
+#line 267 "skylang.y"
+                                     {
+		if(passagem == 1){
+			(yyval.tree) = add_tree_node("statement");
+			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
+		}
+	 }
+#line 2048 "skylang.tab.c"
+    break;
+
+  case 24: /* statement: RETURN exp SEMICOLON  */
+#line 274 "skylang.y"
+                          {
+		if(passagem == 1){
+			(yyval.tree) = add_tree_node("RETURN statement");
+			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
+		}
+	 }
+#line 2059 "skylang.tab.c"
+    break;
+
   case 25: /* statement: forStatement  */
-#line 248 "skylang.y"
+#line 281 "skylang.y"
                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("forStatement");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 2037 "skylang.tab.c"
+#line 2070 "skylang.tab.c"
     break;
 
   case 26: /* forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  */
-#line 258 "skylang.y"
+#line 291 "skylang.y"
                                                                                                                  {
 			if(passagem == 1){
 				(yyval.tree) = add_tree_node("ForStatement");
@@ -2047,33 +2080,33 @@ yyreduce:
 				(yyval.tree) -> leaf4 = (yyvsp[-1].tree);
 			}
 	}
-#line 2051 "skylang.tab.c"
+#line 2084 "skylang.tab.c"
     break;
 
   case 27: /* callFuncStatement: ID PARENTESES_INI call_params PARENTESES_FIM  */
-#line 272 "skylang.y"
+#line 305 "skylang.y"
                                                      {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("CallFunStatement");
 			(yyval.tree) -> leaf1 = (yyvsp[-1].tree);
 		}
 	}
-#line 2062 "skylang.tab.c"
+#line 2095 "skylang.tab.c"
     break;
 
   case 28: /* call_params: call_params_list  */
-#line 282 "skylang.y"
+#line 315 "skylang.y"
                         {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("CallParams");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 2073 "skylang.tab.c"
+#line 2106 "skylang.tab.c"
     break;
 
   case 29: /* call_params_list: call_param COLON call_params_list  */
-#line 290 "skylang.y"
+#line 323 "skylang.y"
                                           {
 		if(passagem == 1){ 
 			(yyval.tree) = add_tree_node("call_params_list");
@@ -2081,76 +2114,76 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	}
-#line 2085 "skylang.tab.c"
+#line 2118 "skylang.tab.c"
     break;
 
   case 30: /* call_params_list: call_param  */
-#line 297 "skylang.y"
+#line 330 "skylang.y"
                     {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("call_params_list");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 2096 "skylang.tab.c"
+#line 2129 "skylang.tab.c"
     break;
 
   case 31: /* call_params_list: %empty  */
-#line 303 "skylang.y"
+#line 336 "skylang.y"
          {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("Vazio");
 		}
 	 }
-#line 2106 "skylang.tab.c"
+#line 2139 "skylang.tab.c"
     break;
 
   case 32: /* call_param: terminal  */
-#line 310 "skylang.y"
+#line 343 "skylang.y"
                  {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("call_param terminal");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 2117 "skylang.tab.c"
+#line 2150 "skylang.tab.c"
     break;
 
   case 33: /* inputStatement: READ PARENTESES_INI STRING PARENTESES_FIM  */
-#line 320 "skylang.y"
+#line 353 "skylang.y"
                                                   {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("inputStatement");	 
 			//$$ -> leaf1 = $3;
 		}
 	}
-#line 2128 "skylang.tab.c"
+#line 2161 "skylang.tab.c"
     break;
 
   case 34: /* outPutStatement: WRITE PARENTESES_INI STRING PARENTESES_FIM  */
-#line 330 "skylang.y"
+#line 363 "skylang.y"
                                                     {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
-#line 2139 "skylang.tab.c"
+#line 2172 "skylang.tab.c"
     break;
 
   case 35: /* outPutStatement: WRITELN PARENTESES_INI STRING PARENTESES_FIM  */
-#line 336 "skylang.y"
+#line 369 "skylang.y"
                                                        {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
-#line 2150 "skylang.tab.c"
+#line 2183 "skylang.tab.c"
     break;
 
   case 36: /* forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  */
-#line 346 "skylang.y"
+#line 379 "skylang.y"
                                                                                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("forAllStatement");
@@ -2160,18 +2193,28 @@ yyreduce:
 			existe_simbolo = searchSymbol((yyvsp[-6].str));
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope((yyvsp[-6].str),escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 			existe_simbolo = searchSymbol((yyvsp[-4].str));
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope((yyvsp[-6].str),escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 		}
 	 }
-#line 2171 "skylang.tab.c"
+#line 2214 "skylang.tab.c"
     break;
 
   case 37: /* ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  */
-#line 366 "skylang.y"
+#line 409 "skylang.y"
                                                                               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("ifStatement");
@@ -2179,11 +2222,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[-1].tree);
 		}
 	 }
-#line 2183 "skylang.tab.c"
+#line 2226 "skylang.tab.c"
     break;
 
   case 38: /* ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM ELSE CHAVES_INI codeBlock CHAVES_FIM  */
-#line 373 "skylang.y"
+#line 416 "skylang.y"
                                                                                                                    {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("ifElseStatement");
@@ -2192,66 +2235,66 @@ yyreduce:
 			(yyval.tree) -> leaf3 = (yyvsp[-1].tree);
 		}
 	 }
-#line 2196 "skylang.tab.c"
+#line 2239 "skylang.tab.c"
     break;
 
   case 39: /* exp: setExp  */
-#line 384 "skylang.y"
+#line 427 "skylang.y"
                 {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("exp");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	 }
-#line 2207 "skylang.tab.c"
+#line 2250 "skylang.tab.c"
     break;
 
   case 40: /* exp: aritExp  */
-#line 390 "skylang.y"
+#line 433 "skylang.y"
                  {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("exp");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	 }
-#line 2218 "skylang.tab.c"
+#line 2261 "skylang.tab.c"
     break;
 
   case 41: /* exp: relExp  */
-#line 396 "skylang.y"
+#line 439 "skylang.y"
                 {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("exp");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	 }
-#line 2229 "skylang.tab.c"
+#line 2272 "skylang.tab.c"
     break;
 
   case 42: /* exp: terminal  */
-#line 402 "skylang.y"
+#line 445 "skylang.y"
                   {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("exp");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	 }
-#line 2240 "skylang.tab.c"
+#line 2283 "skylang.tab.c"
     break;
 
   case 43: /* exp: assignmentExp  */
-#line 409 "skylang.y"
+#line 452 "skylang.y"
                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("exp");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 2251 "skylang.tab.c"
+#line 2294 "skylang.tab.c"
     break;
 
   case 44: /* assignmentExp: terminal EQUALS exp  */
-#line 418 "skylang.y"
+#line 461 "skylang.y"
                             {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("assigmentExp");
@@ -2259,11 +2302,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	}
-#line 2263 "skylang.tab.c"
+#line 2306 "skylang.tab.c"
     break;
 
   case 45: /* setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM  */
-#line 428 "skylang.y"
+#line 471 "skylang.y"
                                                                  {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("setExp");
@@ -2271,11 +2314,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[-1].tree);
 		}
 	}
-#line 2275 "skylang.tab.c"
+#line 2318 "skylang.tab.c"
     break;
 
   case 46: /* setExp: REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM  */
-#line 435 "skylang.y"
+#line 478 "skylang.y"
                                                                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("setExp");
@@ -2283,11 +2326,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[-1].tree);
 		}
 	}
-#line 2287 "skylang.tab.c"
+#line 2330 "skylang.tab.c"
     break;
 
   case 47: /* setExp: EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM  */
-#line 442 "skylang.y"
+#line 485 "skylang.y"
                                                                       {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("setExp");
@@ -2295,22 +2338,22 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[-1].tree);
 		}
 	}
-#line 2299 "skylang.tab.c"
+#line 2342 "skylang.tab.c"
     break;
 
   case 48: /* terms_set: aritSetExp  */
-#line 452 "skylang.y"
+#line 495 "skylang.y"
                    {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terms_set");
 			(yyval.tree) -> leaf1 = (yyvsp[0].tree);
 		}
 	}
-#line 2310 "skylang.tab.c"
+#line 2353 "skylang.tab.c"
     break;
 
   case 49: /* aritSetExp: ID  */
-#line 461 "skylang.y"
+#line 504 "skylang.y"
            {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal ID");
@@ -2320,37 +2363,42 @@ yyreduce:
 			existe_simbolo = searchSymbol((yyvsp[0].str));
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope((yyvsp[0].str),escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 		}
 
-	 }
-#line 2328 "skylang.tab.c"
+	}
+#line 2376 "skylang.tab.c"
     break;
 
   case 50: /* aritSetExp: FLOAT  */
-#line 474 "skylang.y"
+#line 522 "skylang.y"
                {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal FLOAT");
 		}
 		 
 	 }
-#line 2339 "skylang.tab.c"
+#line 2387 "skylang.tab.c"
     break;
 
   case 51: /* aritSetExp: INTEGER  */
-#line 480 "skylang.y"
+#line 528 "skylang.y"
                  {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal INTEGER");
 		}
 		 
 	 }
-#line 2350 "skylang.tab.c"
+#line 2398 "skylang.tab.c"
     break;
 
   case 52: /* aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM  */
-#line 486 "skylang.y"
+#line 534 "skylang.y"
                                                                                                    {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("aritSetExp"); 
@@ -2358,11 +2406,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[-2].tree);
 		}
 	}
-#line 2362 "skylang.tab.c"
+#line 2410 "skylang.tab.c"
     break;
 
   case 53: /* aritExp: terminal MULT exp  */
-#line 497 "skylang.y"
+#line 545 "skylang.y"
                           {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("aritExp");
@@ -2370,11 +2418,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	 }
-#line 2374 "skylang.tab.c"
+#line 2422 "skylang.tab.c"
     break;
 
   case 54: /* aritExp: terminal PLUS exp  */
-#line 504 "skylang.y"
+#line 552 "skylang.y"
                            {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("aritExp");
@@ -2382,11 +2430,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	 }
-#line 2386 "skylang.tab.c"
+#line 2434 "skylang.tab.c"
     break;
 
   case 55: /* aritExp: terminal MINUS exp  */
-#line 511 "skylang.y"
+#line 559 "skylang.y"
                             {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("aritExp");
@@ -2394,11 +2442,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	 }
-#line 2398 "skylang.tab.c"
+#line 2446 "skylang.tab.c"
     break;
 
   case 56: /* aritExp: terminal DIV exp  */
-#line 518 "skylang.y"
+#line 566 "skylang.y"
                           {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("aritExp");
@@ -2406,11 +2454,11 @@ yyreduce:
 			(yyval.tree) -> leaf2 = (yyvsp[0].tree);
 		}
 	 }
-#line 2410 "skylang.tab.c"
+#line 2458 "skylang.tab.c"
     break;
 
   case 57: /* relExp: terminal rel exp  */
-#line 527 "skylang.y"
+#line 575 "skylang.y"
                          {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("relExp");
@@ -2419,81 +2467,81 @@ yyreduce:
 			(yyval.tree) -> leaf3 = (yyvsp[0].tree);
 		}
 	 }
-#line 2423 "skylang.tab.c"
+#line 2471 "skylang.tab.c"
     break;
 
   case 58: /* rel: CGE  */
-#line 538 "skylang.y"
+#line 586 "skylang.y"
             {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel CGE");
 		}
 	 }
-#line 2433 "skylang.tab.c"
+#line 2481 "skylang.tab.c"
     break;
 
   case 59: /* rel: CGT  */
-#line 543 "skylang.y"
+#line 591 "skylang.y"
               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel");
 		}
 	 }
-#line 2443 "skylang.tab.c"
+#line 2491 "skylang.tab.c"
     break;
 
   case 60: /* rel: CNE  */
-#line 548 "skylang.y"
+#line 596 "skylang.y"
               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel");
 		}
 	 }
-#line 2453 "skylang.tab.c"
+#line 2501 "skylang.tab.c"
     break;
 
   case 61: /* rel: CLT  */
-#line 553 "skylang.y"
+#line 601 "skylang.y"
               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel");
 		}
 	 }
-#line 2463 "skylang.tab.c"
+#line 2511 "skylang.tab.c"
     break;
 
   case 62: /* rel: AND  */
-#line 558 "skylang.y"
+#line 606 "skylang.y"
               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel");
 		}
 	 }
-#line 2473 "skylang.tab.c"
+#line 2521 "skylang.tab.c"
     break;
 
   case 63: /* rel: CLE  */
-#line 563 "skylang.y"
+#line 611 "skylang.y"
               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel");
 		}
 	 }
-#line 2483 "skylang.tab.c"
+#line 2531 "skylang.tab.c"
     break;
 
   case 64: /* rel: CEQ  */
-#line 568 "skylang.y"
+#line 616 "skylang.y"
               {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("rel CEQ");
 		}
 	}
-#line 2493 "skylang.tab.c"
+#line 2541 "skylang.tab.c"
     break;
 
   case 65: /* terminal: ID  */
-#line 577 "skylang.y"
+#line 625 "skylang.y"
            {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal ID");
@@ -2503,48 +2551,53 @@ yyreduce:
 			existe_simbolo = searchSymbol((yyvsp[0].str));
 			if(existe_simbolo != 1){
 				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope((yyvsp[0].str),escopoAtual);
+				if(escopo_correto!=1){
+					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
 			}
 		}
 		 
-	 }
-#line 2511 "skylang.tab.c"
+	}
+#line 2564 "skylang.tab.c"
     break;
 
   case 66: /* terminal: FLOAT  */
-#line 590 "skylang.y"
+#line 643 "skylang.y"
                {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal FLOAT");
 		}
 		 
 	 }
-#line 2522 "skylang.tab.c"
+#line 2575 "skylang.tab.c"
     break;
 
   case 67: /* terminal: INTEGER  */
-#line 596 "skylang.y"
+#line 649 "skylang.y"
                  {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal INTEGER");
 		}
 		 
 	 }
-#line 2533 "skylang.tab.c"
+#line 2586 "skylang.tab.c"
     break;
 
   case 68: /* terminal: PARENTESES_INI exp PARENTESES_FIM  */
-#line 603 "skylang.y"
+#line 656 "skylang.y"
                                             {
 		if(passagem == 1){
 			(yyval.tree) = add_tree_node("terminal EXP");
 			(yyval.tree)->leaf1 =(yyvsp[-1].tree);
 		}
 	}
-#line 2544 "skylang.tab.c"
+#line 2597 "skylang.tab.c"
     break;
 
 
-#line 2548 "skylang.tab.c"
+#line 2601 "skylang.tab.c"
 
       default: break;
     }
@@ -2769,7 +2822,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 612 "skylang.y"
+#line 665 "skylang.y"
 
 
 extern void yyerror(const char* a) {
@@ -2798,7 +2851,10 @@ char fname[100];
 	printf("\n========== Segunda Passagem ===========\n\n");
 	yyparse();
 	fclose(yyin);
-	free_tree(tree);
+	if(existe_main!=1){
+		printf("\nERRO: O codigo nao possui uma funcao main()\n");
+	}
+	free(escopoAtual);
     yylex_destroy();
     return 0;
 }

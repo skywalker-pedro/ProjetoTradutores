@@ -25,4 +25,5 @@ void insert_symbol(int id,char * name, char*type,char*varType,char* escopo) {
         s -> escopo = escopo;
         HASH_ADD_INT( hashed_symbol_table, id, s );
     }
+    free(s);
 }
