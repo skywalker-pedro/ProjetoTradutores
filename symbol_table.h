@@ -13,7 +13,7 @@ typedef struct hash_table {
 
 Hash_table *hashed_symbol_table = NULL;
 
-void insert_symbol(int id,char * name, char*type,char*varType) {
+void insert_symbol(int id,char * name, char*type,char*varType,char* escopo) {
     Hash_table * s;
     HASH_FIND_INT(hashed_symbol_table,&id,s);
     if(s==NULL){
@@ -22,6 +22,7 @@ void insert_symbol(int id,char * name, char*type,char*varType) {
         s -> type = type;
         s -> name = name;
         s -> varType = varType;
+        s -> escopo = escopo;
         HASH_ADD_INT( hashed_symbol_table, id, s );
     }
 }
