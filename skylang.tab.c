@@ -2854,10 +2854,6 @@ char fname[100];
 	if(existe_main!=1){
 		printf("\nERRO: O codigo nao possui uma funcao main()\n");
 	}
-	free(escopoAtual);
     yylex_destroy();
     return 0;
 }
-
-
-

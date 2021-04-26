@@ -117,8 +117,6 @@ declarationList:
 			$$ = add_tree_node("declarationList");
 			$$ -> leaf1 = $1;
 			$$ -> leaf2 = $2;
-			free($1);
-			free($2);
 		}
 	}
 	| declaration {
@@ -695,10 +693,6 @@ char fname[100];
 	if(existe_main!=1){
 		printf("\nERRO: O codigo nao possui uma funcao main()\n");
 	}
-	free(escopoAtual);
     yylex_destroy();
     return 0;
 }
-
-
-
