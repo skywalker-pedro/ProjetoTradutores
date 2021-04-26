@@ -1,9 +1,43 @@
-int main(){
-int x3;;
-x3 = 1;
-set A1;
+elem semEscopo;
+int var2;
 
-add(x3 in A1)
+
+float teste(int a, int b){
+    return (a+b);
+    float x;
+}
+
+float teste(int a, int b){
+    return (a+b);
+    float x;
+}
+
+int main2(){
+
+    int x1;
+    int y1;
+    x1 = x1 + (8*5);
+    set SET1;
+    set SET2;
+    add(8 in SET2);
+    add(x1 in SET1);
+    remove(x1 in SET1);
+    exists(x1 in SET1);
+    remove((exists (x1 in SET1)) in SET2);
+
+    forall(x1 in SET1){
+        x1 = (x1 + 2)*3;
+        writeln("escrevendoString");
+    }
+    if(x==1){
+        writeln("string1DoIf");
+    }else{
+        writeln("String2doIf");
+    }
+    for(i=0;i<232;i=i+1){
+        writeln("Funcionou");
+    }
+    teste4(x,y1);
 
 return 0;
 }

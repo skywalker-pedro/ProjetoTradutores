@@ -3,12 +3,12 @@ int var2;
 
 
 float teste(int a, int b){
-    float x;
     return (a+b);
+    float x;
 }
 
 int main(){
-
+    int i;
     int x1;
     int y1;
     x1 = x1 + (8*5);
@@ -24,7 +24,7 @@ int main(){
         x1 = (x1 + 2)*3;
         writeln("escrevendoString");
     }
-    if(x==1){
+    if(x1==1){
         writeln("string1DoIf");
     }else{
         writeln("String2doIf");

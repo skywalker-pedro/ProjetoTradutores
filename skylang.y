@@ -19,6 +19,9 @@ int symbol_ID = 0;
 treeNode* tree = NULL;
 int existe_simbolo;
 int existe_main = 0;
+char * redeclaracao_funcao;
+int flag_redeclaracao_funcao;
+//int erro_count = 0;
 int aux=1;
 int escopo_correto;
 char * escopoAtual = "Global";
@@ -125,6 +128,14 @@ declarationList:
 			$$ -> leaf1 = $1;
 		}
 	}
+
+	/*| error {
+		if(passagem == 1){
+			erro_count = erro_count +1;
+			$$ = add_tree_node("Erro Sintatico");
+			yyerror(yymsg);
+		}
+	}*/
 ;
 declaration:
 	variable_declaration{
@@ -147,14 +158,23 @@ variable_declaration:
 							insert_symbol(symbol_ID, $2,"VARIAVEL",$1, escopoAtual);
 							symbol_ID = symbol_ID +1;
 							//printf("\nAQUI %s\n",$2);
-							$$ = add_tree_node("variable_declaration - Type ID");
+							$$ = add_tree_node("variable_declaration");
 						}
+
 						 
 	}
 ;
 
 func_declaration:
-	TYPE ID PARENTESES_INI {escopoAtual = $2;} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
+	TYPE ID PARENTESES_INI {escopoAtual = $2;
+							if(passagem == 1){
+								existe_simbolo = searchSymbol($2);
+								if(existe_simbolo == 1){
+									redeclaracao_funcao = "\nERRO SEMANTICO: redeclaracao de funcao\n";
+									flag_redeclaracao_funcao = 1;
+								}
+							}
+							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
 																					if(passagem == 1){
 																						insert_symbol(symbol_ID, $2,"FUNCAO",$1,escopoAtual );
 																						symbol_ID = symbol_ID +1 ;																	
@@ -168,6 +188,13 @@ func_declaration:
 																							existe_main = 1;
 																						}
 																					}
+
+																					/*if(passagem == 2){
+																						existe_simbolo = searchSymbol($2);
+																						if(existe_simbolo == 1){
+																							printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: redeclaracao de funcao\n", num_linha,posicao_linha);
+																						}
+																					}*/
 																					//printf("\nESCOPO ATUAL: %s\n",escopoAtual);
 	}
 ;
@@ -183,14 +210,14 @@ params:
 params_list:
 	param COLON params_list {
 							if(passagem == 1){ 
-								$$ = add_tree_node("params_list_n");
+								$$ = add_tree_node("params_list");
 		 						$$ -> leaf1 = $1;
 							  	$$ -> leaf2 = $3;
 							}
 	}
 	|param { 
 			if(passagem == 1){
-				$$ = add_tree_node("params_lis_1");
+				$$ = add_tree_node("params_list");
 		 	 	$$ -> leaf1 = $1;
 			}
 	}
@@ -199,13 +226,20 @@ params_list:
 			$$ = add_tree_node("Vazio");
 		}
 	}
+	/*| error {
+		if(passagem == 1){
+			erro_count = erro_count +1;
+			add_tree_node("Erro Sintatico");
+			yyerror(yymsg);
+		}
+	}*/
 ;
 param:
 	TYPE ID { 
 				if(passagem == 1){
 					insert_symbol(symbol_ID, $2,"PARAMETRO_FUNCAO",$1,escopoAtual);
 		    		symbol_ID = symbol_ID +1;
-			 		$$ = add_tree_node("param - TYPE ID");
+			 		$$ = add_tree_node("param");
 				}
 	}
 ;
@@ -223,6 +257,14 @@ codeBlock:
 		}
 		 
 	}
+
+	/*| error {
+		if(passagem == 1){
+			erro_count = erro_count +1;
+			add_tree_node("Erro Sintatico");
+			yyerror(yymsg);
+		}
+	}*/
 ;
 
 statement:
@@ -307,6 +349,14 @@ callFuncStatement:
 			$$ = add_tree_node("CallFunStatement");
 			$$ -> leaf1 = $3;
 		}
+
+		if(passagem == 2){
+			existe_simbolo = searchSymbol($1);
+			if(existe_simbolo != 1){
+				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Funcao nao declarada\n", num_linha,posicao_linha);
+			}
+		}
+
 	}
 
 ;
@@ -665,8 +715,10 @@ terminal:
 %%
 
 extern void yyerror(const char* a) {
-    printf("\n-->ERRO SINTATICO na linha %d, coluna %d\n",num_linha,posicao_linha);
-	printf("-->  %s\n",a);
+	if(passagem==2){
+    	printf("\n-->ERRO SINTATICO na linha %d, coluna %d\n",num_linha,posicao_linha);
+		printf("-->  %s\n",a);
+	}
 }
 
 
@@ -692,6 +744,9 @@ char fname[100];
 	fclose(yyin);
 	if(existe_main!=1){
 		printf("\nERRO: O codigo nao possui uma funcao main()\n");
+	}
+	if(flag_redeclaracao_funcao==1){
+		printf("\nERRO: Redeclaracao de funcao\n");
 	}
     yylex_destroy();
     return 0;
