@@ -10,7 +10,7 @@ int main(){
 
     int x1;
     int y1;
-    x1 = x1 + 8 + 5;
+    x1 = x1 + (8*5);
     set SET1;
     set SET2;
     add(8 in SET2);
@@ -21,19 +21,16 @@ int main(){
 
     forall(x1 in SET1){
         x1 = (x1 + 2)*3;
-        writeln("x1fsdjfksjdflkj");
+        writeln("escrevendoString");
     }
-
     if(x==1){
-        writeln("Funcionou");
+        writeln("string1DoIf");
     }else{
-        writeln("Funcionou2");
+        writeln("String2doIf");
     }
-
     for(i=0;i<232;i=i+1){
         writeln("Funcionou");
     }
-
     teste(x1,y1);
 
 return 0;

@@ -8,6 +8,7 @@
 #include "skylang.h"
 #include "symbol_table.h"
 #include "skylangTree.h"
+#include <string.h>
 
 extern int yylex();
 extern void yyerror(const char* msg);
@@ -16,7 +17,7 @@ extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 treeNode* tree = NULL;
-int passagem;
+int existe_simbolo;
 char * escopoAtual = "Global";
 /* Print TS Function*/
 void printTS(){
@@ -25,6 +26,26 @@ void printTS(){
         printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s",aux->id,aux->name,aux->type,aux->varType, aux -> escopo);
         aux = aux -> hh.next;
     }
+	free(aux);
+}
+
+//Search symbol in symbol table
+int searchSymbol(char*symbol){
+	Hash_table* aux = hashed_symbol_table;
+	int retorno = 0;
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,symbol)==0){
+			retorno = 1;
+		}
+        aux = aux -> hh.next;
+    }
+	free(aux);
+	if(retorno == 1){
+		return 1;
+	}else{
+		return 0;
+	}
 }
 
 %}
@@ -233,7 +254,6 @@ statement:
 
 ;
 
-
 forStatement:
 		FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM{
 			if(passagem == 1){
@@ -327,6 +347,16 @@ forAllStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("forAllStatement");
 			$$ -> leaf1 = $8;
+		}
+		if(passagem == 2){
+			existe_simbolo = searchSymbol($3);
+			if(existe_simbolo != 1){
+				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}
+			existe_simbolo = searchSymbol($5);
+			if(existe_simbolo != 1){
+				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}
 		}
 	 }
 ;
@@ -433,6 +463,13 @@ aritSetExp:
 			$$ = add_tree_node("terminal ID");
 		}
 		 
+		if(passagem == 2){
+			existe_simbolo = searchSymbol($1);
+			if(existe_simbolo != 1){
+				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}
+		}
+
 	 }
 	|FLOAT {
 		if(passagem == 1){
@@ -540,6 +577,13 @@ terminal:
 	ID {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal ID");
+			
+		}
+		if(passagem == 2){
+			existe_simbolo = searchSymbol($1);
+			if(existe_simbolo != 1){
+				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}
 		}
 		 
 	 }
@@ -575,11 +619,10 @@ extern void yyerror(const char* a) {
 
 int main(){
 char fname[100];
-    printf("\nDigite o nome do arquivo a ser analisado:\n-> ");
     scanf("%s",fname);
     yyin=fopen(fname,"r+");
 	passagem=1;
-	printf("\n========== Primeira Passagem===========\n\n");
+	printf("\n========== Primeira Passagem ===========\n\n");
     yyparse();
     //yylex();
 	fclose(yyin);
@@ -589,12 +632,12 @@ char fname[100];
 	printf("\n---------> ARVORE: <---------\n");
 	print_tree(0,tree);
 	printf("\n");
-	free_tree(tree);
-	yyin=fopen(fname,"r+");
 	passagem=2;
-	printf("\n========== Segunda Passagem===========\n\n");
+	yyin=fopen(fname,"r+");
+	printf("\n========== Segunda Passagem ===========\n\n");
 	yyparse();
 	fclose(yyin);
+	free_tree(tree);
     yylex_destroy();
     return 0;
 }
