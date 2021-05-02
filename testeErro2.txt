@@ -1,5 +1,10 @@
+float teste(){
+    return 0;
+}
+
 int main() {
     set ()s;
+    int cd;
     add(3 in s);;
     add(2 in s);
     add(5 in s);
@@ -14,3 +19,5 @@ int main() {
 return 0;
 
 }
+
+

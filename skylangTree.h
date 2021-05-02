@@ -5,7 +5,7 @@
 /* Tree Node*/
 
 typedef struct node { 
-    char * node_type;
+    //char * node_type;
     char * node_name;
     struct node * leaf1;
     struct node * leaf2;
@@ -71,8 +71,6 @@ void free_tree(struct node * node){
     if(node==NULL){
         return;
     }
-
-    free(node);
     //printf("\nNode desalocado\n");
     if(node->leaf1!=NULL){
         free_tree(node->leaf1);
@@ -90,4 +88,5 @@ void free_tree(struct node * node){
         free_tree(node->leaf5);
     };
 
+    free(node);
 }

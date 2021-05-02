@@ -12,7 +12,7 @@ int posicao_linha = 0;
 int passagem;
 
 void LexicalError(){
-	printf("\nERROR: Token %s nao reconhecido na linha %d\n",yytext,num_linha);
+	printf("\n--> ERRO LEXICO: Token %s nao reconhecido na linha %d\n",yytext,num_linha);
 }
 
 %}
@@ -79,7 +79,7 @@ empty "EMPTY"
 		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
-		yylval.str = (char *) strdup(yytext);
+		//yylval.str = (char *) strdup(yytext);
 		return EXISTS;
 
 }
@@ -89,7 +89,7 @@ empty "EMPTY"
 		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
-		yylval.str = (char *) strdup(yytext);
+		//yylval.str = (char *) strdup(yytext);
 		return REMOVE;
 
 }
@@ -100,7 +100,7 @@ empty "EMPTY"
 		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
-		yylval.str = (char *) strdup(yytext);
+		//yylval.str = (char *) strdup(yytext);
 		return IN;
 
 
@@ -112,7 +112,7 @@ empty "EMPTY"
 			if(passagem == 2){
 			posicao_linha += yyleng;
 			}
-			yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
 			return EMPTY;
 
 }
@@ -122,7 +122,7 @@ empty "EMPTY"
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
-			yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
 			return NEGATION;
    
 }
@@ -187,7 +187,7 @@ empty "EMPTY"
 
 {writeLn}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -206,7 +206,7 @@ empty "EMPTY"
 
 {add}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -222,7 +222,7 @@ empty "EMPTY"
 
 {forall}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -231,7 +231,7 @@ empty "EMPTY"
 
 {cgt}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -242,7 +242,7 @@ empty "EMPTY"
 
 {for}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -252,7 +252,7 @@ empty "EMPTY"
 
 {else}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -262,7 +262,7 @@ empty "EMPTY"
 
 {if}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -282,7 +282,7 @@ empty "EMPTY"
 
 {is_in}	{
     		//printf("Token valido: -> %s\n", yytext);
-			yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -291,7 +291,7 @@ empty "EMPTY"
 
 {is_set}	{
     		//printf("Token valido: -> %s\n", yytext);
-			yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -303,7 +303,7 @@ empty "EMPTY"
 
 {return}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -374,7 +374,7 @@ empty "EMPTY"
 
 {sub}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -385,7 +385,7 @@ empty "EMPTY"
 
 {div}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -396,7 +396,7 @@ empty "EMPTY"
 
 {mult}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -407,7 +407,7 @@ empty "EMPTY"
 
 {plus}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -418,7 +418,7 @@ empty "EMPTY"
 
 {cge}	{
     		//printf("Token valido eq or greater: -> %s\n", yytext);
-			yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -428,7 +428,7 @@ empty "EMPTY"
 
 {ceq}	{
     		 //printf("Token valido equals: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -440,7 +440,7 @@ empty "EMPTY"
 
 {equals}	{
     		 //printf("Token valido assign: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -450,7 +450,7 @@ empty "EMPTY"
 
 {or}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -460,7 +460,7 @@ empty "EMPTY"
 
 {and}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -471,7 +471,7 @@ empty "EMPTY"
 
 {cle}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -482,7 +482,7 @@ empty "EMPTY"
 
 {cne}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -492,7 +492,7 @@ empty "EMPTY"
 
 {clt}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -503,7 +503,7 @@ empty "EMPTY"
 
 {parenteses_ini}	{
     		 //printf("Token valido parenteses ini: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -513,7 +513,7 @@ empty "EMPTY"
 
 {parenteses_fim}	{
     		 //printf("Token valido parenteses fim: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -523,7 +523,7 @@ empty "EMPTY"
 
 {chaves_ini}	{
     		 //printf("Token valido chaves ini: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -534,7 +534,7 @@ empty "EMPTY"
 
 {chaves_fim}	{
     		 //printf("Token valido chaves fim: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -544,7 +544,7 @@ empty "EMPTY"
 
 {semicolon}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
+			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
 		}
@@ -599,8 +599,8 @@ empty "EMPTY"
 . { 
 	if(passagem == 2){
 			posicao_linha += yyleng;
+			LexicalError();
 		}
-    LexicalError();
 }
 
 

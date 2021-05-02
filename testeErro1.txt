@@ -1,8 +1,7 @@
 elem semEscopo;
-int var2;
+int $$;
 
-
-float teste(int a, int b){
+float x teste(int a, int b){
     return (a+b);
     float x;
 }
@@ -29,15 +28,18 @@ int main2(){
         x1 = (x1 + 2)*3;
         writeln("escrevendoString");
     }
-    if(x==1){
+    if(x==1)9{
         writeln("string1DoIf");
+
+    }
     }else{
         writeln("String2doIf");
     }
     for(i=0;i<232;i=i+1){
-        writeln("Funcionou");
+        writeln("Funcionou");;
     }
     teste4(x,y1);
 
+return 0;
 return 0;
 }

@@ -32,7 +32,7 @@ void printTS(){
         printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s",aux->id,aux->name,aux->type,aux->varType, aux -> escopo);
         aux = aux -> hh.next;
     }
-	free(aux);
+	//free(aux);
 }
 
 //Search symbol in symbol table
@@ -46,7 +46,7 @@ int searchSymbol(char*symbol){
 		}
         aux = aux -> hh.next;
     }
-	free(aux);
+	//free(aux);
 	if(retorno == 1){
 		return 1;
 	}else{
@@ -70,7 +70,7 @@ int searchScope(char*symbol,char*symbol_scope){
 		}
         aux = aux -> hh.next;
     }
-	free(aux);
+	//free(aux);
 	if(retorno == 1){
 		return 1;
 	}else{
@@ -163,6 +163,15 @@ variable_declaration:
 
 						 
 	}
+
+
+	|error {
+		if(passagem == 1){
+			//erro_count = erro_count +1;
+			$$ = add_tree_node("Erro Sintatico");
+			yyerror(yymsg);
+		}
+	}
 ;
 
 func_declaration:
@@ -170,7 +179,7 @@ func_declaration:
 							if(passagem == 1){
 								existe_simbolo = searchSymbol($2);
 								if(existe_simbolo == 1){
-									redeclaracao_funcao = "\nERRO SEMANTICO: redeclaracao de funcao\n";
+									redeclaracao_funcao = "\n--> ERRO SEMANTICO: redeclaracao de funcao\n";
 									flag_redeclaracao_funcao = 1;
 								}
 							}
@@ -192,7 +201,7 @@ func_declaration:
 																					/*if(passagem == 2){
 																						existe_simbolo = searchSymbol($2);
 																						if(existe_simbolo == 1){
-																							printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: redeclaracao de funcao\n", num_linha,posicao_linha);
+																							printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: redeclaracao de funcao\n", num_linha,posicao_linha);
 																						}
 																					}*/
 																					//printf("\nESCOPO ATUAL: %s\n",escopoAtual);
@@ -353,7 +362,7 @@ callFuncStatement:
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($1);
 			if(existe_simbolo != 1){
-				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Funcao nao declarada\n", num_linha,posicao_linha);
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Funcao nao declarada\n", num_linha,posicao_linha);
 			}
 		}
 
@@ -434,20 +443,20 @@ forAllStatement:
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($3);
 			if(existe_simbolo != 1){
-				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
 			}else{
 				escopo_correto = searchScope($3,escopoAtual);
 				if(escopo_correto!=1){
-					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+					printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
 				}
 			}
 			existe_simbolo = searchSymbol($5);
 			if(existe_simbolo != 1){
-				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
 			}else{
 				escopo_correto = searchScope($3,escopoAtual);
 				if(escopo_correto!=1){
-					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+					printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
 				}
 			}
 		}
@@ -559,11 +568,11 @@ aritSetExp:
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($1);
 			if(existe_simbolo != 1){
-				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
 			}else{
 				escopo_correto = searchScope($1,escopoAtual);
 				if(escopo_correto!=1){
-					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+					printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
 				}
 			}
 		}
@@ -680,11 +689,11 @@ terminal:
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($1);
 			if(existe_simbolo != 1){
-				printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
 			}else{
 				escopo_correto = searchScope($1,escopoAtual);
 				if(escopo_correto!=1){
-					printf("\nERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+					printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
 				}
 			}
 		}
@@ -716,8 +725,8 @@ terminal:
 
 extern void yyerror(const char* a) {
 	if(passagem==2){
-    	printf("\n-->ERRO SINTATICO na linha %d, coluna %d\n",num_linha,posicao_linha);
-		printf("-->  %s\n",a);
+    	printf("\n--> ERRO SINTATICO na linha %d, coluna %d\n",num_linha,posicao_linha);
+		printf("  %s\n",a);
 	}
 }
 
@@ -743,11 +752,13 @@ char fname[100];
 	yyparse();
 	fclose(yyin);
 	if(existe_main!=1){
-		printf("\nERRO: O codigo nao possui uma funcao main()\n");
+		printf("\n--> ERRO: O codigo nao possui uma funcao main()\n");
 	}
 	if(flag_redeclaracao_funcao==1){
-		printf("\nERRO: Redeclaracao de funcao\n");
+		printf("\n--> ERRO: Redeclaracao de funcao\n");
 	}
     yylex_destroy();
+	free_tree(tree);
+	//free_TS(hashed_symbol_table);
     return 0;
 }

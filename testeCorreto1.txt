@@ -2,7 +2,7 @@ elem semEscopo;
 int var2;
 
 
-float teste(int a, int b){
+float teste(int a, float b, float t){
     return (a+b);
     float x;
 }
