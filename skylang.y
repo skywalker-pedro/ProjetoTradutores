@@ -78,6 +78,32 @@ int searchScope(char*symbol,char*symbol_scope){
 	}
 }
 
+//Check if parameters in function call are correct
+int searchFunctionVariable(char*symbol,char*symbol_scope){
+	Hash_table* aux = hashed_symbol_table;
+	int retorno = 0;
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,symbol)==0){
+			if (strcmp(aux->escopo,"Global")==0){
+				retorno = 1;
+			}
+			if (strcmp(aux->escopo,symbol_scope)==0){
+				retorno = 1;
+			}
+		}
+        aux = aux -> hh.next;
+    }
+	//free(aux);
+	if(retorno == 1){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+
+
 %}
 
 %union 
@@ -736,19 +762,19 @@ char fname[100];
     scanf("%s",fname);
     yyin=fopen(fname,"r+");
 	passagem=1;
-	printf("\n========== Primeira Passagem ===========\n\n");
+	printf("\n=================== PRIMEIRA PASSAGEM (TS E ARVORE) ====================\n\n");
     yyparse();
     //yylex();
 	fclose(yyin);
-	printf("\n---------> Tabela de Simbolos <---------\n");
-	printTS();
 	printf("\n");
 	printf("\n---------> ARVORE: <---------\n");
 	print_tree(0,tree);
+	printf("\n\n---------> Tabela de Simbolos <---------\n");
+	printTS();
 	printf("\n");
 	passagem=2;
 	yyin=fopen(fname,"r+");
-	printf("\n========== Segunda Passagem ===========\n\n");
+	printf("\n==================== SEGUNDA PASSAGEM (TRATAMENTO DE ERROS) =====================\n\n");
 	yyparse();
 	fclose(yyin);
 	if(existe_main!=1){
