@@ -21,6 +21,7 @@ int existe_simbolo;
 int existe_main = 0;
 char * redeclaracao_funcao;
 int flag_redeclaracao_funcao;
+int registrador_atual = 0;
 //int erro_count = 0;
 int aux=1;
 int escopo_correto;
@@ -29,7 +30,7 @@ char * escopoAtual = "Global";
 void printTS(){
 	Hash_table* aux = hashed_symbol_table;
     while(aux!=NULL){
-        printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s",aux->id,aux->name,aux->type,aux->varType, aux -> escopo);
+        printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s | Registrador: $%d",aux->id,aux->name,aux->type,aux->varType, aux -> escopo,aux -> registrador);
         aux = aux -> hh.next;
     }
 	//free(aux);
@@ -181,7 +182,9 @@ declaration:
 variable_declaration:
 	TYPE ID SEMICOLON { 
 						if(passagem == 1){
-							insert_symbol(symbol_ID, $2,"VARIAVEL",$1, escopoAtual);
+							
+ 							insert_symbol(symbol_ID, $2,"VARIAVEL",$1, escopoAtual,registrador_atual);
+							registrador_atual = registrador_atual +1;
 							symbol_ID = symbol_ID +1;
 							//printf("\nAQUI %s\n",$2);
 							$$ = add_tree_node("variable_declaration");
@@ -211,7 +214,9 @@ func_declaration:
 							}
 							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
 																					if(passagem == 1){
-																						insert_symbol(symbol_ID, $2,"FUNCAO",$1,escopoAtual );
+											
+																						insert_symbol(symbol_ID, $2,"FUNCAO",$1,escopoAtual,-1);
+																						//registrador_atual = registrador_atual +1;
 																						symbol_ID = symbol_ID +1 ;																	
 																						$$ = add_tree_node("func_declaration");																		
 																						$$ -> leaf1 = $5;
@@ -272,7 +277,9 @@ params_list:
 param:
 	TYPE ID { 
 				if(passagem == 1){
-					insert_symbol(symbol_ID, $2,"PARAMETRO_FUNCAO",$1,escopoAtual);
+				
+					insert_symbol(symbol_ID, $2,"PARAMETRO_FUNCAO",$1,escopoAtual,-1);
+					//registrador_atual = registrador_atual +1;
 		    		symbol_ID = symbol_ID +1;
 			 		$$ = add_tree_node("param");
 				}

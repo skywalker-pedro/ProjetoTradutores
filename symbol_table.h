@@ -8,12 +8,13 @@ typedef struct hash_table {
     char * varType; //if it is int, set , elem or float
     char *name;
     char* escopo;
+    int registrador;
     UT_hash_handle hh; 
 }Hash_table;
 
 Hash_table *hashed_symbol_table = NULL;
 
-void insert_symbol(int id,char * name, char*type,char*varType,char* escopo) {
+void insert_symbol(int id,char * name, char*type,char*varType,char* escopo,int registrador) {
     Hash_table * s;
     HASH_FIND_INT(hashed_symbol_table,&id,s);
     if(s==NULL){
@@ -23,6 +24,7 @@ void insert_symbol(int id,char * name, char*type,char*varType,char* escopo) {
         s -> name = name;
         s -> varType = varType;
         s -> escopo = escopo;
+        s -> registrador = registrador;
         HASH_ADD_INT( hashed_symbol_table, id, s );
     }
 }

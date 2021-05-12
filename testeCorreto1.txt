@@ -1,38 +1,26 @@
-elem semEscopo;
-int var2;
+int main() {
 
+set notas;
 
-float teste(int a, float b, float t){
-    return (a+b);
-    float x;
-}
+notas = EMPTY;
 
-int main(){
-    int i;
-    int x1;
-    int y1;
-    x1 = x1 + (-8*5);
-    set SET1;
-    set SET2;
-    add(8 in SET2);
-    add(x1 in SET1);
-    remove(x1 in SET1);
-    exists(x1 in SET1);
-    remove((exists (x1 in SET1)) in SET2);
+add(10 in add(10.0 in add(10 in notas)));
 
-    forall(x1 in SET1){
-        x1 = (x1 + 2)*3;
-        writeln("escrevendoString");
-    }
-    if(x1==1){
-        writeln("string1DoIf");
-    }else{
-        writeln("String2doIf");
-    }
-    for(i=0;i<232;i=i+1){
-        writeln("Funcionou");
-    }
-    teste(x1,y1);
+float media1; float media2;
+
+float soma; soma = 0;
+
+elem i;
+
+forall(i in notas) soma = soma + i;
+
+media1 = soma/3 - 1/10*10;
+
+media2 = soma/3;
+
+if (media1 == media2 && media1 >= 5) writeln("Parabéns!");
 
 return 0;
+
 }
+
