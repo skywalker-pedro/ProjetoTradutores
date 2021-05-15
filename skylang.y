@@ -143,9 +143,13 @@ int searchFunctionVariable(char*symbol,char*symbol_scope){
 
 %left PLUS MINUS MULT DIV
 
-%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock assignmentExp
+%type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock assignmentExp statement_list
 %type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement //forRel
 %type<tree> ifStatement exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement //forExp expTerminal
+
+%nonassoc THEN
+%nonassoc ELSE
+
 %%  
 
 /*rule section*/
@@ -306,18 +310,11 @@ param:
 	}
 ;
 codeBlock:
-	codeBlock statement{
+	statement_list{
 		if(passagem == 1){
-			$$ = add_tree_node("codeBlock");
+			$$ = add_tree_node("CodeBlock");
 			$$ -> leaf1 = $1;
-			$$ -> leaf2 = $2;
 		}
-	}
-	| {	
-		if(passagem == 1){
-			$$ = add_tree_node("codeBlock VAZIO");
-		}
-		 
 	}
 
 	/*| error {
@@ -327,6 +324,19 @@ codeBlock:
 			yyerror(yymsg);
 		}
 	}*/
+;
+statement_list:
+	statement_list statement {
+			$$ = add_tree_node("Statement_list");
+			$$ -> leaf1 = $1;
+			$$ -> leaf2 = $2;
+		}
+	| {	
+		if(passagem == 1){
+			$$ = add_tree_node("Statement_list VAZIO");
+		}
+		 
+	}
 ;
 
 statement:
@@ -392,7 +402,7 @@ statement:
 ;
 
 forStatement:
-		FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM{
+		FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement CHAVES_FIM{
 			if(passagem == 1){
 				$$ = add_tree_node("ForStatement");
 				$$ -> leaf1 = $3;
@@ -522,7 +532,7 @@ outPutStatement:
 
 forAllStatement:
 	
-	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM {
+	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement CHAVES_FIM {
 		if(passagem == 1){
 			$$ = add_tree_node("forAllStatement");
 			$$ -> leaf1 = $8;
@@ -552,19 +562,19 @@ forAllStatement:
 
 ifStatement:
 
-	IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM  {
+	IF PARENTESES_INI exp PARENTESES_FIM statement %prec THEN {
 		if(passagem == 1){
 			$$ = add_tree_node("ifStatement");
 			$$ -> leaf1 = $3;
-			$$ -> leaf2 = $6;
+			$$ -> leaf2 = $5;
 		}
 	 }
-	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM ELSE CHAVES_INI codeBlock CHAVES_FIM {
+	|IF PARENTESES_INI exp PARENTESES_FIM statement ELSE statement {
 		if(passagem == 1){
 			$$ = add_tree_node("ifElseStatement");
 			$$ -> leaf1 = $3;
-			$$ -> leaf2 = $6;
-			$$ -> leaf3 = $10;
+			$$ -> leaf2 = $5;
+			$$ -> leaf3 = $7;
 		}
 	 }
 ;

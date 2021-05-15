@@ -96,7 +96,8 @@ extern int yydebug;
     PLUS = 297,                    /* PLUS  */
     MINUS = 298,                   /* MINUS  */
     MULT = 299,                    /* MULT  */
-    DIV = 300                      /* DIV  */
+    DIV = 300,                     /* DIV  */
+    THEN = 301                     /* THEN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -110,7 +111,7 @@ union YYSTYPE
 	char *str;
 	struct node* tree;
 
-#line 114 "skylang.tab.h"
+#line 115 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
