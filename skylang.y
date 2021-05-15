@@ -586,6 +586,22 @@ ifStatement:
 			$$ -> leaf3 = $7;
 		}
 	 }
+
+	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM %prec THEN {
+		if(passagem == 1){
+			$$ = add_tree_node("ifStatement");
+			$$ -> leaf1 = $3;
+			$$ -> leaf2 = $6;
+		}
+	 }
+	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM {
+		if(passagem == 1){
+			$$ = add_tree_node("ifElseStatement");
+			$$ -> leaf1 = $3;
+			$$ -> leaf2 = $6;
+			$$ -> leaf3 = $10;
+		}
+	 }
 ;
 
 exp:

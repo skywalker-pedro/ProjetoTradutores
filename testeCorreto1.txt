@@ -24,8 +24,7 @@ int main(){
     forall(x1 in SET1)
         writeln("escrevendoString");
 
-    for(i=0;i<232;i=i+1)
-        writeln("Funcionou");
+    for(i=0;i<232;i=i+1) writeln("Funcionou");
 
     for(i=0;i<232;i=i+1){
         writeln("Funcionou");
@@ -41,6 +40,16 @@ int main(){
         writeln("string1DoIf");
     else 
         x1=1;
+
+    if (x1==1){
+        writeln("string1DoIf");
+        writeln("string1DoIf"); 
+    }
+    else{
+        x1=1;
+        writeln("string1DoIf");
+        
+    }
 
 return 0;
 }
