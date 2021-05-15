@@ -13,4 +13,4 @@ testeErrado1:
 	echo testeErro1.txt| ./skylang
 	
 testeErrado2:	
-	echo testeErro1.txt| ./skylang
+	echo testeErro2.txt| ./skylang

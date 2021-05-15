@@ -12,13 +12,13 @@ int posicao_linha = 0;
 int passagem;
 
 void LexicalError(){
-	printf("\n--> ERRO LEXICO: Token %s nao reconhecido na linha %d\n",yytext,num_linha);
+	printf("\n--> ERRO LEXICO: Token %s nao reconhecido na linha %d\n, coluna %d",yytext,num_linha,posicao_linha);
 }
 
 %}
 
 string \"(\\.|[^"\\])*\"
-char (\'([^(\"\')])+\')
+char (\'(.|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\\\|\\\'|\\\"|\\\?)\')
 new_line  \n
 tabulacao	\t
 espaco " "

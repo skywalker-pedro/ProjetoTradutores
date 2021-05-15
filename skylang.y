@@ -17,6 +17,8 @@ extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 treeNode* tree = NULL;
+
+/////////////////////////////////// Variaveis de controle de escolpo, declaracao e checagem de tipos
 int existe_simbolo;
 int existe_main = 0;
 char * redeclaracao_funcao;
@@ -25,6 +27,8 @@ int registrador_atual = 0;
 //int erro_count = 0;
 int aux=1;
 int escopo_correto;
+int argumento_func;
+//////////////////////////////////
 char * escopoAtual = "Global";
 /* Print TS Function*/
 void printTS(){
@@ -55,6 +59,23 @@ int searchSymbol(char*symbol){
 	}
 }
 
+//Search symbol type in symbol table
+char * searchVarType(char*symbol,char*symbol_scope){
+	Hash_table* aux = hashed_symbol_table;
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,symbol)==0){
+			if (strcmp(aux->escopo,symbol_scope)==0){
+				return aux -> varType;
+			}
+		}
+        aux = aux -> hh.next;
+    }
+	return NULL;
+	//free(aux);
+}
+
+
 //Search symbol scope in symbol table
 int searchScope(char*symbol,char*symbol_scope){
 	Hash_table* aux = hashed_symbol_table;
@@ -83,13 +104,12 @@ int searchScope(char*symbol,char*symbol_scope){
 int searchFunctionVariable(char*symbol,char*symbol_scope){
 	Hash_table* aux = hashed_symbol_table;
 	int retorno = 0;
+	char * tipo_variavel;
+	tipo_variavel = searchVarType(symbol,symbol_scope);
     while(aux!=NULL){
 		//strcmp retorna 0 caso as strings sejam iguais
-        if (strcmp(aux->name,symbol)==0){
-			if (strcmp(aux->escopo,"Global")==0){
-				retorno = 1;
-			}
-			if (strcmp(aux->escopo,symbol_scope)==0){
+        if (strcmp(aux->name,symbol_scope)==0){
+			if (strcmp(aux-> varType,tipo_variavel)==0){
 				retorno = 1;
 			}
 		}
@@ -424,6 +444,7 @@ call_params_list:
 			$$ = add_tree_node("call_params_list");
 			$$ -> leaf1 = $1;
 		}
+
 	}
 	|{
 		if(passagem == 1){
@@ -437,12 +458,16 @@ call_param:
 			$$ = add_tree_node("call_param terminal");
 			$$ -> leaf1 = $1;
 		}
+
+		if(passagem == 2){
+			
+		}
 	}
 ;
 
 inputStatement:
 
-	READ PARENTESES_INI STRING PARENTESES_FIM {
+	READ PARENTESES_INI ID PARENTESES_FIM {
 		if(passagem == 1){
 			$$ = add_tree_node("inputStatement");	 
 			//$$ -> leaf1 = $3;
@@ -458,7 +483,36 @@ outPutStatement:
 			//$$ -> leaf1 = $3;
 		}
 	 }
+
+	|WRITE PARENTESES_INI CHAR PARENTESES_FIM  {
+		if(passagem == 1){
+			$$ = add_tree_node("outPutStatement");
+			//$$ -> leaf1 = $3;
+		}
+	 }
+
+	|WRITE PARENTESES_INI exp PARENTESES_FIM  {
+		if(passagem == 1){
+			$$ = add_tree_node("outPutStatement");
+			//$$ -> leaf1 = $3;
+		}
+	 }
 	|WRITELN PARENTESES_INI STRING PARENTESES_FIM  {
+		if(passagem == 1){
+			$$ = add_tree_node("outPutStatement");
+			//$$ -> leaf1 = $3;
+		}
+	 }
+
+
+	 |WRITELN PARENTESES_INI CHAR PARENTESES_FIM  {
+		if(passagem == 1){
+			$$ = add_tree_node("outPutStatement");
+			//$$ -> leaf1 = $3;
+		}
+	 }
+
+	 |WRITELN PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
@@ -516,7 +570,16 @@ ifStatement:
 ;
 
 exp:
-	setExp  {
+
+
+	NEGATION exp  {
+		if(passagem == 1){
+			$$ = add_tree_node("exp");
+			$$ -> leaf1 = $2;
+		}
+	 }
+
+	|setExp  {
 		if(passagem == 1){
 			$$ = add_tree_node("exp");
 			$$ -> leaf1 = $1;
