@@ -21,9 +21,12 @@ int main(){
     exists(x1 in SET1);
     remove((exists (x1 in SET1)) in SET2);
 
-    forall(x1 in SET1){
+    forall(x1 in SET1)
         writeln("escrevendoString");
-    }
+
+    for(i=0;i<232;i=i+1)
+        writeln("Funcionou");
+
     for(i=0;i<232;i=i+1){
         writeln("Funcionou");
     }

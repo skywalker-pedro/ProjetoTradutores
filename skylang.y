@@ -402,13 +402,22 @@ statement:
 ;
 
 forStatement:
-		FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement CHAVES_FIM{
+	FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement CHAVES_FIM{
 			if(passagem == 1){
 				$$ = add_tree_node("ForStatement");
 				$$ -> leaf1 = $3;
 				$$ -> leaf2 = $5;
 				$$ -> leaf3 = $7;
 				$$ -> leaf4 = $10;
+			}
+	}
+| FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement{
+			if(passagem == 1){
+				$$ = add_tree_node("ForStatement");
+				$$ -> leaf1 = $3;
+				$$ -> leaf2 = $5;
+				$$ -> leaf3 = $7;
+				$$ -> leaf4 = $9;
 			}
 	}
 ;
@@ -532,10 +541,10 @@ outPutStatement:
 
 forAllStatement:
 	
-	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement CHAVES_FIM {
+	FORALL PARENTESES_INI ID IN ID PARENTESES_FIM statement {
 		if(passagem == 1){
 			$$ = add_tree_node("forAllStatement");
-			$$ -> leaf1 = $8;
+			$$ -> leaf1 = $7;
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($3);
