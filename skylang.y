@@ -21,8 +21,8 @@ treeNode* tree = NULL;
 /////////////////////////////////// Variaveis de controle de escolpo, declaracao e checagem de tipos
 int existe_simbolo;
 int existe_main = 0;
-char * redeclaracao_funcao;
 int flag_redeclaracao_funcao;
+int flag_redeclaracao_variavel;
 int registrador_atual = 0;
 //int erro_count = 0;
 int aux=1;
@@ -207,17 +207,23 @@ variable_declaration:
 	TYPE ID SEMICOLON { 
 						if(passagem == 1){
 							
+							existe_simbolo = searchSymbol($2);
+							if(existe_simbolo == 1){
+								escopo_correto = searchScope($2,escopoAtual);
+								if(escopo_correto == 1){
+									flag_redeclaracao_variavel =1;
+									printf("\n--> ERRO SEMANTICO: redeclaracao da VARIAVEL -> %s <- na linha %d",$2,num_linha_1-1);
+								}
+							}
  							insert_symbol(symbol_ID, $2,"VARIAVEL",$1, escopoAtual,registrador_atual);
 							registrador_atual = registrador_atual +1;
 							symbol_ID = symbol_ID +1;
 							//printf("\nAQUI %s\n",$2);
 							$$ = add_tree_node("variable_declaration");
+				
 						}
 
-						 
 	}
-
-
 	|error {
 		if(passagem == 1){
 			//erro_count = erro_count +1;
@@ -225,6 +231,7 @@ variable_declaration:
 			yyerror(yymsg);
 		}
 	}
+
 ;
 
 func_declaration:
@@ -232,7 +239,7 @@ func_declaration:
 							if(passagem == 1){
 								existe_simbolo = searchSymbol($2);
 								if(existe_simbolo == 1){
-									redeclaracao_funcao = "\n--> ERRO SEMANTICO: redeclaracao de funcao\n";
+									printf("\n--> ERRO SEMANTICO: redeclaracao da FUNCAO -> %s <- na linha %d",$2,num_linha_1);
 									flag_redeclaracao_funcao = 1;
 								}
 							}
@@ -867,7 +874,7 @@ char fname[100];
     scanf("%s",fname);
     yyin=fopen(fname,"r+");
 	passagem=1;
-	printf("\n=================== PRIMEIRA PASSAGEM (TS E ARVORE) ====================\n\n");
+	printf("\n=================== PRIMEIRA PASSAGEM (TS, ARVORE e erros de Redeclaracao ) ====================\n\n");
     yyparse();
     //yylex();
 	fclose(yyin);
@@ -886,7 +893,10 @@ char fname[100];
 		printf("\n--> ERRO: O codigo nao possui uma funcao main()\n");
 	}
 	if(flag_redeclaracao_funcao==1){
-		printf("\n--> ERRO: Redeclaracao de funcao\n");
+		printf("\n--> ERRO: Redeclaracao de FUNCAO (checar inicio da primeira passagem para mais detalhes)\n");
+	}
+	if(flag_redeclaracao_variavel==1){
+		printf("\n--> ERRO: Redeclaracao de VARIAVEL (checar inicio da primeira passagem para mais detalhes)\n");
 	}
     yylex_destroy();
 	free_tree(tree);

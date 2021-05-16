@@ -366,17 +366,17 @@ struct yy_trans_info
 static const flex_int16_t yy_accept[113] =
     {   0,
         0,    0,   57,   55,   26,   27,   16,    5,   10,   53,
-        8,   54,   45,   46,   35,   36,    9,   33,   51,   34,
-       28,   52,   49,   44,   39,   18,   30,   30,    7,   11,
-        6,   50,   30,   30,   30,   30,   30,   30,   30,   47,
-       55,   48,   43,    0,   32,    0,   41,    0,    0,    0,
-       28,   29,   42,   38,   37,   30,   30,   30,   30,   30,
-       30,   30,   30,   21,    3,   30,   30,   30,   30,   40,
-       31,   31,   30,   15,   30,   30,   30,   30,   19,   22,
-       30,   30,   30,   30,   30,   30,   20,   30,   30,   30,
-       30,   30,   12,   30,   30,   30,    4,   30,   30,   23,
+        8,   54,   45,   46,   35,   36,    9,   28,   51,   34,
+       29,   52,   49,   44,   39,   18,   31,   31,    7,   11,
+        6,   50,   31,   31,   31,   31,   31,   31,   31,   47,
+       55,   48,   43,    0,   33,    0,   41,    0,    0,    0,
+       29,   30,   42,   38,   37,   31,   31,   31,   31,   31,
+       31,   31,   31,   21,    3,   31,   31,   31,   31,   40,
+       32,   32,   31,   15,   31,   31,   31,   31,   19,   22,
+       31,   31,   31,   31,   31,   31,   20,   31,   31,   31,
+       31,   31,   12,   31,   31,   31,    4,   31,   31,   23,
 
-       30,   30,   30,   14,    1,   17,   24,    2,   25,   30,
+       31,   31,   31,   14,    1,   17,   24,    2,   25,   31,
        13,    0
     } ;
 
@@ -572,14 +572,16 @@ char *yytext;
 
 int num_linha = 1;
 int posicao_linha = 0;
+int num_linha_1 = 1;
+int posicao_linha_1 = 0;
 int passagem;
 
 void LexicalError(){
 	printf("\n--> ERRO LEXICO: Token %s nao reconhecido na linha %d\n, coluna %d",yytext,num_linha,posicao_linha);
 }
 
-#line 582 "lex.yy.c"
-#line 583 "lex.yy.c"
+#line 584 "lex.yy.c"
+#line 585 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -794,10 +796,10 @@ YY_DECL
 		}
 
 	{
-#line 75 "skylang.l"
+#line 77 "skylang.l"
 
 
-#line 801 "lex.yy.c"
+#line 803 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -856,11 +858,14 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 77 "skylang.l"
+#line 79 "skylang.l"
 {
 		//printf("Token valido exists: -> %s\n",yytext);
 		if(passagem == 2){
 			posicao_linha += yyleng;
+		}
+		if(passagem == 1){
+			posicao_linha_1 += yyleng;
 		}
 		//yylval.str = (char *) strdup(yytext);
 		return EXISTS;
@@ -869,11 +874,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 87 "skylang.l"
+#line 92 "skylang.l"
 {
 		//printf("Token valido remove: -> %s\n",yytext);
 		if(passagem == 2){
 			posicao_linha += yyleng;
+		}
+		if(passagem == 1){
+			posicao_linha_1 += yyleng;
 		}
 		//yylval.str = (char *) strdup(yytext);
 		return REMOVE;
@@ -882,12 +890,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 97 "skylang.l"
+#line 105 "skylang.l"
 {
 
 		//printf("Token valido IN: -> %s\n",yytext);
 		if(passagem == 2){
 			posicao_linha += yyleng;
+		}
+		if(passagem == 1){
+			posicao_linha_1 += yyleng;
 		}
 		//yylval.str = (char *) strdup(yytext);
 		return IN;
@@ -897,12 +908,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 109 "skylang.l"
+#line 120 "skylang.l"
 {
 
 			//printf("Token valido EMPTY: -> %s\n",yytext);
 			if(passagem == 2){
 			posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+			posicao_linha_1 += yyleng;
 			}
 			//yylval.str = (char *) strdup(yytext);
 			return EMPTY;
@@ -911,12 +925,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 120 "skylang.l"
+#line 134 "skylang.l"
 {
     		//printf("Token valido negation: -> %s\n", yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
-		}
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			//yylval.str = (char *) strdup(yytext);
 			return NEGATION;
    
@@ -924,92 +941,115 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 130 "skylang.l"
+#line 147 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
 			posicao_linha += yyleng;
-		}
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 138 "skylang.l"
+#line 158 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
-   
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 146 "skylang.l"
+#line 168 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 154 "skylang.l"
+#line 179 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return COLON;
    
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 163 "skylang.l"
+#line 191 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 171 "skylang.l"
+#line 202 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 179 "skylang.l"
+#line 213 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return READ;
    
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 188 "skylang.l"
+#line 225 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return WRITELN;
 
    
@@ -1017,134 +1057,167 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 199 "skylang.l"
+#line 239 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return WRITE;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 207 "skylang.l"
+#line 250 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return ADD;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 216 "skylang.l"
+#line 262 "skylang.l"
 {
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 223 "skylang.l"
+#line 272 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return FORALL;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 232 "skylang.l"
+#line 284 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CGT;
    
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 243 "skylang.l"
+#line 298 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return FOR;
    
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 253 "skylang.l"
+#line 311 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return ELSE;
    
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 263 "skylang.l"
+#line 324 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return IF;
 			
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 273 "skylang.l"
+#line 337 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return TYPE;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 283 "skylang.l"
+#line 350 "skylang.l"
 {
     		//printf("Token valido: -> %s\n", yytext);
 			//yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return IS_IN;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 292 "skylang.l"
+#line 362 "skylang.l"
 {
     		//printf("Token valido: -> %s\n", yytext);
 			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return IS_SET;
    
    
@@ -1152,122 +1225,153 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 304 "skylang.l"
+#line 377 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
    			if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return RETURN;
 }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 313 "skylang.l"
+#line 389 "skylang.l"
 {
     		 printf(" ");
 			 if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 }	
 	YY_BREAK
 case 27:
 /* rule 27 can match eol */
 YY_RULE_SETUP
-#line 320 "skylang.l"
+#line 399 "skylang.l"
 {
     		if(passagem==2){
 				num_linha += 1;
 				posicao_linha = 0;
 			}
+			if(passagem == 1){
+				num_linha_1 += 1;
+				posicao_linha_1 =0;
+			}
 }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 327 "skylang.l"
-{
-    		//printf("Token valido INTEIRO: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-    		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
-			return INTEGER;
-}
-	YY_BREAK
-case 29:
-YY_RULE_SETUP
-#line 336 "skylang.l"
-{
-    		//printf("Token valido FLOAT: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-    		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
-			return FLOAT;
-}
-	YY_BREAK
-case 30:
-YY_RULE_SETUP
-#line 345 "skylang.l"
-{
-    		//printf("Token valido ID: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-    		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
-			return ID;
-   
-}
-	YY_BREAK
-case 31:
-YY_RULE_SETUP
-#line 355 "skylang.l"
-{
-    		//printf("Token valido CHAR: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-    		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
-			return CHAR;
-   
-}
-	YY_BREAK
-case 32:
-/* rule 32 can match eol */
-YY_RULE_SETUP
-#line 365 "skylang.l"
-{
-    		//printf("Token valido STRING: -> %s\n", yytext);
-			 yylval.str = (char *) strdup(yytext);
-    		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
-			return STRING;
-}
-	YY_BREAK
-case 33:
-YY_RULE_SETUP
-#line 375 "skylang.l"
+#line 410 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return MINUS;
    
 }
 	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 423 "skylang.l"
+{
+    		//printf("Token valido INTEIRO: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return INTEGER;
+}
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 435 "skylang.l"
+{
+    		//printf("Token valido FLOAT: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return FLOAT;
+}
+	YY_BREAK
+case 31:
+YY_RULE_SETUP
+#line 447 "skylang.l"
+{
+    		//printf("Token valido ID: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return ID;
+   
+}
+	YY_BREAK
+case 32:
+YY_RULE_SETUP
+#line 460 "skylang.l"
+{
+    		//printf("Token valido CHAR: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CHAR;
+   
+}
+	YY_BREAK
+case 33:
+/* rule 33 can match eol */
+YY_RULE_SETUP
+#line 473 "skylang.l"
+{
+    		//printf("Token valido STRING: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return STRING;
+}
+	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 386 "skylang.l"
+#line 486 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return DIV;
    
    
@@ -1275,13 +1379,16 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 397 "skylang.l"
+#line 500 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return MULT;
    
    
@@ -1289,13 +1396,16 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 408 "skylang.l"
+#line 514 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return PLUS;
    
    
@@ -1303,143 +1413,176 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 419 "skylang.l"
+#line 528 "skylang.l"
 {
     		//printf("Token valido eq or greater: -> %s\n", yytext);
 			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CGE;
    
 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 429 "skylang.l"
+#line 541 "skylang.l"
 {
     		 //printf("Token valido equals: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CEQ;
    
 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 441 "skylang.l"
+#line 556 "skylang.l"
 {
     		 //printf("Token valido assign: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return EQUALS;
    
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 451 "skylang.l"
+#line 569 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return OR;
    
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 461 "skylang.l"
+#line 582 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return AND;
    
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 472 "skylang.l"
+#line 596 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CLE;
    
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 483 "skylang.l"
+#line 610 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CNE;
    
 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 493 "skylang.l"
+#line 623 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CLT;
    
 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 504 "skylang.l"
+#line 637 "skylang.l"
 {
     		 //printf("Token valido parenteses ini: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return PARENTESES_INI;
    
 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 514 "skylang.l"
+#line 650 "skylang.l"
 {
     		 //printf("Token valido parenteses fim: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return PARENTESES_FIM;
    
 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 524 "skylang.l"
+#line 663 "skylang.l"
 {
     		 //printf("Token valido chaves ini: -> %s\n", yytext);
 			// yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CHAVES_INI;
 
    
@@ -1447,104 +1590,128 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 535 "skylang.l"
+#line 677 "skylang.l"
 {
     		 //printf("Token valido chaves fim: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return CHAVES_FIM;
    
 }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 545 "skylang.l"
+#line 690 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
 			 //yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return SEMICOLON;
    
 }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 555 "skylang.l"
+#line 703 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 563 "skylang.l"
+#line 714 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return '.';
    
 }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 572 "skylang.l"
+#line 726 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return ':';
 
 }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 581 "skylang.l"
+#line 738 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 589 "skylang.l"
+#line 749 "skylang.l"
 {
     		 //printf("Token valido apost: -> %s\n", yytext);
     		if(passagem == 2){
-			posicao_linha += yyleng;
-		}
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 			return APOST;
    
 }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 599 "skylang.l"
+#line 762 "skylang.l"
 { 
 	if(passagem == 2){
-			posicao_linha += yyleng;
-			LexicalError();
-		}
+		posicao_linha += yyleng;
+		LexicalError();
+	}
+	if(passagem == 1){
+		posicao_linha_1 += yyleng;
+	}
 }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 607 "skylang.l"
+#line 773 "skylang.l"
 ECHO;
 	YY_BREAK
-#line 1548 "lex.yy.c"
+#line 1715 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2512,5 +2679,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 607 "skylang.l"
+#line 773 "skylang.l"
 

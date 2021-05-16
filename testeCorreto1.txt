@@ -50,6 +50,6 @@ int main(){
         writeln("string1DoIf");
         
     }
-
+    x = teste(x1,y1);
 return 0;
 }
