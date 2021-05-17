@@ -5,7 +5,6 @@ Terminais sem uso na gramática
     IS_SET
     OR
     APOST
-    EMPTY
 
 
 Gramática
@@ -88,37 +87,40 @@ Gramática
    53    | assignmentExp
 
    54 assignmentExp: terminal EQUALS exp
+   55              | terminal EQUALS CONST
 
-   55 setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
-   56       | REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
-   57       | EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+   56 setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+   57       | REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+   58       | EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
 
-   58 terms_set: aritSetExp
+   59 terms_set: aritSetExp
 
-   59 aritSetExp: ID
-   60           | FLOAT
-   61           | INTEGER
-   62           | PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+   60 aritSetExp: ID
+   61           | FLOAT
+   62           | INTEGER
+   63           | PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
-   63 aritExp: terminal MULT exp
-   64        | terminal PLUS exp
-   65        | terminal MINUS exp
-   66        | terminal DIV exp
+   64 aritExp: terminal MULT exp
+   65        | terminal PLUS exp
+   66        | terminal MINUS exp
+   67        | terminal DIV exp
 
-   67 relExp: terminal rel exp
+   68 relExp: terminal rel exp
 
-   68 rel: CGE
-   69    | CGT
-   70    | CNE
-   71    | CLT
-   72    | AND
-   73    | CLE
-   74    | CEQ
+   69 rel: CGE
+   70    | CGT
+   71    | CNE
+   72    | CLT
+   73    | AND
+   74    | CLE
+   75    | CEQ
 
-   75 terminal: ID
-   76         | FLOAT
-   77         | INTEGER
-   78         | PARENTESES_INI exp PARENTESES_FIM
+   76 terminal: ID
+   77         | FLOAT
+   78         | INTEGER
+   79         | PARENTESES_INI exp PARENTESES_FIM
+
+   80 CONST: EMPTY
 
 
 Terminais, com as regras onde eles aparecem
@@ -126,7 +128,7 @@ Terminais, com as regras onde eles aparecem
     $end (0) 0
     error (256) 7
     TYPE <str> (258) 6 9 14
-    ID <str> (259) 6 9 14 29 35 42 43 59 75
+    ID <str> (259) 6 9 14 29 35 42 43 60 76
     RETURN (260) 25
     IF (261) 44 45 46 47
     ELSE (262) 45 47
@@ -134,40 +136,40 @@ Terminais, com as regras onde eles aparecem
     WRITE (264) 36 37 38
     WRITELN (265) 39 40 41
     READ (266) 35
-    EXISTS (267) 57 62
-    ADD (268) 55
-    REMOVE (269) 56
+    EXISTS (267) 58 63
+    ADD (268) 56
+    REMOVE (269) 57
     FOR (270) 27 28
     FORALL (271) 42 43
-    IN (272) 42 43 55 56 57 62
+    IN (272) 42 43 56 57 58 63
     IS_IN (273)
     IS_SET (274)
     OR (275)
-    CLE <tree> (276) 73
-    CLT <tree> (277) 71
-    CNE <tree> (278) 70
-    CGT <tree> (279) 69
-    AND <tree> (280) 72
-    CEQ <tree> (281) 74
-    CGE <tree> (282) 68
-    INTEGER <tree> (283) 61 77
-    FLOAT <tree> (284) 60 76
+    CLE <tree> (276) 74
+    CLT <tree> (277) 72
+    CNE <tree> (278) 71
+    CGT <tree> (279) 70
+    AND <tree> (280) 73
+    CEQ <tree> (281) 75
+    CGE <tree> (282) 69
+    INTEGER <tree> (283) 62 78
+    FLOAT <tree> (284) 61 77
     CHAR (285) 37 40
     STRING (286) 36 39
     NEGATION (287) 48
-    EQUALS (288) 54
+    EQUALS (288) 54 55
     APOST (289)
     CHAVES_INI (290) 9 27 43 46 47
     CHAVES_FIM (291) 9 27 43 46 47
-    PARENTESES_INI (292) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 46 47 55 56 57 62 78
-    PARENTESES_FIM (293) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 46 47 55 56 57 62 78
-    EMPTY (294)
+    PARENTESES_INI (292) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 46 47 56 57 58 63 79
+    PARENTESES_FIM (293) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 46 47 56 57 58 63 79
+    EMPTY (294) 80
     SEMICOLON (295) 6 19 22 23 24 25 27 28
     COLON (296) 11 31
-    PLUS (297) 64
-    MINUS (298) 65
-    MULT (299) 63
-    DIV (300) 66
+    PLUS (297) 65
+    MINUS (298) 66
+    MULT (299) 64
+    DIV (300) 67
     THEN (301)
 
 
@@ -240,31 +242,34 @@ Não terminais com as regras onde eles aparecem
         à direita: 20
     exp <tree> (69)
         à esquerda: 48 49 50 51 52 53
-        à direita: 19 25 27 28 38 41 44 45 46 47 48 54 63 64 65 66 67 78
+        à direita: 19 25 27 28 38 41 44 45 46 47 48 54 64 65 66 67 68 79
     assignmentExp <tree> (70)
-        à esquerda: 54
+        à esquerda: 54 55
         à direita: 53
     setExp <tree> (71)
-        à esquerda: 55 56 57
+        à esquerda: 56 57 58
         à direita: 49
     terms_set <tree> (72)
-        à esquerda: 58
-        à direita: 55 56 57 62
+        à esquerda: 59
+        à direita: 56 57 58 63
     aritSetExp <tree> (73)
-        à esquerda: 59 60 61 62
-        à direita: 58
+        à esquerda: 60 61 62 63
+        à direita: 59
     aritExp <tree> (74)
-        à esquerda: 63 64 65 66
+        à esquerda: 64 65 66 67
         à direita: 50
     relExp <tree> (75)
-        à esquerda: 67
+        à esquerda: 68
         à direita: 51
     rel <tree> (76)
-        à esquerda: 68 69 70 71 72 73 74
-        à direita: 67
+        à esquerda: 69 70 71 72 73 74 75
+        à direita: 68
     terminal <tree> (77)
-        à esquerda: 75 76 77 78
-        à direita: 34 52 54 63 64 65 66 67
+        à esquerda: 76 77 78 79
+        à direita: 34 52 54 55 64 65 66 67 68
+    CONST <tree> (78)
+        à esquerda: 80
+        à direita: 55
 
 
 Estado 0
@@ -508,7 +513,7 @@ Estado 24
    15 codeBlock: statement_list •
    16 statement_list: statement_list • statement
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -563,23 +568,23 @@ Estado 26
 Estado 27
 
    29 callFuncStatement: ID • PARENTESES_INI call_params PARENTESES_FIM
-   75 terminal: ID •
+   76 terminal: ID •
 
     PARENTESES_INI  deslocar, e ir ao estado 57
 
-    CLE        reduzir usando a regra 75 (terminal)
-    CLT        reduzir usando a regra 75 (terminal)
-    CNE        reduzir usando a regra 75 (terminal)
-    CGT        reduzir usando a regra 75 (terminal)
-    AND        reduzir usando a regra 75 (terminal)
-    CEQ        reduzir usando a regra 75 (terminal)
-    CGE        reduzir usando a regra 75 (terminal)
-    EQUALS     reduzir usando a regra 75 (terminal)
-    SEMICOLON  reduzir usando a regra 75 (terminal)
-    PLUS       reduzir usando a regra 75 (terminal)
-    MINUS      reduzir usando a regra 75 (terminal)
-    MULT       reduzir usando a regra 75 (terminal)
-    DIV        reduzir usando a regra 75 (terminal)
+    CLE        reduzir usando a regra 76 (terminal)
+    CLT        reduzir usando a regra 76 (terminal)
+    CNE        reduzir usando a regra 76 (terminal)
+    CGT        reduzir usando a regra 76 (terminal)
+    AND        reduzir usando a regra 76 (terminal)
+    CEQ        reduzir usando a regra 76 (terminal)
+    CGE        reduzir usando a regra 76 (terminal)
+    EQUALS     reduzir usando a regra 76 (terminal)
+    SEMICOLON  reduzir usando a regra 76 (terminal)
+    PLUS       reduzir usando a regra 76 (terminal)
+    MINUS      reduzir usando a regra 76 (terminal)
+    MULT       reduzir usando a regra 76 (terminal)
+    DIV        reduzir usando a regra 76 (terminal)
 
 
 Estado 28
@@ -640,21 +645,21 @@ Estado 32
 
 Estado 33
 
-   57 setExp: EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+   58 setExp: EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
 
     PARENTESES_INI  deslocar, e ir ao estado 64
 
 
 Estado 34
 
-   55 setExp: ADD • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+   56 setExp: ADD • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
 
     PARENTESES_INI  deslocar, e ir ao estado 65
 
 
 Estado 35
 
-   56 setExp: REMOVE • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+   57 setExp: REMOVE • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
 
     PARENTESES_INI  deslocar, e ir ao estado 66
 
@@ -677,7 +682,26 @@ Estado 37
 
 Estado 38
 
-   77 terminal: INTEGER •
+   78 terminal: INTEGER •
+
+    CLE        reduzir usando a regra 78 (terminal)
+    CLT        reduzir usando a regra 78 (terminal)
+    CNE        reduzir usando a regra 78 (terminal)
+    CGT        reduzir usando a regra 78 (terminal)
+    AND        reduzir usando a regra 78 (terminal)
+    CEQ        reduzir usando a regra 78 (terminal)
+    CGE        reduzir usando a regra 78 (terminal)
+    EQUALS     reduzir usando a regra 78 (terminal)
+    SEMICOLON  reduzir usando a regra 78 (terminal)
+    PLUS       reduzir usando a regra 78 (terminal)
+    MINUS      reduzir usando a regra 78 (terminal)
+    MULT       reduzir usando a regra 78 (terminal)
+    DIV        reduzir usando a regra 78 (terminal)
+
+
+Estado 39
+
+   77 terminal: FLOAT •
 
     CLE        reduzir usando a regra 77 (terminal)
     CLT        reduzir usando a regra 77 (terminal)
@@ -692,25 +716,6 @@ Estado 38
     MINUS      reduzir usando a regra 77 (terminal)
     MULT       reduzir usando a regra 77 (terminal)
     DIV        reduzir usando a regra 77 (terminal)
-
-
-Estado 39
-
-   76 terminal: FLOAT •
-
-    CLE        reduzir usando a regra 76 (terminal)
-    CLT        reduzir usando a regra 76 (terminal)
-    CNE        reduzir usando a regra 76 (terminal)
-    CGT        reduzir usando a regra 76 (terminal)
-    AND        reduzir usando a regra 76 (terminal)
-    CEQ        reduzir usando a regra 76 (terminal)
-    CGE        reduzir usando a regra 76 (terminal)
-    EQUALS     reduzir usando a regra 76 (terminal)
-    SEMICOLON  reduzir usando a regra 76 (terminal)
-    PLUS       reduzir usando a regra 76 (terminal)
-    MINUS      reduzir usando a regra 76 (terminal)
-    MULT       reduzir usando a regra 76 (terminal)
-    DIV        reduzir usando a regra 76 (terminal)
 
 
 Estado 40
@@ -736,23 +741,23 @@ Estado 40
 
 Estado 41
 
-   78 terminal: PARENTESES_INI • exp PARENTESES_FIM
+   79 terminal: PARENTESES_INI • exp PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
     exp            ir ao estado 70
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 42
@@ -935,11 +940,12 @@ Estado 55
 
    52 exp: terminal •
    54 assignmentExp: terminal • EQUALS exp
-   63 aritExp: terminal • MULT exp
-   64        | terminal • PLUS exp
-   65        | terminal • MINUS exp
-   66        | terminal • DIV exp
-   67 relExp: terminal • rel exp
+   55              | terminal • EQUALS CONST
+   64 aritExp: terminal • MULT exp
+   65        | terminal • PLUS exp
+   66        | terminal • MINUS exp
+   67        | terminal • DIV exp
+   68 relExp: terminal • rel exp
 
     CLE     deslocar, e ir ao estado 75
     CLT     deslocar, e ir ao estado 76
@@ -963,17 +969,17 @@ Estado 56
 
     6 variable_declaration: TYPE ID • SEMICOLON
 
-    SEMICOLON  deslocar, e ir ao estado 185
+    SEMICOLON  deslocar, e ir ao estado 187
 
 
 Estado 57
 
    29 callFuncStatement: ID PARENTESES_INI • call_params PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 186
-    INTEGER         deslocar, e ir ao estado 187
-    FLOAT           deslocar, e ir ao estado 188
-    PARENTESES_INI  deslocar, e ir ao estado 189
+    ID              deslocar, e ir ao estado 188
+    INTEGER         deslocar, e ir ao estado 189
+    FLOAT           deslocar, e ir ao estado 190
+    PARENTESES_INI  deslocar, e ir ao estado 191
 
     PARENTESES_FIM  reduzir usando a regra 33 (call_params_list)
 
@@ -985,21 +991,21 @@ Estado 57
 
 Estado 58
 
-   75 terminal: ID •
+   76 terminal: ID •
 
-    CLE        reduzir usando a regra 75 (terminal)
-    CLT        reduzir usando a regra 75 (terminal)
-    CNE        reduzir usando a regra 75 (terminal)
-    CGT        reduzir usando a regra 75 (terminal)
-    AND        reduzir usando a regra 75 (terminal)
-    CEQ        reduzir usando a regra 75 (terminal)
-    CGE        reduzir usando a regra 75 (terminal)
-    EQUALS     reduzir usando a regra 75 (terminal)
-    SEMICOLON  reduzir usando a regra 75 (terminal)
-    PLUS       reduzir usando a regra 75 (terminal)
-    MINUS      reduzir usando a regra 75 (terminal)
-    MULT       reduzir usando a regra 75 (terminal)
-    DIV        reduzir usando a regra 75 (terminal)
+    CLE        reduzir usando a regra 76 (terminal)
+    CLT        reduzir usando a regra 76 (terminal)
+    CNE        reduzir usando a regra 76 (terminal)
+    CGT        reduzir usando a regra 76 (terminal)
+    AND        reduzir usando a regra 76 (terminal)
+    CEQ        reduzir usando a regra 76 (terminal)
+    CGE        reduzir usando a regra 76 (terminal)
+    EQUALS     reduzir usando a regra 76 (terminal)
+    SEMICOLON  reduzir usando a regra 76 (terminal)
+    PLUS       reduzir usando a regra 76 (terminal)
+    MINUS      reduzir usando a regra 76 (terminal)
+    MULT       reduzir usando a regra 76 (terminal)
+    DIV        reduzir usando a regra 76 (terminal)
 
 
 Estado 59
@@ -1016,21 +1022,21 @@ Estado 60
    46            | IF PARENTESES_INI • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    47            | IF PARENTESES_INI • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
     exp            ir ao estado 93
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 61
@@ -1039,23 +1045,23 @@ Estado 61
    37                | WRITE PARENTESES_INI • CHAR PARENTESES_FIM
    38                | WRITE PARENTESES_INI • exp PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
     CHAR            deslocar, e ir ao estado 94
     STRING          deslocar, e ir ao estado 95
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
     exp            ir ao estado 96
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 62
@@ -1064,23 +1070,23 @@ Estado 62
    40                | WRITELN PARENTESES_INI • CHAR PARENTESES_FIM
    41                | WRITELN PARENTESES_INI • exp PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
     CHAR            deslocar, e ir ao estado 97
     STRING          deslocar, e ir ao estado 98
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
     exp            ir ao estado 99
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 63
@@ -1092,7 +1098,7 @@ Estado 63
 
 Estado 64
 
-   57 setExp: EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
 
     ID              deslocar, e ir ao estado 101
     INTEGER         deslocar, e ir ao estado 102
@@ -1105,7 +1111,7 @@ Estado 64
 
 Estado 65
 
-   55 setExp: ADD PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+   56 setExp: ADD PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
 
     ID              deslocar, e ir ao estado 101
     INTEGER         deslocar, e ir ao estado 102
@@ -1118,7 +1124,7 @@ Estado 65
 
 Estado 66
 
-   56 setExp: REMOVE PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+   57 setExp: REMOVE PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
 
     ID              deslocar, e ir ao estado 101
     INTEGER         deslocar, e ir ao estado 102
@@ -1168,7 +1174,7 @@ Estado 69
 
 Estado 70
 
-   78 terminal: PARENTESES_INI exp • PARENTESES_FIM
+   79 terminal: PARENTESES_INI exp • PARENTESES_FIM
 
     PARENTESES_FIM  deslocar, e ir ao estado 111
 
@@ -1271,77 +1277,7 @@ Estado 74
 
 Estado 75
 
-   73 rel: CLE •
-
-    ID              reduzir usando a regra 73 (rel)
-    EXISTS          reduzir usando a regra 73 (rel)
-    ADD             reduzir usando a regra 73 (rel)
-    REMOVE          reduzir usando a regra 73 (rel)
-    INTEGER         reduzir usando a regra 73 (rel)
-    FLOAT           reduzir usando a regra 73 (rel)
-    NEGATION        reduzir usando a regra 73 (rel)
-    PARENTESES_INI  reduzir usando a regra 73 (rel)
-
-
-Estado 76
-
-   71 rel: CLT •
-
-    ID              reduzir usando a regra 71 (rel)
-    EXISTS          reduzir usando a regra 71 (rel)
-    ADD             reduzir usando a regra 71 (rel)
-    REMOVE          reduzir usando a regra 71 (rel)
-    INTEGER         reduzir usando a regra 71 (rel)
-    FLOAT           reduzir usando a regra 71 (rel)
-    NEGATION        reduzir usando a regra 71 (rel)
-    PARENTESES_INI  reduzir usando a regra 71 (rel)
-
-
-Estado 77
-
-   70 rel: CNE •
-
-    ID              reduzir usando a regra 70 (rel)
-    EXISTS          reduzir usando a regra 70 (rel)
-    ADD             reduzir usando a regra 70 (rel)
-    REMOVE          reduzir usando a regra 70 (rel)
-    INTEGER         reduzir usando a regra 70 (rel)
-    FLOAT           reduzir usando a regra 70 (rel)
-    NEGATION        reduzir usando a regra 70 (rel)
-    PARENTESES_INI  reduzir usando a regra 70 (rel)
-
-
-Estado 78
-
-   69 rel: CGT •
-
-    ID              reduzir usando a regra 69 (rel)
-    EXISTS          reduzir usando a regra 69 (rel)
-    ADD             reduzir usando a regra 69 (rel)
-    REMOVE          reduzir usando a regra 69 (rel)
-    INTEGER         reduzir usando a regra 69 (rel)
-    FLOAT           reduzir usando a regra 69 (rel)
-    NEGATION        reduzir usando a regra 69 (rel)
-    PARENTESES_INI  reduzir usando a regra 69 (rel)
-
-
-Estado 79
-
-   72 rel: AND •
-
-    ID              reduzir usando a regra 72 (rel)
-    EXISTS          reduzir usando a regra 72 (rel)
-    ADD             reduzir usando a regra 72 (rel)
-    REMOVE          reduzir usando a regra 72 (rel)
-    INTEGER         reduzir usando a regra 72 (rel)
-    FLOAT           reduzir usando a regra 72 (rel)
-    NEGATION        reduzir usando a regra 72 (rel)
-    PARENTESES_INI  reduzir usando a regra 72 (rel)
-
-
-Estado 80
-
-   74 rel: CEQ •
+   74 rel: CLE •
 
     ID              reduzir usando a regra 74 (rel)
     EXISTS          reduzir usando a regra 74 (rel)
@@ -1353,23 +1289,94 @@ Estado 80
     PARENTESES_INI  reduzir usando a regra 74 (rel)
 
 
+Estado 76
+
+   72 rel: CLT •
+
+    ID              reduzir usando a regra 72 (rel)
+    EXISTS          reduzir usando a regra 72 (rel)
+    ADD             reduzir usando a regra 72 (rel)
+    REMOVE          reduzir usando a regra 72 (rel)
+    INTEGER         reduzir usando a regra 72 (rel)
+    FLOAT           reduzir usando a regra 72 (rel)
+    NEGATION        reduzir usando a regra 72 (rel)
+    PARENTESES_INI  reduzir usando a regra 72 (rel)
+
+
+Estado 77
+
+   71 rel: CNE •
+
+    ID              reduzir usando a regra 71 (rel)
+    EXISTS          reduzir usando a regra 71 (rel)
+    ADD             reduzir usando a regra 71 (rel)
+    REMOVE          reduzir usando a regra 71 (rel)
+    INTEGER         reduzir usando a regra 71 (rel)
+    FLOAT           reduzir usando a regra 71 (rel)
+    NEGATION        reduzir usando a regra 71 (rel)
+    PARENTESES_INI  reduzir usando a regra 71 (rel)
+
+
+Estado 78
+
+   70 rel: CGT •
+
+    ID              reduzir usando a regra 70 (rel)
+    EXISTS          reduzir usando a regra 70 (rel)
+    ADD             reduzir usando a regra 70 (rel)
+    REMOVE          reduzir usando a regra 70 (rel)
+    INTEGER         reduzir usando a regra 70 (rel)
+    FLOAT           reduzir usando a regra 70 (rel)
+    NEGATION        reduzir usando a regra 70 (rel)
+    PARENTESES_INI  reduzir usando a regra 70 (rel)
+
+
+Estado 79
+
+   73 rel: AND •
+
+    ID              reduzir usando a regra 73 (rel)
+    EXISTS          reduzir usando a regra 73 (rel)
+    ADD             reduzir usando a regra 73 (rel)
+    REMOVE          reduzir usando a regra 73 (rel)
+    INTEGER         reduzir usando a regra 73 (rel)
+    FLOAT           reduzir usando a regra 73 (rel)
+    NEGATION        reduzir usando a regra 73 (rel)
+    PARENTESES_INI  reduzir usando a regra 73 (rel)
+
+
+Estado 80
+
+   75 rel: CEQ •
+
+    ID              reduzir usando a regra 75 (rel)
+    EXISTS          reduzir usando a regra 75 (rel)
+    ADD             reduzir usando a regra 75 (rel)
+    REMOVE          reduzir usando a regra 75 (rel)
+    INTEGER         reduzir usando a regra 75 (rel)
+    FLOAT           reduzir usando a regra 75 (rel)
+    NEGATION        reduzir usando a regra 75 (rel)
+    PARENTESES_INI  reduzir usando a regra 75 (rel)
+
+
 Estado 81
 
-   68 rel: CGE •
+   69 rel: CGE •
 
-    ID              reduzir usando a regra 68 (rel)
-    EXISTS          reduzir usando a regra 68 (rel)
-    ADD             reduzir usando a regra 68 (rel)
-    REMOVE          reduzir usando a regra 68 (rel)
-    INTEGER         reduzir usando a regra 68 (rel)
-    FLOAT           reduzir usando a regra 68 (rel)
-    NEGATION        reduzir usando a regra 68 (rel)
-    PARENTESES_INI  reduzir usando a regra 68 (rel)
+    ID              reduzir usando a regra 69 (rel)
+    EXISTS          reduzir usando a regra 69 (rel)
+    ADD             reduzir usando a regra 69 (rel)
+    REMOVE          reduzir usando a regra 69 (rel)
+    INTEGER         reduzir usando a regra 69 (rel)
+    FLOAT           reduzir usando a regra 69 (rel)
+    NEGATION        reduzir usando a regra 69 (rel)
+    PARENTESES_INI  reduzir usando a regra 69 (rel)
 
 
 Estado 82
 
    54 assignmentExp: terminal EQUALS • exp
+   55              | terminal EQUALS • CONST
 
     ID              deslocar, e ir ao estado 58
     EXISTS          deslocar, e ir ao estado 33
@@ -1379,27 +1386,7 @@ Estado 82
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
-
-    exp            ir ao estado 112
-    assignmentExp  ir ao estado 51
-    setExp         ir ao estado 52
-    aritExp        ir ao estado 53
-    relExp         ir ao estado 54
-    terminal       ir ao estado 55
-
-
-Estado 83
-
-   64 aritExp: terminal PLUS • exp
-
-    ID              deslocar, e ir ao estado 58
-    EXISTS          deslocar, e ir ao estado 33
-    ADD             deslocar, e ir ao estado 34
-    REMOVE          deslocar, e ir ao estado 35
-    INTEGER         deslocar, e ir ao estado 38
-    FLOAT           deslocar, e ir ao estado 39
-    NEGATION        deslocar, e ir ao estado 40
-    PARENTESES_INI  deslocar, e ir ao estado 41
+    EMPTY           deslocar, e ir ao estado 112
 
     exp            ir ao estado 113
     assignmentExp  ir ao estado 51
@@ -1407,32 +1394,12 @@ Estado 83
     aritExp        ir ao estado 53
     relExp         ir ao estado 54
     terminal       ir ao estado 55
+    CONST          ir ao estado 114
 
 
-Estado 84
+Estado 83
 
-   65 aritExp: terminal MINUS • exp
-
-    ID              deslocar, e ir ao estado 58
-    EXISTS          deslocar, e ir ao estado 33
-    ADD             deslocar, e ir ao estado 34
-    REMOVE          deslocar, e ir ao estado 35
-    INTEGER         deslocar, e ir ao estado 38
-    FLOAT           deslocar, e ir ao estado 39
-    NEGATION        deslocar, e ir ao estado 40
-    PARENTESES_INI  deslocar, e ir ao estado 41
-
-    exp            ir ao estado 114
-    assignmentExp  ir ao estado 51
-    setExp         ir ao estado 52
-    aritExp        ir ao estado 53
-    relExp         ir ao estado 54
-    terminal       ir ao estado 55
-
-
-Estado 85
-
-   63 aritExp: terminal MULT • exp
+   65 aritExp: terminal PLUS • exp
 
     ID              deslocar, e ir ao estado 58
     EXISTS          deslocar, e ir ao estado 33
@@ -1451,9 +1418,9 @@ Estado 85
     terminal       ir ao estado 55
 
 
-Estado 86
+Estado 84
 
-   66 aritExp: terminal DIV • exp
+   66 aritExp: terminal MINUS • exp
 
     ID              deslocar, e ir ao estado 58
     EXISTS          deslocar, e ir ao estado 33
@@ -1472,9 +1439,9 @@ Estado 86
     terminal       ir ao estado 55
 
 
-Estado 87
+Estado 85
 
-   67 relExp: terminal rel • exp
+   64 aritExp: terminal MULT • exp
 
     ID              deslocar, e ir ao estado 58
     EXISTS          deslocar, e ir ao estado 33
@@ -1493,11 +1460,53 @@ Estado 87
     terminal       ir ao estado 55
 
 
+Estado 86
+
+   67 aritExp: terminal DIV • exp
+
+    ID              deslocar, e ir ao estado 58
+    EXISTS          deslocar, e ir ao estado 33
+    ADD             deslocar, e ir ao estado 34
+    REMOVE          deslocar, e ir ao estado 35
+    INTEGER         deslocar, e ir ao estado 38
+    FLOAT           deslocar, e ir ao estado 39
+    NEGATION        deslocar, e ir ao estado 40
+    PARENTESES_INI  deslocar, e ir ao estado 41
+
+    exp            ir ao estado 118
+    assignmentExp  ir ao estado 51
+    setExp         ir ao estado 52
+    aritExp        ir ao estado 53
+    relExp         ir ao estado 54
+    terminal       ir ao estado 55
+
+
+Estado 87
+
+   68 relExp: terminal rel • exp
+
+    ID              deslocar, e ir ao estado 58
+    EXISTS          deslocar, e ir ao estado 33
+    ADD             deslocar, e ir ao estado 34
+    REMOVE          deslocar, e ir ao estado 35
+    INTEGER         deslocar, e ir ao estado 38
+    FLOAT           deslocar, e ir ao estado 39
+    NEGATION        deslocar, e ir ao estado 40
+    PARENTESES_INI  deslocar, e ir ao estado 41
+
+    exp            ir ao estado 119
+    assignmentExp  ir ao estado 51
+    setExp         ir ao estado 52
+    aritExp        ir ao estado 53
+    relExp         ir ao estado 54
+    terminal       ir ao estado 55
+
+
 Estado 88
 
    29 callFuncStatement: ID PARENTESES_INI call_params • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 118
+    PARENTESES_FIM  deslocar, e ir ao estado 120
 
 
 Estado 89
@@ -1512,7 +1521,7 @@ Estado 90
    31 call_params_list: call_param • COLON call_params_list
    32                 | call_param •
 
-    COLON  deslocar, e ir ao estado 119
+    COLON  deslocar, e ir ao estado 121
 
     PARENTESES_FIM  reduzir usando a regra 32 (call_params_list)
 
@@ -1556,112 +1565,112 @@ Estado 93
    46            | IF PARENTESES_INI exp • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    47            | IF PARENTESES_INI exp • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 120
+    PARENTESES_FIM  deslocar, e ir ao estado 122
 
 
 Estado 94
 
    37 outPutStatement: WRITE PARENTESES_INI CHAR • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 121
+    PARENTESES_FIM  deslocar, e ir ao estado 123
 
 
 Estado 95
 
    36 outPutStatement: WRITE PARENTESES_INI STRING • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 122
+    PARENTESES_FIM  deslocar, e ir ao estado 124
 
 
 Estado 96
 
    38 outPutStatement: WRITE PARENTESES_INI exp • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 123
+    PARENTESES_FIM  deslocar, e ir ao estado 125
 
 
 Estado 97
 
    40 outPutStatement: WRITELN PARENTESES_INI CHAR • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 124
+    PARENTESES_FIM  deslocar, e ir ao estado 126
 
 
 Estado 98
 
    39 outPutStatement: WRITELN PARENTESES_INI STRING • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 125
+    PARENTESES_FIM  deslocar, e ir ao estado 127
 
 
 Estado 99
 
    41 outPutStatement: WRITELN PARENTESES_INI exp • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 126
+    PARENTESES_FIM  deslocar, e ir ao estado 128
 
 
 Estado 100
 
    35 inputStatement: READ PARENTESES_INI ID • PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 127
+    PARENTESES_FIM  deslocar, e ir ao estado 129
 
 
 Estado 101
 
-   59 aritSetExp: ID •
-
-    IN  reduzir usando a regra 59 (aritSetExp)
-
-
-Estado 102
-
-   61 aritSetExp: INTEGER •
-
-    IN  reduzir usando a regra 61 (aritSetExp)
-
-
-Estado 103
-
-   60 aritSetExp: FLOAT •
+   60 aritSetExp: ID •
 
     IN  reduzir usando a regra 60 (aritSetExp)
 
 
+Estado 102
+
+   62 aritSetExp: INTEGER •
+
+    IN  reduzir usando a regra 62 (aritSetExp)
+
+
+Estado 103
+
+   61 aritSetExp: FLOAT •
+
+    IN  reduzir usando a regra 61 (aritSetExp)
+
+
 Estado 104
 
-   62 aritSetExp: PARENTESES_INI • EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI • EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
-    EXISTS  deslocar, e ir ao estado 128
+    EXISTS  deslocar, e ir ao estado 130
 
 
 Estado 105
 
-   57 setExp: EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
 
-    IN  deslocar, e ir ao estado 129
+    IN  deslocar, e ir ao estado 131
 
 
 Estado 106
 
-   58 terms_set: aritSetExp •
+   59 terms_set: aritSetExp •
 
-    IN  reduzir usando a regra 58 (terms_set)
+    IN  reduzir usando a regra 59 (terms_set)
 
 
 Estado 107
 
-   55 setExp: ADD PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
+   56 setExp: ADD PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
 
-    IN  deslocar, e ir ao estado 130
+    IN  deslocar, e ir ao estado 132
 
 
 Estado 108
 
-   56 setExp: REMOVE PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
+   57 setExp: REMOVE PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
 
-    IN  deslocar, e ir ao estado 131
+    IN  deslocar, e ir ao estado 133
 
 
 Estado 109
@@ -1669,7 +1678,7 @@ Estado 109
    27 forStatement: FOR PARENTESES_INI exp • SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp • SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement
 
-    SEMICOLON  deslocar, e ir ao estado 132
+    SEMICOLON  deslocar, e ir ao estado 134
 
 
 Estado 110
@@ -1677,128 +1686,142 @@ Estado 110
    42 forAllStatement: FORALL PARENTESES_INI ID • IN ID PARENTESES_FIM statement
    43                | FORALL PARENTESES_INI ID • IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
 
-    IN  deslocar, e ir ao estado 133
+    IN  deslocar, e ir ao estado 135
 
 
 Estado 111
 
-   78 terminal: PARENTESES_INI exp PARENTESES_FIM •
+   79 terminal: PARENTESES_INI exp PARENTESES_FIM •
 
-    CLE        reduzir usando a regra 78 (terminal)
-    CLT        reduzir usando a regra 78 (terminal)
-    CNE        reduzir usando a regra 78 (terminal)
-    CGT        reduzir usando a regra 78 (terminal)
-    AND        reduzir usando a regra 78 (terminal)
-    CEQ        reduzir usando a regra 78 (terminal)
-    CGE        reduzir usando a regra 78 (terminal)
-    EQUALS     reduzir usando a regra 78 (terminal)
-    SEMICOLON  reduzir usando a regra 78 (terminal)
-    PLUS       reduzir usando a regra 78 (terminal)
-    MINUS      reduzir usando a regra 78 (terminal)
-    MULT       reduzir usando a regra 78 (terminal)
-    DIV        reduzir usando a regra 78 (terminal)
+    CLE        reduzir usando a regra 79 (terminal)
+    CLT        reduzir usando a regra 79 (terminal)
+    CNE        reduzir usando a regra 79 (terminal)
+    CGT        reduzir usando a regra 79 (terminal)
+    AND        reduzir usando a regra 79 (terminal)
+    CEQ        reduzir usando a regra 79 (terminal)
+    CGE        reduzir usando a regra 79 (terminal)
+    EQUALS     reduzir usando a regra 79 (terminal)
+    SEMICOLON  reduzir usando a regra 79 (terminal)
+    PLUS       reduzir usando a regra 79 (terminal)
+    MINUS      reduzir usando a regra 79 (terminal)
+    MULT       reduzir usando a regra 79 (terminal)
+    DIV        reduzir usando a regra 79 (terminal)
 
 
 Estado 112
+
+   80 CONST: EMPTY •
+
+    SEMICOLON  reduzir usando a regra 80 (CONST)
+
+
+Estado 113
 
    54 assignmentExp: terminal EQUALS exp •
 
     SEMICOLON  reduzir usando a regra 54 (assignmentExp)
 
 
-Estado 113
-
-   64 aritExp: terminal PLUS exp •
-
-    SEMICOLON  reduzir usando a regra 64 (aritExp)
-
-
 Estado 114
 
-   65 aritExp: terminal MINUS exp •
+   55 assignmentExp: terminal EQUALS CONST •
 
-    SEMICOLON  reduzir usando a regra 65 (aritExp)
+    SEMICOLON  reduzir usando a regra 55 (assignmentExp)
 
 
 Estado 115
 
-   63 aritExp: terminal MULT exp •
+   65 aritExp: terminal PLUS exp •
 
-    SEMICOLON  reduzir usando a regra 63 (aritExp)
+    SEMICOLON  reduzir usando a regra 65 (aritExp)
 
 
 Estado 116
 
-   66 aritExp: terminal DIV exp •
+   66 aritExp: terminal MINUS exp •
 
     SEMICOLON  reduzir usando a regra 66 (aritExp)
 
 
 Estado 117
 
-   67 relExp: terminal rel exp •
+   64 aritExp: terminal MULT exp •
 
-    SEMICOLON  reduzir usando a regra 67 (relExp)
+    SEMICOLON  reduzir usando a regra 64 (aritExp)
 
 
 Estado 118
+
+   67 aritExp: terminal DIV exp •
+
+    SEMICOLON  reduzir usando a regra 67 (aritExp)
+
+
+Estado 119
+
+   68 relExp: terminal rel exp •
+
+    SEMICOLON  reduzir usando a regra 68 (relExp)
+
+
+Estado 120
 
    29 callFuncStatement: ID PARENTESES_INI call_params PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 29 (callFuncStatement)
 
 
-Estado 119
+Estado 121
 
    31 call_params_list: call_param COLON • call_params_list
 
-    ID              deslocar, e ir ao estado 186
-    INTEGER         deslocar, e ir ao estado 187
-    FLOAT           deslocar, e ir ao estado 188
-    PARENTESES_INI  deslocar, e ir ao estado 189
+    ID              deslocar, e ir ao estado 188
+    INTEGER         deslocar, e ir ao estado 189
+    FLOAT           deslocar, e ir ao estado 190
+    PARENTESES_INI  deslocar, e ir ao estado 191
 
     PARENTESES_FIM  reduzir usando a regra 33 (call_params_list)
 
-    call_params_list  ir ao estado 134
+    call_params_list  ir ao estado 136
     call_param        ir ao estado 90
     terminal          ir ao estado 91
 
 
-Estado 120
+Estado 122
 
    44 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM • statement
    45            | IF PARENTESES_INI exp PARENTESES_FIM • statement ELSE statement
    46            | IF PARENTESES_INI exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
    47            | IF PARENTESES_INI exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    error           deslocar, e ir ao estado 190
-    TYPE            deslocar, e ir ao estado 191
+    error           deslocar, e ir ao estado 192
+    TYPE            deslocar, e ir ao estado 193
     ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 192
-    IF              deslocar, e ir ao estado 193
+    RETURN          deslocar, e ir ao estado 194
+    IF              deslocar, e ir ao estado 195
     WRITE           deslocar, e ir ao estado 30
     WRITELN         deslocar, e ir ao estado 31
     READ            deslocar, e ir ao estado 32
     EXISTS          deslocar, e ir ao estado 33
     ADD             deslocar, e ir ao estado 34
     REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 194
-    FORALL          deslocar, e ir ao estado 195
+    FOR             deslocar, e ir ao estado 196
+    FORALL          deslocar, e ir ao estado 197
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_INI      deslocar, e ir ao estado 135
+    CHAVES_INI      deslocar, e ir ao estado 137
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    variable_declaration  ir ao estado 196
-    statement             ir ao estado 136
-    forStatement          ir ao estado 197
-    callFuncStatement     ir ao estado 198
-    inputStatement        ir ao estado 199
-    outPutStatement       ir ao estado 200
-    forAllStatement       ir ao estado 201
-    ifStatement           ir ao estado 202
-    exp                   ir ao estado 203
+    variable_declaration  ir ao estado 198
+    statement             ir ao estado 138
+    forStatement          ir ao estado 199
+    callFuncStatement     ir ao estado 200
+    inputStatement        ir ao estado 201
+    outPutStatement       ir ao estado 202
+    forAllStatement       ir ao estado 203
+    ifStatement           ir ao estado 204
+    exp                   ir ao estado 205
     assignmentExp         ir ao estado 51
     setExp                ir ao estado 52
     aritExp               ir ao estado 53
@@ -1806,102 +1829,102 @@ Estado 120
     terminal              ir ao estado 55
 
 
-Estado 121
+Estado 123
 
    37 outPutStatement: WRITE PARENTESES_INI CHAR PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 37 (outPutStatement)
 
 
-Estado 122
+Estado 124
 
    36 outPutStatement: WRITE PARENTESES_INI STRING PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 36 (outPutStatement)
 
 
-Estado 123
+Estado 125
 
    38 outPutStatement: WRITE PARENTESES_INI exp PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 38 (outPutStatement)
 
 
-Estado 124
+Estado 126
 
    40 outPutStatement: WRITELN PARENTESES_INI CHAR PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 40 (outPutStatement)
 
 
-Estado 125
+Estado 127
 
    39 outPutStatement: WRITELN PARENTESES_INI STRING PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 39 (outPutStatement)
 
 
-Estado 126
+Estado 128
 
    41 outPutStatement: WRITELN PARENTESES_INI exp PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 41 (outPutStatement)
 
 
-Estado 127
+Estado 129
 
    35 inputStatement: READ PARENTESES_INI ID PARENTESES_FIM •
 
     SEMICOLON  reduzir usando a regra 35 (inputStatement)
 
 
-Estado 128
-
-   62 aritSetExp: PARENTESES_INI EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
-
-    PARENTESES_INI  deslocar, e ir ao estado 137
-
-
-Estado 129
-
-   57 setExp: EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
-
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
-
-    terms_set   ir ao estado 138
-    aritSetExp  ir ao estado 208
-
-
 Estado 130
 
-   55 setExp: ADD PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
-
-    terms_set   ir ao estado 139
-    aritSetExp  ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 139
 
 
 Estado 131
 
-   56 setExp: REMOVE PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
 
     terms_set   ir ao estado 140
-    aritSetExp  ir ao estado 208
+    aritSetExp  ir ao estado 210
 
 
 Estado 132
+
+   56 setExp: ADD PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
+
+    terms_set   ir ao estado 141
+    aritSetExp  ir ao estado 210
+
+
+Estado 133
+
+   57 setExp: REMOVE PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
+
+    terms_set   ir ao estado 142
+    aritSetExp  ir ao estado 210
+
+
+Estado 134
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON • exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON • exp SEMICOLON exp PARENTESES_FIM statement
@@ -1915,7 +1938,7 @@ Estado 132
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    exp            ir ao estado 141
+    exp            ir ao estado 143
     assignmentExp  ir ao estado 51
     setExp         ir ao estado 52
     aritExp        ir ao estado 53
@@ -1923,22 +1946,22 @@ Estado 132
     terminal       ir ao estado 55
 
 
-Estado 133
+Estado 135
 
    42 forAllStatement: FORALL PARENTESES_INI ID IN • ID PARENTESES_FIM statement
    43                | FORALL PARENTESES_INI ID IN • ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
 
-    ID  deslocar, e ir ao estado 142
+    ID  deslocar, e ir ao estado 144
 
 
-Estado 134
+Estado 136
 
    31 call_params_list: call_param COLON call_params_list •
 
     PARENTESES_FIM  reduzir usando a regra 31 (call_params_list)
 
 
-Estado 135
+Estado 137
 
    46 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
    47            | IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
@@ -1962,15 +1985,15 @@ Estado 135
     CHAVES_FIM      reduzir usando a regra 17 (statement_list)
     PARENTESES_INI  reduzir usando a regra 17 (statement_list)
 
-    statement_list  ir ao estado 143
+    statement_list  ir ao estado 145
 
 
-Estado 136
+Estado 138
 
    44 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM statement •
    45            | IF PARENTESES_INI exp PARENTESES_FIM statement • ELSE statement
 
-    ELSE  deslocar, e ir ao estado 144
+    ELSE  deslocar, e ir ao estado 146
 
     error           reduzir usando a regra 44 (ifStatement)
     TYPE            reduzir usando a regra 44 (ifStatement)
@@ -1992,63 +2015,63 @@ Estado 136
     PARENTESES_INI  reduzir usando a regra 44 (ifStatement)
 
 
-Estado 137
+Estado 139
 
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
     ID              deslocar, e ir ao estado 101
     INTEGER         deslocar, e ir ao estado 102
     FLOAT           deslocar, e ir ao estado 103
     PARENTESES_INI  deslocar, e ir ao estado 104
 
-    terms_set   ir ao estado 145
+    terms_set   ir ao estado 147
     aritSetExp  ir ao estado 106
-
-
-Estado 138
-
-   57 setExp: EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 146
-
-
-Estado 139
-
-   55 setExp: ADD PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 147
 
 
 Estado 140
 
-   56 setExp: REMOVE PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
 
     PARENTESES_FIM  deslocar, e ir ao estado 148
 
 
 Estado 141
 
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp • SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
-   28             | FOR PARENTESES_INI exp SEMICOLON exp • SEMICOLON exp PARENTESES_FIM statement
+   56 setExp: ADD PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
 
-    SEMICOLON  deslocar, e ir ao estado 149
+    PARENTESES_FIM  deslocar, e ir ao estado 149
 
 
 Estado 142
 
-   42 forAllStatement: FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM statement
-   43                | FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+   57 setExp: REMOVE PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
 
     PARENTESES_FIM  deslocar, e ir ao estado 150
 
 
 Estado 143
 
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp • SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+   28             | FOR PARENTESES_INI exp SEMICOLON exp • SEMICOLON exp PARENTESES_FIM statement
+
+    SEMICOLON  deslocar, e ir ao estado 151
+
+
+Estado 144
+
+   42 forAllStatement: FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM statement
+   43                | FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+
+    PARENTESES_FIM  deslocar, e ir ao estado 152
+
+
+Estado 145
+
    16 statement_list: statement_list • statement
    46 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
    47            | IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -2064,7 +2087,7 @@ Estado 143
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 151
+    CHAVES_FIM      deslocar, e ir ao estado 153
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
@@ -2083,11 +2106,11 @@ Estado 143
     terminal              ir ao estado 55
 
 
-Estado 144
+Estado 146
 
    45 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM statement ELSE • statement
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -2106,7 +2129,7 @@ Estado 144
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
-    statement             ir ao estado 152
+    statement             ir ao estado 154
     forStatement          ir ao estado 44
     callFuncStatement     ir ao estado 45
     inputStatement        ir ao estado 46
@@ -2119,64 +2142,64 @@ Estado 144
     aritExp               ir ao estado 53
     relExp                ir ao estado 54
     terminal              ir ao estado 55
-
-
-Estado 145
-
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM PARENTESES_FIM
-
-    IN  deslocar, e ir ao estado 153
-
-
-Estado 146
-
-   57 setExp: EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
-
-    SEMICOLON  reduzir usando a regra 57 (setExp)
 
 
 Estado 147
 
-   55 setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM PARENTESES_FIM
 
-    SEMICOLON  reduzir usando a regra 55 (setExp)
+    IN  deslocar, e ir ao estado 155
 
 
 Estado 148
 
-   56 setExp: REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
+   58 setExp: EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
 
-    SEMICOLON  reduzir usando a regra 56 (setExp)
+    SEMICOLON  reduzir usando a regra 58 (setExp)
 
 
 Estado 149
 
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
-   28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON • exp PARENTESES_FIM statement
+   56 setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
-
-    exp            ir ao estado 154
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    SEMICOLON  reduzir usando a regra 56 (setExp)
 
 
 Estado 150
 
+   57 setExp: REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
+
+    SEMICOLON  reduzir usando a regra 57 (setExp)
+
+
+Estado 151
+
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+   28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON • exp PARENTESES_FIM statement
+
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+
+    exp            ir ao estado 156
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
+
+
+Estado 152
+
    42 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM • statement
    43                | FORALL PARENTESES_INI ID IN ID PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -2192,11 +2215,11 @@ Estado 150
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_INI      deslocar, e ir ao estado 155
+    CHAVES_INI      deslocar, e ir ao estado 157
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
-    statement             ir ao estado 156
+    statement             ir ao estado 158
     forStatement          ir ao estado 44
     callFuncStatement     ir ao estado 45
     inputStatement        ir ao estado 46
@@ -2211,12 +2234,12 @@ Estado 150
     terminal              ir ao estado 55
 
 
-Estado 151
+Estado 153
 
    46 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
    47            | IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM • ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    ELSE  deslocar, e ir ao estado 157
+    ELSE  deslocar, e ir ao estado 159
 
     error           reduzir usando a regra 46 (ifStatement)
     TYPE            reduzir usando a regra 46 (ifStatement)
@@ -2238,7 +2261,7 @@ Estado 151
     PARENTESES_INI  reduzir usando a regra 46 (ifStatement)
 
 
-Estado 152
+Estado 154
 
    45 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM statement ELSE statement •
 
@@ -2262,28 +2285,28 @@ Estado 152
     PARENTESES_INI  reduzir usando a regra 45 (ifStatement)
 
 
-Estado 153
+Estado 155
 
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
 
-    terms_set   ir ao estado 158
-    aritSetExp  ir ao estado 208
+    terms_set   ir ao estado 160
+    aritSetExp  ir ao estado 210
 
 
-Estado 154
+Estado 156
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp • PARENTESES_FIM statement
 
-    PARENTESES_FIM  deslocar, e ir ao estado 159
+    PARENTESES_FIM  deslocar, e ir ao estado 161
 
 
-Estado 155
+Estado 157
 
    43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
 
@@ -2306,10 +2329,10 @@ Estado 155
     CHAVES_FIM      reduzir usando a regra 17 (statement_list)
     PARENTESES_INI  reduzir usando a regra 17 (statement_list)
 
-    statement_list  ir ao estado 160
+    statement_list  ir ao estado 162
 
 
-Estado 156
+Estado 158
 
    42 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM statement •
 
@@ -2333,26 +2356,26 @@ Estado 156
     PARENTESES_INI  reduzir usando a regra 42 (forAllStatement)
 
 
-Estado 157
+Estado 159
 
    47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE • CHAVES_INI statement_list CHAVES_FIM
 
-    CHAVES_INI  deslocar, e ir ao estado 161
+    CHAVES_INI  deslocar, e ir ao estado 163
 
 
-Estado 158
+Estado 160
 
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 162
+    PARENTESES_FIM  deslocar, e ir ao estado 164
 
 
-Estado 159
+Estado 161
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM • statement
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -2368,11 +2391,11 @@ Estado 159
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_INI      deslocar, e ir ao estado 163
+    CHAVES_INI      deslocar, e ir ao estado 165
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
-    statement             ir ao estado 164
+    statement             ir ao estado 166
     forStatement          ir ao estado 44
     callFuncStatement     ir ao estado 45
     inputStatement        ir ao estado 46
@@ -2387,12 +2410,12 @@ Estado 159
     terminal              ir ao estado 55
 
 
-Estado 160
+Estado 162
 
    16 statement_list: statement_list • statement
    43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -2408,7 +2431,7 @@ Estado 160
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 165
+    CHAVES_FIM      deslocar, e ir ao estado 167
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
@@ -2427,42 +2450,9 @@ Estado 160
     terminal              ir ao estado 55
 
 
-Estado 161
-
-   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI • statement_list CHAVES_FIM
-
-    error           reduzir usando a regra 17 (statement_list)
-    TYPE            reduzir usando a regra 17 (statement_list)
-    ID              reduzir usando a regra 17 (statement_list)
-    RETURN          reduzir usando a regra 17 (statement_list)
-    IF              reduzir usando a regra 17 (statement_list)
-    WRITE           reduzir usando a regra 17 (statement_list)
-    WRITELN         reduzir usando a regra 17 (statement_list)
-    READ            reduzir usando a regra 17 (statement_list)
-    EXISTS          reduzir usando a regra 17 (statement_list)
-    ADD             reduzir usando a regra 17 (statement_list)
-    REMOVE          reduzir usando a regra 17 (statement_list)
-    FOR             reduzir usando a regra 17 (statement_list)
-    FORALL          reduzir usando a regra 17 (statement_list)
-    INTEGER         reduzir usando a regra 17 (statement_list)
-    FLOAT           reduzir usando a regra 17 (statement_list)
-    NEGATION        reduzir usando a regra 17 (statement_list)
-    CHAVES_FIM      reduzir usando a regra 17 (statement_list)
-    PARENTESES_INI  reduzir usando a regra 17 (statement_list)
-
-    statement_list  ir ao estado 166
-
-
-Estado 162
-
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 167
-
-
 Estado 163
 
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
+   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI • statement_list CHAVES_FIM
 
     error           reduzir usando a regra 17 (statement_list)
     TYPE            reduzir usando a regra 17 (statement_list)
@@ -2488,6 +2478,39 @@ Estado 163
 
 Estado 164
 
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM • PARENTESES_FIM
+
+    PARENTESES_FIM  deslocar, e ir ao estado 169
+
+
+Estado 165
+
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
+
+    error           reduzir usando a regra 17 (statement_list)
+    TYPE            reduzir usando a regra 17 (statement_list)
+    ID              reduzir usando a regra 17 (statement_list)
+    RETURN          reduzir usando a regra 17 (statement_list)
+    IF              reduzir usando a regra 17 (statement_list)
+    WRITE           reduzir usando a regra 17 (statement_list)
+    WRITELN         reduzir usando a regra 17 (statement_list)
+    READ            reduzir usando a regra 17 (statement_list)
+    EXISTS          reduzir usando a regra 17 (statement_list)
+    ADD             reduzir usando a regra 17 (statement_list)
+    REMOVE          reduzir usando a regra 17 (statement_list)
+    FOR             reduzir usando a regra 17 (statement_list)
+    FORALL          reduzir usando a regra 17 (statement_list)
+    INTEGER         reduzir usando a regra 17 (statement_list)
+    FLOAT           reduzir usando a regra 17 (statement_list)
+    NEGATION        reduzir usando a regra 17 (statement_list)
+    CHAVES_FIM      reduzir usando a regra 17 (statement_list)
+    PARENTESES_INI  reduzir usando a regra 17 (statement_list)
+
+    statement_list  ir ao estado 170
+
+
+Estado 166
+
    28 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement •
 
     error           reduzir usando a regra 28 (forStatement)
@@ -2510,7 +2533,7 @@ Estado 164
     PARENTESES_INI  reduzir usando a regra 28 (forStatement)
 
 
-Estado 165
+Estado 167
 
    43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
 
@@ -2534,12 +2557,12 @@ Estado 165
     PARENTESES_INI  reduzir usando a regra 43 (forAllStatement)
 
 
-Estado 166
+Estado 168
 
    16 statement_list: statement_list • statement
    47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list • CHAVES_FIM
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -2555,54 +2578,7 @@ Estado 166
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 169
-    PARENTESES_INI  deslocar, e ir ao estado 41
-
-    variable_declaration  ir ao estado 42
-    statement             ir ao estado 43
-    forStatement          ir ao estado 44
-    callFuncStatement     ir ao estado 45
-    inputStatement        ir ao estado 46
-    outPutStatement       ir ao estado 47
-    forAllStatement       ir ao estado 48
-    ifStatement           ir ao estado 49
-    exp                   ir ao estado 50
-    assignmentExp         ir ao estado 51
-    setExp                ir ao estado 52
-    aritExp               ir ao estado 53
-    relExp                ir ao estado 54
-    terminal              ir ao estado 55
-
-
-Estado 167
-
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM •
-
-    IN  reduzir usando a regra 62 (aritSetExp)
-
-
-Estado 168
-
-   16 statement_list: statement_list • statement
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
-
-    error           deslocar, e ir ao estado 171
-    TYPE            deslocar, e ir ao estado 26
-    ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 28
-    IF              deslocar, e ir ao estado 29
-    WRITE           deslocar, e ir ao estado 30
-    WRITELN         deslocar, e ir ao estado 31
-    READ            deslocar, e ir ao estado 32
-    EXISTS          deslocar, e ir ao estado 33
-    ADD             deslocar, e ir ao estado 34
-    REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 36
-    FORALL          deslocar, e ir ao estado 37
-    INTEGER         deslocar, e ir ao estado 38
-    FLOAT           deslocar, e ir ao estado 39
-    NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 170
+    CHAVES_FIM      deslocar, e ir ao estado 171
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
@@ -2622,6 +2598,53 @@ Estado 168
 
 
 Estado 169
+
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM •
+
+    IN  reduzir usando a regra 63 (aritSetExp)
+
+
+Estado 170
+
+   16 statement_list: statement_list • statement
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
+
+    error           deslocar, e ir ao estado 173
+    TYPE            deslocar, e ir ao estado 26
+    ID              deslocar, e ir ao estado 27
+    RETURN          deslocar, e ir ao estado 28
+    IF              deslocar, e ir ao estado 29
+    WRITE           deslocar, e ir ao estado 30
+    WRITELN         deslocar, e ir ao estado 31
+    READ            deslocar, e ir ao estado 32
+    EXISTS          deslocar, e ir ao estado 33
+    ADD             deslocar, e ir ao estado 34
+    REMOVE          deslocar, e ir ao estado 35
+    FOR             deslocar, e ir ao estado 36
+    FORALL          deslocar, e ir ao estado 37
+    INTEGER         deslocar, e ir ao estado 38
+    FLOAT           deslocar, e ir ao estado 39
+    NEGATION        deslocar, e ir ao estado 40
+    CHAVES_FIM      deslocar, e ir ao estado 172
+    PARENTESES_INI  deslocar, e ir ao estado 41
+
+    variable_declaration  ir ao estado 42
+    statement             ir ao estado 43
+    forStatement          ir ao estado 44
+    callFuncStatement     ir ao estado 45
+    inputStatement        ir ao estado 46
+    outPutStatement       ir ao estado 47
+    forAllStatement       ir ao estado 48
+    ifStatement           ir ao estado 49
+    exp                   ir ao estado 50
+    assignmentExp         ir ao estado 51
+    setExp                ir ao estado 52
+    aritExp               ir ao estado 53
+    relExp                ir ao estado 54
+    terminal              ir ao estado 55
+
+
+Estado 171
 
    47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM •
 
@@ -2645,7 +2668,7 @@ Estado 169
     PARENTESES_INI  reduzir usando a regra 47 (ifStatement)
 
 
-Estado 170
+Estado 172
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
 
@@ -2669,7 +2692,7 @@ Estado 170
     PARENTESES_INI  reduzir usando a regra 27 (forStatement)
 
 
-Estado 171
+Estado 173
 
     7 variable_declaration: error •
 
@@ -2693,68 +2716,9 @@ Estado 171
     PARENTESES_INI  reduzir usando a regra 7 (variable_declaration)
 
 
-Estado 172
-
-   75 terminal: ID •
-
-    CLE             reduzir usando a regra 75 (terminal)
-    CLT             reduzir usando a regra 75 (terminal)
-    CNE             reduzir usando a regra 75 (terminal)
-    CGT             reduzir usando a regra 75 (terminal)
-    AND             reduzir usando a regra 75 (terminal)
-    CEQ             reduzir usando a regra 75 (terminal)
-    CGE             reduzir usando a regra 75 (terminal)
-    EQUALS          reduzir usando a regra 75 (terminal)
-    PARENTESES_FIM  reduzir usando a regra 75 (terminal)
-    PLUS            reduzir usando a regra 75 (terminal)
-    MINUS           reduzir usando a regra 75 (terminal)
-    MULT            reduzir usando a regra 75 (terminal)
-    DIV             reduzir usando a regra 75 (terminal)
-
-
-Estado 173
-
-   57 setExp: EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
-
-    PARENTESES_INI  deslocar, e ir ao estado 209
-
-
 Estado 174
 
-   55 setExp: ADD • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
-
-    PARENTESES_INI  deslocar, e ir ao estado 210
-
-
-Estado 175
-
-   56 setExp: REMOVE • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
-
-    PARENTESES_INI  deslocar, e ir ao estado 211
-
-
-Estado 176
-
-   77 terminal: INTEGER •
-
-    CLE             reduzir usando a regra 77 (terminal)
-    CLT             reduzir usando a regra 77 (terminal)
-    CNE             reduzir usando a regra 77 (terminal)
-    CGT             reduzir usando a regra 77 (terminal)
-    AND             reduzir usando a regra 77 (terminal)
-    CEQ             reduzir usando a regra 77 (terminal)
-    CGE             reduzir usando a regra 77 (terminal)
-    EQUALS          reduzir usando a regra 77 (terminal)
-    PARENTESES_FIM  reduzir usando a regra 77 (terminal)
-    PLUS            reduzir usando a regra 77 (terminal)
-    MINUS           reduzir usando a regra 77 (terminal)
-    MULT            reduzir usando a regra 77 (terminal)
-    DIV             reduzir usando a regra 77 (terminal)
-
-
-Estado 177
-
-   76 terminal: FLOAT •
+   76 terminal: ID •
 
     CLE             reduzir usando a regra 76 (terminal)
     CLT             reduzir usando a regra 76 (terminal)
@@ -2771,85 +2735,145 @@ Estado 177
     DIV             reduzir usando a regra 76 (terminal)
 
 
+Estado 175
+
+   58 setExp: EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+
+    PARENTESES_INI  deslocar, e ir ao estado 211
+
+
+Estado 176
+
+   56 setExp: ADD • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+
+    PARENTESES_INI  deslocar, e ir ao estado 212
+
+
+Estado 177
+
+   57 setExp: REMOVE • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM
+
+    PARENTESES_INI  deslocar, e ir ao estado 213
+
+
 Estado 178
 
-   48 exp: NEGATION • exp
+   78 terminal: INTEGER •
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
-
-    exp            ir ao estado 212
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    CLE             reduzir usando a regra 78 (terminal)
+    CLT             reduzir usando a regra 78 (terminal)
+    CNE             reduzir usando a regra 78 (terminal)
+    CGT             reduzir usando a regra 78 (terminal)
+    AND             reduzir usando a regra 78 (terminal)
+    CEQ             reduzir usando a regra 78 (terminal)
+    CGE             reduzir usando a regra 78 (terminal)
+    EQUALS          reduzir usando a regra 78 (terminal)
+    PARENTESES_FIM  reduzir usando a regra 78 (terminal)
+    PLUS            reduzir usando a regra 78 (terminal)
+    MINUS           reduzir usando a regra 78 (terminal)
+    MULT            reduzir usando a regra 78 (terminal)
+    DIV             reduzir usando a regra 78 (terminal)
 
 
 Estado 179
 
-   78 terminal: PARENTESES_INI • exp PARENTESES_FIM
+   77 terminal: FLOAT •
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
-
-    exp            ir ao estado 213
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    CLE             reduzir usando a regra 77 (terminal)
+    CLT             reduzir usando a regra 77 (terminal)
+    CNE             reduzir usando a regra 77 (terminal)
+    CGT             reduzir usando a regra 77 (terminal)
+    AND             reduzir usando a regra 77 (terminal)
+    CEQ             reduzir usando a regra 77 (terminal)
+    CGE             reduzir usando a regra 77 (terminal)
+    EQUALS          reduzir usando a regra 77 (terminal)
+    PARENTESES_FIM  reduzir usando a regra 77 (terminal)
+    PLUS            reduzir usando a regra 77 (terminal)
+    MINUS           reduzir usando a regra 77 (terminal)
+    MULT            reduzir usando a regra 77 (terminal)
+    DIV             reduzir usando a regra 77 (terminal)
 
 
 Estado 180
+
+   48 exp: NEGATION • exp
+
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+
+    exp            ir ao estado 214
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
+
+
+Estado 181
+
+   79 terminal: PARENTESES_INI • exp PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+
+    exp            ir ao estado 215
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
+
+
+Estado 182
 
    53 exp: assignmentExp •
 
     PARENTESES_FIM  reduzir usando a regra 53 (exp)
 
 
-Estado 181
+Estado 183
 
    49 exp: setExp •
 
     PARENTESES_FIM  reduzir usando a regra 49 (exp)
 
 
-Estado 182
+Estado 184
 
    50 exp: aritExp •
 
     PARENTESES_FIM  reduzir usando a regra 50 (exp)
 
 
-Estado 183
+Estado 185
 
    51 exp: relExp •
 
     PARENTESES_FIM  reduzir usando a regra 51 (exp)
 
 
-Estado 184
+Estado 186
 
    52 exp: terminal •
    54 assignmentExp: terminal • EQUALS exp
-   63 aritExp: terminal • MULT exp
-   64        | terminal • PLUS exp
-   65        | terminal • MINUS exp
-   66        | terminal • DIV exp
-   67 relExp: terminal • rel exp
+   55              | terminal • EQUALS CONST
+   64 aritExp: terminal • MULT exp
+   65        | terminal • PLUS exp
+   66        | terminal • MINUS exp
+   67        | terminal • DIV exp
+   68 relExp: terminal • rel exp
 
     CLE     deslocar, e ir ao estado 75
     CLT     deslocar, e ir ao estado 76
@@ -2858,18 +2882,18 @@ Estado 184
     AND     deslocar, e ir ao estado 79
     CEQ     deslocar, e ir ao estado 80
     CGE     deslocar, e ir ao estado 81
-    EQUALS  deslocar, e ir ao estado 214
-    PLUS    deslocar, e ir ao estado 215
-    MINUS   deslocar, e ir ao estado 216
-    MULT    deslocar, e ir ao estado 217
-    DIV     deslocar, e ir ao estado 218
+    EQUALS  deslocar, e ir ao estado 216
+    PLUS    deslocar, e ir ao estado 217
+    MINUS   deslocar, e ir ao estado 218
+    MULT    deslocar, e ir ao estado 219
+    DIV     deslocar, e ir ao estado 220
 
     PARENTESES_FIM  reduzir usando a regra 52 (exp)
 
-    rel  ir ao estado 219
+    rel  ir ao estado 221
 
 
-Estado 185
+Estado 187
 
     6 variable_declaration: TYPE ID SEMICOLON •
 
@@ -2893,25 +2917,9 @@ Estado 185
     PARENTESES_INI  reduzir usando a regra 6 (variable_declaration)
 
 
-Estado 186
-
-   75 terminal: ID •
-
-    PARENTESES_FIM  reduzir usando a regra 75 (terminal)
-    COLON           reduzir usando a regra 75 (terminal)
-
-
-Estado 187
-
-   77 terminal: INTEGER •
-
-    PARENTESES_FIM  reduzir usando a regra 77 (terminal)
-    COLON           reduzir usando a regra 77 (terminal)
-
-
 Estado 188
 
-   76 terminal: FLOAT •
+   76 terminal: ID •
 
     PARENTESES_FIM  reduzir usando a regra 76 (terminal)
     COLON           reduzir usando a regra 76 (terminal)
@@ -2919,26 +2927,42 @@ Estado 188
 
 Estado 189
 
-   78 terminal: PARENTESES_INI • exp PARENTESES_FIM
+   78 terminal: INTEGER •
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
-
-    exp            ir ao estado 220
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    PARENTESES_FIM  reduzir usando a regra 78 (terminal)
+    COLON           reduzir usando a regra 78 (terminal)
 
 
 Estado 190
+
+   77 terminal: FLOAT •
+
+    PARENTESES_FIM  reduzir usando a regra 77 (terminal)
+    COLON           reduzir usando a regra 77 (terminal)
+
+
+Estado 191
+
+   79 terminal: PARENTESES_INI • exp PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+
+    exp            ir ao estado 222
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
+
+
+Estado 192
 
     7 variable_declaration: error •
 
@@ -2963,14 +2987,14 @@ Estado 190
     PARENTESES_INI  reduzir usando a regra 7 (variable_declaration)
 
 
-Estado 191
+Estado 193
 
     6 variable_declaration: TYPE • ID SEMICOLON
 
-    ID  deslocar, e ir ao estado 221
+    ID  deslocar, e ir ao estado 223
 
 
-Estado 192
+Estado 194
 
    25 statement: RETURN • exp SEMICOLON
 
@@ -2983,7 +3007,7 @@ Estado 192
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    exp            ir ao estado 222
+    exp            ir ao estado 224
     assignmentExp  ir ao estado 51
     setExp         ir ao estado 52
     aritExp        ir ao estado 53
@@ -2991,33 +3015,33 @@ Estado 192
     terminal       ir ao estado 55
 
 
-Estado 193
+Estado 195
 
    44 ifStatement: IF • PARENTESES_INI exp PARENTESES_FIM statement
    45            | IF • PARENTESES_INI exp PARENTESES_FIM statement ELSE statement
    46            | IF • PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    47            | IF • PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    PARENTESES_INI  deslocar, e ir ao estado 223
-
-
-Estado 194
-
-   27 forStatement: FOR • PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
-   28             | FOR • PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement
-
-    PARENTESES_INI  deslocar, e ir ao estado 224
-
-
-Estado 195
-
-   42 forAllStatement: FORALL • PARENTESES_INI ID IN ID PARENTESES_FIM statement
-   43                | FORALL • PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
-
     PARENTESES_INI  deslocar, e ir ao estado 225
 
 
 Estado 196
+
+   27 forStatement: FOR • PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+   28             | FOR • PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement
+
+    PARENTESES_INI  deslocar, e ir ao estado 226
+
+
+Estado 197
+
+   42 forAllStatement: FORALL • PARENTESES_INI ID IN ID PARENTESES_FIM statement
+   43                | FORALL • PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+
+    PARENTESES_INI  deslocar, e ir ao estado 227
+
+
+Estado 198
 
    18 statement: variable_declaration •
 
@@ -3042,7 +3066,7 @@ Estado 196
     PARENTESES_INI  reduzir usando a regra 18 (statement)
 
 
-Estado 197
+Estado 199
 
    26 statement: forStatement •
 
@@ -3067,28 +3091,28 @@ Estado 197
     PARENTESES_INI  reduzir usando a regra 26 (statement)
 
 
-Estado 198
-
-   24 statement: callFuncStatement • SEMICOLON
-
-    SEMICOLON  deslocar, e ir ao estado 226
-
-
-Estado 199
-
-   23 statement: inputStatement • SEMICOLON
-
-    SEMICOLON  deslocar, e ir ao estado 227
-
-
 Estado 200
 
-   22 statement: outPutStatement • SEMICOLON
+   24 statement: callFuncStatement • SEMICOLON
 
     SEMICOLON  deslocar, e ir ao estado 228
 
 
 Estado 201
+
+   23 statement: inputStatement • SEMICOLON
+
+    SEMICOLON  deslocar, e ir ao estado 229
+
+
+Estado 202
+
+   22 statement: outPutStatement • SEMICOLON
+
+    SEMICOLON  deslocar, e ir ao estado 230
+
+
+Estado 203
 
    21 statement: forAllStatement •
 
@@ -3113,7 +3137,7 @@ Estado 201
     PARENTESES_INI  reduzir usando a regra 21 (statement)
 
 
-Estado 202
+Estado 204
 
    20 statement: ifStatement •
 
@@ -3138,77 +3162,51 @@ Estado 202
     PARENTESES_INI  reduzir usando a regra 20 (statement)
 
 
-Estado 203
+Estado 205
 
    19 statement: exp • SEMICOLON
 
-    SEMICOLON  deslocar, e ir ao estado 229
-
-
-Estado 204
-
-   59 aritSetExp: ID •
-
-    PARENTESES_FIM  reduzir usando a regra 59 (aritSetExp)
-
-
-Estado 205
-
-   61 aritSetExp: INTEGER •
-
-    PARENTESES_FIM  reduzir usando a regra 61 (aritSetExp)
+    SEMICOLON  deslocar, e ir ao estado 231
 
 
 Estado 206
 
-   60 aritSetExp: FLOAT •
+   60 aritSetExp: ID •
 
     PARENTESES_FIM  reduzir usando a regra 60 (aritSetExp)
 
 
 Estado 207
 
-   62 aritSetExp: PARENTESES_INI • EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+   62 aritSetExp: INTEGER •
 
-    EXISTS  deslocar, e ir ao estado 230
+    PARENTESES_FIM  reduzir usando a regra 62 (aritSetExp)
 
 
 Estado 208
 
-   58 terms_set: aritSetExp •
+   61 aritSetExp: FLOAT •
 
-    PARENTESES_FIM  reduzir usando a regra 58 (terms_set)
+    PARENTESES_FIM  reduzir usando a regra 61 (aritSetExp)
 
 
 Estado 209
 
-   57 setExp: EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI • EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 101
-    INTEGER         deslocar, e ir ao estado 102
-    FLOAT           deslocar, e ir ao estado 103
-    PARENTESES_INI  deslocar, e ir ao estado 104
-
-    terms_set   ir ao estado 231
-    aritSetExp  ir ao estado 106
+    EXISTS  deslocar, e ir ao estado 232
 
 
 Estado 210
 
-   55 setExp: ADD PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+   59 terms_set: aritSetExp •
 
-    ID              deslocar, e ir ao estado 101
-    INTEGER         deslocar, e ir ao estado 102
-    FLOAT           deslocar, e ir ao estado 103
-    PARENTESES_INI  deslocar, e ir ao estado 104
-
-    terms_set   ir ao estado 232
-    aritSetExp  ir ao estado 106
+    PARENTESES_FIM  reduzir usando a regra 59 (terms_set)
 
 
 Estado 211
 
-   56 setExp: REMOVE PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
 
     ID              deslocar, e ir ao estado 101
     INTEGER         deslocar, e ir ao estado 102
@@ -3221,190 +3219,219 @@ Estado 211
 
 Estado 212
 
+   56 setExp: ADD PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 101
+    INTEGER         deslocar, e ir ao estado 102
+    FLOAT           deslocar, e ir ao estado 103
+    PARENTESES_INI  deslocar, e ir ao estado 104
+
+    terms_set   ir ao estado 234
+    aritSetExp  ir ao estado 106
+
+
+Estado 213
+
+   57 setExp: REMOVE PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 101
+    INTEGER         deslocar, e ir ao estado 102
+    FLOAT           deslocar, e ir ao estado 103
+    PARENTESES_INI  deslocar, e ir ao estado 104
+
+    terms_set   ir ao estado 235
+    aritSetExp  ir ao estado 106
+
+
+Estado 214
+
    48 exp: NEGATION exp •
 
     PARENTESES_FIM  reduzir usando a regra 48 (exp)
 
 
-Estado 213
-
-   78 terminal: PARENTESES_INI exp • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 234
-
-
-Estado 214
-
-   54 assignmentExp: terminal EQUALS • exp
-
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
-
-    exp            ir ao estado 235
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
-
-
 Estado 215
 
-   64 aritExp: terminal PLUS • exp
+   79 terminal: PARENTESES_INI exp • PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
-
-    exp            ir ao estado 236
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    PARENTESES_FIM  deslocar, e ir ao estado 236
 
 
 Estado 216
 
-   65 aritExp: terminal MINUS • exp
+   54 assignmentExp: terminal EQUALS • exp
+   55              | terminal EQUALS • CONST
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+    EMPTY           deslocar, e ir ao estado 237
 
-    exp            ir ao estado 237
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    exp            ir ao estado 238
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
+    CONST          ir ao estado 239
 
 
 Estado 217
 
-   63 aritExp: terminal MULT • exp
+   65 aritExp: terminal PLUS • exp
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
-    exp            ir ao estado 238
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    exp            ir ao estado 240
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 218
 
-   66 aritExp: terminal DIV • exp
+   66 aritExp: terminal MINUS • exp
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
-    exp            ir ao estado 239
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    exp            ir ao estado 241
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 219
 
-   67 relExp: terminal rel • exp
+   64 aritExp: terminal MULT • exp
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
-    exp            ir ao estado 240
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    exp            ir ao estado 242
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 220
 
-   78 terminal: PARENTESES_INI exp • PARENTESES_FIM
+   67 aritExp: terminal DIV • exp
 
-    PARENTESES_FIM  deslocar, e ir ao estado 241
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+
+    exp            ir ao estado 243
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 221
 
-    6 variable_declaration: TYPE ID • SEMICOLON
+   68 relExp: terminal rel • exp
 
-    SEMICOLON  deslocar, e ir ao estado 242
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
+
+    exp            ir ao estado 244
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
 Estado 222
 
-   25 statement: RETURN exp • SEMICOLON
+   79 terminal: PARENTESES_INI exp • PARENTESES_FIM
 
-    SEMICOLON  deslocar, e ir ao estado 243
+    PARENTESES_FIM  deslocar, e ir ao estado 245
 
 
 Estado 223
+
+    6 variable_declaration: TYPE ID • SEMICOLON
+
+    SEMICOLON  deslocar, e ir ao estado 246
+
+
+Estado 224
+
+   25 statement: RETURN exp • SEMICOLON
+
+    SEMICOLON  deslocar, e ir ao estado 247
+
+
+Estado 225
 
    44 ifStatement: IF PARENTESES_INI • exp PARENTESES_FIM statement
    45            | IF PARENTESES_INI • exp PARENTESES_FIM statement ELSE statement
    46            | IF PARENTESES_INI • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    47            | IF PARENTESES_INI • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
-    exp            ir ao estado 244
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    exp            ir ao estado 248
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
-Estado 224
+Estado 226
 
    27 forStatement: FOR PARENTESES_INI • exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI • exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement
@@ -3418,7 +3445,7 @@ Estado 224
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    exp            ir ao estado 245
+    exp            ir ao estado 249
     assignmentExp  ir ao estado 51
     setExp         ir ao estado 52
     aritExp        ir ao estado 53
@@ -3426,15 +3453,15 @@ Estado 224
     terminal       ir ao estado 55
 
 
-Estado 225
+Estado 227
 
    42 forAllStatement: FORALL PARENTESES_INI • ID IN ID PARENTESES_FIM statement
    43                | FORALL PARENTESES_INI • ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
 
-    ID  deslocar, e ir ao estado 246
+    ID  deslocar, e ir ao estado 250
 
 
-Estado 226
+Estado 228
 
    24 statement: callFuncStatement SEMICOLON •
 
@@ -3459,7 +3486,7 @@ Estado 226
     PARENTESES_INI  reduzir usando a regra 24 (statement)
 
 
-Estado 227
+Estado 229
 
    23 statement: inputStatement SEMICOLON •
 
@@ -3484,7 +3511,7 @@ Estado 227
     PARENTESES_INI  reduzir usando a regra 23 (statement)
 
 
-Estado 228
+Estado 230
 
    22 statement: outPutStatement SEMICOLON •
 
@@ -3509,7 +3536,7 @@ Estado 228
     PARENTESES_INI  reduzir usando a regra 22 (statement)
 
 
-Estado 229
+Estado 231
 
    19 statement: exp SEMICOLON •
 
@@ -3534,104 +3561,118 @@ Estado 229
     PARENTESES_INI  reduzir usando a regra 19 (statement)
 
 
-Estado 230
-
-   62 aritSetExp: PARENTESES_INI EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
-
-    PARENTESES_INI  deslocar, e ir ao estado 247
-
-
-Estado 231
-
-   57 setExp: EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
-
-    IN  deslocar, e ir ao estado 248
-
-
 Estado 232
 
-   55 setExp: ADD PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS • PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
-    IN  deslocar, e ir ao estado 249
+    PARENTESES_INI  deslocar, e ir ao estado 251
 
 
 Estado 233
 
-   56 setExp: REMOVE PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
 
-    IN  deslocar, e ir ao estado 250
+    IN  deslocar, e ir ao estado 252
 
 
 Estado 234
 
-   78 terminal: PARENTESES_INI exp PARENTESES_FIM •
+   56 setExp: ADD PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
 
-    CLE             reduzir usando a regra 78 (terminal)
-    CLT             reduzir usando a regra 78 (terminal)
-    CNE             reduzir usando a regra 78 (terminal)
-    CGT             reduzir usando a regra 78 (terminal)
-    AND             reduzir usando a regra 78 (terminal)
-    CEQ             reduzir usando a regra 78 (terminal)
-    CGE             reduzir usando a regra 78 (terminal)
-    EQUALS          reduzir usando a regra 78 (terminal)
-    PARENTESES_FIM  reduzir usando a regra 78 (terminal)
-    PLUS            reduzir usando a regra 78 (terminal)
-    MINUS           reduzir usando a regra 78 (terminal)
-    MULT            reduzir usando a regra 78 (terminal)
-    DIV             reduzir usando a regra 78 (terminal)
+    IN  deslocar, e ir ao estado 253
 
 
 Estado 235
+
+   57 setExp: REMOVE PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM
+
+    IN  deslocar, e ir ao estado 254
+
+
+Estado 236
+
+   79 terminal: PARENTESES_INI exp PARENTESES_FIM •
+
+    CLE             reduzir usando a regra 79 (terminal)
+    CLT             reduzir usando a regra 79 (terminal)
+    CNE             reduzir usando a regra 79 (terminal)
+    CGT             reduzir usando a regra 79 (terminal)
+    AND             reduzir usando a regra 79 (terminal)
+    CEQ             reduzir usando a regra 79 (terminal)
+    CGE             reduzir usando a regra 79 (terminal)
+    EQUALS          reduzir usando a regra 79 (terminal)
+    PARENTESES_FIM  reduzir usando a regra 79 (terminal)
+    PLUS            reduzir usando a regra 79 (terminal)
+    MINUS           reduzir usando a regra 79 (terminal)
+    MULT            reduzir usando a regra 79 (terminal)
+    DIV             reduzir usando a regra 79 (terminal)
+
+
+Estado 237
+
+   80 CONST: EMPTY •
+
+    PARENTESES_FIM  reduzir usando a regra 80 (CONST)
+
+
+Estado 238
 
    54 assignmentExp: terminal EQUALS exp •
 
     PARENTESES_FIM  reduzir usando a regra 54 (assignmentExp)
 
 
-Estado 236
-
-   64 aritExp: terminal PLUS exp •
-
-    PARENTESES_FIM  reduzir usando a regra 64 (aritExp)
-
-
-Estado 237
-
-   65 aritExp: terminal MINUS exp •
-
-    PARENTESES_FIM  reduzir usando a regra 65 (aritExp)
-
-
-Estado 238
-
-   63 aritExp: terminal MULT exp •
-
-    PARENTESES_FIM  reduzir usando a regra 63 (aritExp)
-
-
 Estado 239
 
-   66 aritExp: terminal DIV exp •
+   55 assignmentExp: terminal EQUALS CONST •
 
-    PARENTESES_FIM  reduzir usando a regra 66 (aritExp)
+    PARENTESES_FIM  reduzir usando a regra 55 (assignmentExp)
 
 
 Estado 240
 
-   67 relExp: terminal rel exp •
+   65 aritExp: terminal PLUS exp •
 
-    PARENTESES_FIM  reduzir usando a regra 67 (relExp)
+    PARENTESES_FIM  reduzir usando a regra 65 (aritExp)
 
 
 Estado 241
 
-   78 terminal: PARENTESES_INI exp PARENTESES_FIM •
+   66 aritExp: terminal MINUS exp •
 
-    PARENTESES_FIM  reduzir usando a regra 78 (terminal)
-    COLON           reduzir usando a regra 78 (terminal)
+    PARENTESES_FIM  reduzir usando a regra 66 (aritExp)
 
 
 Estado 242
+
+   64 aritExp: terminal MULT exp •
+
+    PARENTESES_FIM  reduzir usando a regra 64 (aritExp)
+
+
+Estado 243
+
+   67 aritExp: terminal DIV exp •
+
+    PARENTESES_FIM  reduzir usando a regra 67 (aritExp)
+
+
+Estado 244
+
+   68 relExp: terminal rel exp •
+
+    PARENTESES_FIM  reduzir usando a regra 68 (relExp)
+
+
+Estado 245
+
+   79 terminal: PARENTESES_INI exp PARENTESES_FIM •
+
+    PARENTESES_FIM  reduzir usando a regra 79 (terminal)
+    COLON           reduzir usando a regra 79 (terminal)
+
+
+Estado 246
 
     6 variable_declaration: TYPE ID SEMICOLON •
 
@@ -3656,7 +3697,7 @@ Estado 242
     PARENTESES_INI  reduzir usando a regra 6 (variable_declaration)
 
 
-Estado 243
+Estado 247
 
    25 statement: RETURN exp SEMICOLON •
 
@@ -3681,119 +3722,119 @@ Estado 243
     PARENTESES_INI  reduzir usando a regra 25 (statement)
 
 
-Estado 244
+Estado 248
 
    44 ifStatement: IF PARENTESES_INI exp • PARENTESES_FIM statement
    45            | IF PARENTESES_INI exp • PARENTESES_FIM statement ELSE statement
    46            | IF PARENTESES_INI exp • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    47            | IF PARENTESES_INI exp • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 251
+    PARENTESES_FIM  deslocar, e ir ao estado 255
 
 
-Estado 245
+Estado 249
 
    27 forStatement: FOR PARENTESES_INI exp • SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp • SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement
 
-    SEMICOLON  deslocar, e ir ao estado 252
+    SEMICOLON  deslocar, e ir ao estado 256
 
 
-Estado 246
+Estado 250
 
    42 forAllStatement: FORALL PARENTESES_INI ID • IN ID PARENTESES_FIM statement
    43                | FORALL PARENTESES_INI ID • IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
 
-    IN  deslocar, e ir ao estado 253
+    IN  deslocar, e ir ao estado 257
 
 
-Estado 247
+Estado 251
 
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI • terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM
 
     ID              deslocar, e ir ao estado 101
     INTEGER         deslocar, e ir ao estado 102
     FLOAT           deslocar, e ir ao estado 103
     PARENTESES_INI  deslocar, e ir ao estado 104
 
-    terms_set   ir ao estado 254
+    terms_set   ir ao estado 258
     aritSetExp  ir ao estado 106
 
 
-Estado 248
+Estado 252
 
-   57 setExp: EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+   58 setExp: EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
 
-    terms_set   ir ao estado 255
-    aritSetExp  ir ao estado 208
-
-
-Estado 249
-
-   55 setExp: ADD PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
-
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
-
-    terms_set   ir ao estado 256
-    aritSetExp  ir ao estado 208
+    terms_set   ir ao estado 259
+    aritSetExp  ir ao estado 210
 
 
-Estado 250
+Estado 253
 
-   56 setExp: REMOVE PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+   56 setExp: ADD PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
 
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
 
-    terms_set   ir ao estado 257
-    aritSetExp  ir ao estado 208
+    terms_set   ir ao estado 260
+    aritSetExp  ir ao estado 210
 
 
-Estado 251
+Estado 254
+
+   57 setExp: REMOVE PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
+
+    terms_set   ir ao estado 261
+    aritSetExp  ir ao estado 210
+
+
+Estado 255
 
    44 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM • statement
    45            | IF PARENTESES_INI exp PARENTESES_FIM • statement ELSE statement
    46            | IF PARENTESES_INI exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
    47            | IF PARENTESES_INI exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    error           deslocar, e ir ao estado 190
-    TYPE            deslocar, e ir ao estado 191
+    error           deslocar, e ir ao estado 192
+    TYPE            deslocar, e ir ao estado 193
     ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 192
-    IF              deslocar, e ir ao estado 193
+    RETURN          deslocar, e ir ao estado 194
+    IF              deslocar, e ir ao estado 195
     WRITE           deslocar, e ir ao estado 30
     WRITELN         deslocar, e ir ao estado 31
     READ            deslocar, e ir ao estado 32
     EXISTS          deslocar, e ir ao estado 33
     ADD             deslocar, e ir ao estado 34
     REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 194
-    FORALL          deslocar, e ir ao estado 195
+    FOR             deslocar, e ir ao estado 196
+    FORALL          deslocar, e ir ao estado 197
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_INI      deslocar, e ir ao estado 258
+    CHAVES_INI      deslocar, e ir ao estado 262
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    variable_declaration  ir ao estado 196
-    statement             ir ao estado 259
-    forStatement          ir ao estado 197
-    callFuncStatement     ir ao estado 198
-    inputStatement        ir ao estado 199
-    outPutStatement       ir ao estado 200
-    forAllStatement       ir ao estado 201
-    ifStatement           ir ao estado 202
-    exp                   ir ao estado 203
+    variable_declaration  ir ao estado 198
+    statement             ir ao estado 263
+    forStatement          ir ao estado 199
+    callFuncStatement     ir ao estado 200
+    inputStatement        ir ao estado 201
+    outPutStatement       ir ao estado 202
+    forAllStatement       ir ao estado 203
+    ifStatement           ir ao estado 204
+    exp                   ir ao estado 205
     assignmentExp         ir ao estado 51
     setExp                ir ao estado 52
     aritExp               ir ao estado 53
@@ -3801,7 +3842,7 @@ Estado 251
     terminal              ir ao estado 55
 
 
-Estado 252
+Estado 256
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON • exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON • exp SEMICOLON exp PARENTESES_FIM statement
@@ -3815,7 +3856,7 @@ Estado 252
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    exp            ir ao estado 260
+    exp            ir ao estado 264
     assignmentExp  ir ao estado 51
     setExp         ir ao estado 52
     aritExp        ir ao estado 53
@@ -3823,43 +3864,43 @@ Estado 252
     terminal       ir ao estado 55
 
 
-Estado 253
+Estado 257
 
    42 forAllStatement: FORALL PARENTESES_INI ID IN • ID PARENTESES_FIM statement
    43                | FORALL PARENTESES_INI ID IN • ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
 
-    ID  deslocar, e ir ao estado 261
-
-
-Estado 254
-
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM PARENTESES_FIM
-
-    IN  deslocar, e ir ao estado 262
-
-
-Estado 255
-
-   57 setExp: EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 263
-
-
-Estado 256
-
-   55 setExp: ADD PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 264
-
-
-Estado 257
-
-   56 setExp: REMOVE PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 265
+    ID  deslocar, e ir ao estado 265
 
 
 Estado 258
+
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set • IN terms_set PARENTESES_FIM PARENTESES_FIM
+
+    IN  deslocar, e ir ao estado 266
+
+
+Estado 259
+
+   58 setExp: EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
+
+    PARENTESES_FIM  deslocar, e ir ao estado 267
+
+
+Estado 260
+
+   56 setExp: ADD PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
+
+    PARENTESES_FIM  deslocar, e ir ao estado 268
+
+
+Estado 261
+
+   57 setExp: REMOVE PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM
+
+    PARENTESES_FIM  deslocar, e ir ao estado 269
+
+
+Estado 262
 
    46 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
    47            | IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
@@ -3883,15 +3924,15 @@ Estado 258
     CHAVES_FIM      reduzir usando a regra 17 (statement_list)
     PARENTESES_INI  reduzir usando a regra 17 (statement_list)
 
-    statement_list  ir ao estado 266
+    statement_list  ir ao estado 270
 
 
-Estado 259
+Estado 263
 
    44 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM statement •
    45            | IF PARENTESES_INI exp PARENTESES_FIM statement • ELSE statement
 
-    ELSE  deslocar, e ir ao estado 267
+    ELSE  deslocar, e ir ao estado 271
 
     error           reduzir usando a regra 44 (ifStatement)
     TYPE            reduzir usando a regra 44 (ifStatement)
@@ -3913,63 +3954,63 @@ Estado 259
     PARENTESES_INI  reduzir usando a regra 44 (ifStatement)
 
 
-Estado 260
+Estado 264
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp • SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON exp • SEMICOLON exp PARENTESES_FIM statement
 
-    SEMICOLON  deslocar, e ir ao estado 268
-
-
-Estado 261
-
-   42 forAllStatement: FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM statement
-   43                | FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 269
-
-
-Estado 262
-
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM PARENTESES_FIM
-
-    ID              deslocar, e ir ao estado 204
-    INTEGER         deslocar, e ir ao estado 205
-    FLOAT           deslocar, e ir ao estado 206
-    PARENTESES_INI  deslocar, e ir ao estado 207
-
-    terms_set   ir ao estado 270
-    aritSetExp  ir ao estado 208
-
-
-Estado 263
-
-   57 setExp: EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
-
-    PARENTESES_FIM  reduzir usando a regra 57 (setExp)
-
-
-Estado 264
-
-   55 setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
-
-    PARENTESES_FIM  reduzir usando a regra 55 (setExp)
+    SEMICOLON  deslocar, e ir ao estado 272
 
 
 Estado 265
 
-   56 setExp: REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
+   42 forAllStatement: FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM statement
+   43                | FORALL PARENTESES_INI ID IN ID • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
+
+    PARENTESES_FIM  deslocar, e ir ao estado 273
+
+
+Estado 266
+
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN • terms_set PARENTESES_FIM PARENTESES_FIM
+
+    ID              deslocar, e ir ao estado 206
+    INTEGER         deslocar, e ir ao estado 207
+    FLOAT           deslocar, e ir ao estado 208
+    PARENTESES_INI  deslocar, e ir ao estado 209
+
+    terms_set   ir ao estado 274
+    aritSetExp  ir ao estado 210
+
+
+Estado 267
+
+   58 setExp: EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
+
+    PARENTESES_FIM  reduzir usando a regra 58 (setExp)
+
+
+Estado 268
+
+   56 setExp: ADD PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
 
     PARENTESES_FIM  reduzir usando a regra 56 (setExp)
 
 
-Estado 266
+Estado 269
+
+   57 setExp: REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM •
+
+    PARENTESES_FIM  reduzir usando a regra 57 (setExp)
+
+
+Estado 270
 
    16 statement_list: statement_list • statement
    46 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
    47            | IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -3985,7 +4026,7 @@ Estado 266
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 271
+    CHAVES_FIM      deslocar, e ir ao estado 275
     PARENTESES_INI  deslocar, e ir ao estado 41
 
     variable_declaration  ir ao estado 42
@@ -4004,37 +4045,37 @@ Estado 266
     terminal              ir ao estado 55
 
 
-Estado 267
+Estado 271
 
    45 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM statement ELSE • statement
 
-    error           deslocar, e ir ao estado 190
-    TYPE            deslocar, e ir ao estado 191
+    error           deslocar, e ir ao estado 192
+    TYPE            deslocar, e ir ao estado 193
     ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 192
-    IF              deslocar, e ir ao estado 193
+    RETURN          deslocar, e ir ao estado 194
+    IF              deslocar, e ir ao estado 195
     WRITE           deslocar, e ir ao estado 30
     WRITELN         deslocar, e ir ao estado 31
     READ            deslocar, e ir ao estado 32
     EXISTS          deslocar, e ir ao estado 33
     ADD             deslocar, e ir ao estado 34
     REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 194
-    FORALL          deslocar, e ir ao estado 195
+    FOR             deslocar, e ir ao estado 196
+    FORALL          deslocar, e ir ao estado 197
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    variable_declaration  ir ao estado 196
-    statement             ir ao estado 272
-    forStatement          ir ao estado 197
-    callFuncStatement     ir ao estado 198
-    inputStatement        ir ao estado 199
-    outPutStatement       ir ao estado 200
-    forAllStatement       ir ao estado 201
-    ifStatement           ir ao estado 202
-    exp                   ir ao estado 203
+    variable_declaration  ir ao estado 198
+    statement             ir ao estado 276
+    forStatement          ir ao estado 199
+    callFuncStatement     ir ao estado 200
+    inputStatement        ir ao estado 201
+    outPutStatement       ir ao estado 202
+    forAllStatement       ir ao estado 203
+    ifStatement           ir ao estado 204
+    exp                   ir ao estado 205
     assignmentExp         ir ao estado 51
     setExp                ir ao estado 52
     aritExp               ir ao estado 53
@@ -4042,61 +4083,61 @@ Estado 267
     terminal              ir ao estado 55
 
 
-Estado 268
+Estado 272
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON • exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON • exp PARENTESES_FIM statement
 
-    ID              deslocar, e ir ao estado 172
-    EXISTS          deslocar, e ir ao estado 173
-    ADD             deslocar, e ir ao estado 174
-    REMOVE          deslocar, e ir ao estado 175
-    INTEGER         deslocar, e ir ao estado 176
-    FLOAT           deslocar, e ir ao estado 177
-    NEGATION        deslocar, e ir ao estado 178
-    PARENTESES_INI  deslocar, e ir ao estado 179
+    ID              deslocar, e ir ao estado 174
+    EXISTS          deslocar, e ir ao estado 175
+    ADD             deslocar, e ir ao estado 176
+    REMOVE          deslocar, e ir ao estado 177
+    INTEGER         deslocar, e ir ao estado 178
+    FLOAT           deslocar, e ir ao estado 179
+    NEGATION        deslocar, e ir ao estado 180
+    PARENTESES_INI  deslocar, e ir ao estado 181
 
-    exp            ir ao estado 273
-    assignmentExp  ir ao estado 180
-    setExp         ir ao estado 181
-    aritExp        ir ao estado 182
-    relExp         ir ao estado 183
-    terminal       ir ao estado 184
+    exp            ir ao estado 277
+    assignmentExp  ir ao estado 182
+    setExp         ir ao estado 183
+    aritExp        ir ao estado 184
+    relExp         ir ao estado 185
+    terminal       ir ao estado 186
 
 
-Estado 269
+Estado 273
 
    42 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM • statement
    43                | FORALL PARENTESES_INI ID IN ID PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
 
-    error           deslocar, e ir ao estado 190
-    TYPE            deslocar, e ir ao estado 191
+    error           deslocar, e ir ao estado 192
+    TYPE            deslocar, e ir ao estado 193
     ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 192
-    IF              deslocar, e ir ao estado 193
+    RETURN          deslocar, e ir ao estado 194
+    IF              deslocar, e ir ao estado 195
     WRITE           deslocar, e ir ao estado 30
     WRITELN         deslocar, e ir ao estado 31
     READ            deslocar, e ir ao estado 32
     EXISTS          deslocar, e ir ao estado 33
     ADD             deslocar, e ir ao estado 34
     REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 194
-    FORALL          deslocar, e ir ao estado 195
+    FOR             deslocar, e ir ao estado 196
+    FORALL          deslocar, e ir ao estado 197
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_INI      deslocar, e ir ao estado 274
+    CHAVES_INI      deslocar, e ir ao estado 278
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    variable_declaration  ir ao estado 196
-    statement             ir ao estado 275
-    forStatement          ir ao estado 197
-    callFuncStatement     ir ao estado 198
-    inputStatement        ir ao estado 199
-    outPutStatement       ir ao estado 200
-    forAllStatement       ir ao estado 201
-    ifStatement           ir ao estado 202
-    exp                   ir ao estado 203
+    variable_declaration  ir ao estado 198
+    statement             ir ao estado 279
+    forStatement          ir ao estado 199
+    callFuncStatement     ir ao estado 200
+    inputStatement        ir ao estado 201
+    outPutStatement       ir ao estado 202
+    forAllStatement       ir ao estado 203
+    ifStatement           ir ao estado 204
+    exp                   ir ao estado 205
     assignmentExp         ir ao estado 51
     setExp                ir ao estado 52
     aritExp               ir ao estado 53
@@ -4104,19 +4145,19 @@ Estado 269
     terminal              ir ao estado 55
 
 
-Estado 270
+Estado 274
 
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM PARENTESES_FIM
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set • PARENTESES_FIM PARENTESES_FIM
 
-    PARENTESES_FIM  deslocar, e ir ao estado 276
+    PARENTESES_FIM  deslocar, e ir ao estado 280
 
 
-Estado 271
+Estado 275
 
    46 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
    47            | IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM • ELSE CHAVES_INI statement_list CHAVES_FIM
 
-    ELSE  deslocar, e ir ao estado 277
+    ELSE  deslocar, e ir ao estado 281
 
     error           reduzir usando a regra 46 (ifStatement)
     TYPE            reduzir usando a regra 46 (ifStatement)
@@ -4138,7 +4179,7 @@ Estado 271
     PARENTESES_INI  reduzir usando a regra 46 (ifStatement)
 
 
-Estado 272
+Estado 276
 
    45 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM statement ELSE statement •
 
@@ -4163,15 +4204,15 @@ Estado 272
     PARENTESES_INI  reduzir usando a regra 45 (ifStatement)
 
 
-Estado 273
+Estado 277
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp • PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM
    28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp • PARENTESES_FIM statement
 
-    PARENTESES_FIM  deslocar, e ir ao estado 278
+    PARENTESES_FIM  deslocar, e ir ao estado 282
 
 
-Estado 274
+Estado 278
 
    43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
 
@@ -4194,10 +4235,10 @@ Estado 274
     CHAVES_FIM      reduzir usando a regra 17 (statement_list)
     PARENTESES_INI  reduzir usando a regra 17 (statement_list)
 
-    statement_list  ir ao estado 279
+    statement_list  ir ao estado 283
 
 
-Estado 275
+Estado 279
 
    42 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM statement •
 
@@ -4222,242 +4263,53 @@ Estado 275
     PARENTESES_INI  reduzir usando a regra 42 (forAllStatement)
 
 
-Estado 276
-
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM • PARENTESES_FIM
-
-    PARENTESES_FIM  deslocar, e ir ao estado 280
-
-
-Estado 277
-
-   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE • CHAVES_INI statement_list CHAVES_FIM
-
-    CHAVES_INI  deslocar, e ir ao estado 281
-
-
-Estado 278
-
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
-   28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM • statement
-
-    error           deslocar, e ir ao estado 190
-    TYPE            deslocar, e ir ao estado 191
-    ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 192
-    IF              deslocar, e ir ao estado 193
-    WRITE           deslocar, e ir ao estado 30
-    WRITELN         deslocar, e ir ao estado 31
-    READ            deslocar, e ir ao estado 32
-    EXISTS          deslocar, e ir ao estado 33
-    ADD             deslocar, e ir ao estado 34
-    REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 194
-    FORALL          deslocar, e ir ao estado 195
-    INTEGER         deslocar, e ir ao estado 38
-    FLOAT           deslocar, e ir ao estado 39
-    NEGATION        deslocar, e ir ao estado 40
-    CHAVES_INI      deslocar, e ir ao estado 282
-    PARENTESES_INI  deslocar, e ir ao estado 41
-
-    variable_declaration  ir ao estado 196
-    statement             ir ao estado 283
-    forStatement          ir ao estado 197
-    callFuncStatement     ir ao estado 198
-    inputStatement        ir ao estado 199
-    outPutStatement       ir ao estado 200
-    forAllStatement       ir ao estado 201
-    ifStatement           ir ao estado 202
-    exp                   ir ao estado 203
-    assignmentExp         ir ao estado 51
-    setExp                ir ao estado 52
-    aritExp               ir ao estado 53
-    relExp                ir ao estado 54
-    terminal              ir ao estado 55
-
-
-Estado 279
-
-   16 statement_list: statement_list • statement
-   43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
-
-    error           deslocar, e ir ao estado 171
-    TYPE            deslocar, e ir ao estado 26
-    ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 28
-    IF              deslocar, e ir ao estado 29
-    WRITE           deslocar, e ir ao estado 30
-    WRITELN         deslocar, e ir ao estado 31
-    READ            deslocar, e ir ao estado 32
-    EXISTS          deslocar, e ir ao estado 33
-    ADD             deslocar, e ir ao estado 34
-    REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 36
-    FORALL          deslocar, e ir ao estado 37
-    INTEGER         deslocar, e ir ao estado 38
-    FLOAT           deslocar, e ir ao estado 39
-    NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 284
-    PARENTESES_INI  deslocar, e ir ao estado 41
-
-    variable_declaration  ir ao estado 42
-    statement             ir ao estado 43
-    forStatement          ir ao estado 44
-    callFuncStatement     ir ao estado 45
-    inputStatement        ir ao estado 46
-    outPutStatement       ir ao estado 47
-    forAllStatement       ir ao estado 48
-    ifStatement           ir ao estado 49
-    exp                   ir ao estado 50
-    assignmentExp         ir ao estado 51
-    setExp                ir ao estado 52
-    aritExp               ir ao estado 53
-    relExp                ir ao estado 54
-    terminal              ir ao estado 55
-
-
 Estado 280
 
-   62 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM •
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM • PARENTESES_FIM
 
-    PARENTESES_FIM  reduzir usando a regra 62 (aritSetExp)
+    PARENTESES_FIM  deslocar, e ir ao estado 284
 
 
 Estado 281
 
-   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI • statement_list CHAVES_FIM
+   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE • CHAVES_INI statement_list CHAVES_FIM
 
-    error           reduzir usando a regra 17 (statement_list)
-    TYPE            reduzir usando a regra 17 (statement_list)
-    ID              reduzir usando a regra 17 (statement_list)
-    RETURN          reduzir usando a regra 17 (statement_list)
-    IF              reduzir usando a regra 17 (statement_list)
-    WRITE           reduzir usando a regra 17 (statement_list)
-    WRITELN         reduzir usando a regra 17 (statement_list)
-    READ            reduzir usando a regra 17 (statement_list)
-    EXISTS          reduzir usando a regra 17 (statement_list)
-    ADD             reduzir usando a regra 17 (statement_list)
-    REMOVE          reduzir usando a regra 17 (statement_list)
-    FOR             reduzir usando a regra 17 (statement_list)
-    FORALL          reduzir usando a regra 17 (statement_list)
-    INTEGER         reduzir usando a regra 17 (statement_list)
-    FLOAT           reduzir usando a regra 17 (statement_list)
-    NEGATION        reduzir usando a regra 17 (statement_list)
-    CHAVES_FIM      reduzir usando a regra 17 (statement_list)
-    PARENTESES_INI  reduzir usando a regra 17 (statement_list)
-
-    statement_list  ir ao estado 285
+    CHAVES_INI  deslocar, e ir ao estado 285
 
 
 Estado 282
 
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM • CHAVES_INI statement_list CHAVES_FIM
+   28             | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM • statement
 
-    error           reduzir usando a regra 17 (statement_list)
-    TYPE            reduzir usando a regra 17 (statement_list)
-    ID              reduzir usando a regra 17 (statement_list)
-    RETURN          reduzir usando a regra 17 (statement_list)
-    IF              reduzir usando a regra 17 (statement_list)
-    WRITE           reduzir usando a regra 17 (statement_list)
-    WRITELN         reduzir usando a regra 17 (statement_list)
-    READ            reduzir usando a regra 17 (statement_list)
-    EXISTS          reduzir usando a regra 17 (statement_list)
-    ADD             reduzir usando a regra 17 (statement_list)
-    REMOVE          reduzir usando a regra 17 (statement_list)
-    FOR             reduzir usando a regra 17 (statement_list)
-    FORALL          reduzir usando a regra 17 (statement_list)
-    INTEGER         reduzir usando a regra 17 (statement_list)
-    FLOAT           reduzir usando a regra 17 (statement_list)
-    NEGATION        reduzir usando a regra 17 (statement_list)
-    CHAVES_FIM      reduzir usando a regra 17 (statement_list)
-    PARENTESES_INI  reduzir usando a regra 17 (statement_list)
-
-    statement_list  ir ao estado 286
-
-
-Estado 283
-
-   28 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement •
-
-    error           reduzir usando a regra 28 (forStatement)
-    TYPE            reduzir usando a regra 28 (forStatement)
-    ID              reduzir usando a regra 28 (forStatement)
-    RETURN          reduzir usando a regra 28 (forStatement)
-    IF              reduzir usando a regra 28 (forStatement)
-    ELSE            reduzir usando a regra 28 (forStatement)
-    WRITE           reduzir usando a regra 28 (forStatement)
-    WRITELN         reduzir usando a regra 28 (forStatement)
-    READ            reduzir usando a regra 28 (forStatement)
-    EXISTS          reduzir usando a regra 28 (forStatement)
-    ADD             reduzir usando a regra 28 (forStatement)
-    REMOVE          reduzir usando a regra 28 (forStatement)
-    FOR             reduzir usando a regra 28 (forStatement)
-    FORALL          reduzir usando a regra 28 (forStatement)
-    INTEGER         reduzir usando a regra 28 (forStatement)
-    FLOAT           reduzir usando a regra 28 (forStatement)
-    NEGATION        reduzir usando a regra 28 (forStatement)
-    CHAVES_FIM      reduzir usando a regra 28 (forStatement)
-    PARENTESES_INI  reduzir usando a regra 28 (forStatement)
-
-
-Estado 284
-
-   43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
-
-    error           reduzir usando a regra 43 (forAllStatement)
-    TYPE            reduzir usando a regra 43 (forAllStatement)
-    ID              reduzir usando a regra 43 (forAllStatement)
-    RETURN          reduzir usando a regra 43 (forAllStatement)
-    IF              reduzir usando a regra 43 (forAllStatement)
-    ELSE            reduzir usando a regra 43 (forAllStatement)
-    WRITE           reduzir usando a regra 43 (forAllStatement)
-    WRITELN         reduzir usando a regra 43 (forAllStatement)
-    READ            reduzir usando a regra 43 (forAllStatement)
-    EXISTS          reduzir usando a regra 43 (forAllStatement)
-    ADD             reduzir usando a regra 43 (forAllStatement)
-    REMOVE          reduzir usando a regra 43 (forAllStatement)
-    FOR             reduzir usando a regra 43 (forAllStatement)
-    FORALL          reduzir usando a regra 43 (forAllStatement)
-    INTEGER         reduzir usando a regra 43 (forAllStatement)
-    FLOAT           reduzir usando a regra 43 (forAllStatement)
-    NEGATION        reduzir usando a regra 43 (forAllStatement)
-    CHAVES_FIM      reduzir usando a regra 43 (forAllStatement)
-    PARENTESES_INI  reduzir usando a regra 43 (forAllStatement)
-
-
-Estado 285
-
-   16 statement_list: statement_list • statement
-   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list • CHAVES_FIM
-
-    error           deslocar, e ir ao estado 171
-    TYPE            deslocar, e ir ao estado 26
+    error           deslocar, e ir ao estado 192
+    TYPE            deslocar, e ir ao estado 193
     ID              deslocar, e ir ao estado 27
-    RETURN          deslocar, e ir ao estado 28
-    IF              deslocar, e ir ao estado 29
+    RETURN          deslocar, e ir ao estado 194
+    IF              deslocar, e ir ao estado 195
     WRITE           deslocar, e ir ao estado 30
     WRITELN         deslocar, e ir ao estado 31
     READ            deslocar, e ir ao estado 32
     EXISTS          deslocar, e ir ao estado 33
     ADD             deslocar, e ir ao estado 34
     REMOVE          deslocar, e ir ao estado 35
-    FOR             deslocar, e ir ao estado 36
-    FORALL          deslocar, e ir ao estado 37
+    FOR             deslocar, e ir ao estado 196
+    FORALL          deslocar, e ir ao estado 197
     INTEGER         deslocar, e ir ao estado 38
     FLOAT           deslocar, e ir ao estado 39
     NEGATION        deslocar, e ir ao estado 40
-    CHAVES_FIM      deslocar, e ir ao estado 287
+    CHAVES_INI      deslocar, e ir ao estado 286
     PARENTESES_INI  deslocar, e ir ao estado 41
 
-    variable_declaration  ir ao estado 42
-    statement             ir ao estado 43
-    forStatement          ir ao estado 44
-    callFuncStatement     ir ao estado 45
-    inputStatement        ir ao estado 46
-    outPutStatement       ir ao estado 47
-    forAllStatement       ir ao estado 48
-    ifStatement           ir ao estado 49
-    exp                   ir ao estado 50
+    variable_declaration  ir ao estado 198
+    statement             ir ao estado 287
+    forStatement          ir ao estado 199
+    callFuncStatement     ir ao estado 200
+    inputStatement        ir ao estado 201
+    outPutStatement       ir ao estado 202
+    forAllStatement       ir ao estado 203
+    ifStatement           ir ao estado 204
+    exp                   ir ao estado 205
     assignmentExp         ir ao estado 51
     setExp                ir ao estado 52
     aritExp               ir ao estado 53
@@ -4465,12 +4317,12 @@ Estado 285
     terminal              ir ao estado 55
 
 
-Estado 286
+Estado 283
 
    16 statement_list: statement_list • statement
-   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
+   43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
 
-    error           deslocar, e ir ao estado 171
+    error           deslocar, e ir ao estado 173
     TYPE            deslocar, e ir ao estado 26
     ID              deslocar, e ir ao estado 27
     RETURN          deslocar, e ir ao estado 28
@@ -4505,7 +4357,196 @@ Estado 286
     terminal              ir ao estado 55
 
 
+Estado 284
+
+   63 aritSetExp: PARENTESES_INI EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM PARENTESES_FIM •
+
+    PARENTESES_FIM  reduzir usando a regra 63 (aritSetExp)
+
+
+Estado 285
+
+   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI • statement_list CHAVES_FIM
+
+    error           reduzir usando a regra 17 (statement_list)
+    TYPE            reduzir usando a regra 17 (statement_list)
+    ID              reduzir usando a regra 17 (statement_list)
+    RETURN          reduzir usando a regra 17 (statement_list)
+    IF              reduzir usando a regra 17 (statement_list)
+    WRITE           reduzir usando a regra 17 (statement_list)
+    WRITELN         reduzir usando a regra 17 (statement_list)
+    READ            reduzir usando a regra 17 (statement_list)
+    EXISTS          reduzir usando a regra 17 (statement_list)
+    ADD             reduzir usando a regra 17 (statement_list)
+    REMOVE          reduzir usando a regra 17 (statement_list)
+    FOR             reduzir usando a regra 17 (statement_list)
+    FORALL          reduzir usando a regra 17 (statement_list)
+    INTEGER         reduzir usando a regra 17 (statement_list)
+    FLOAT           reduzir usando a regra 17 (statement_list)
+    NEGATION        reduzir usando a regra 17 (statement_list)
+    CHAVES_FIM      reduzir usando a regra 17 (statement_list)
+    PARENTESES_INI  reduzir usando a regra 17 (statement_list)
+
+    statement_list  ir ao estado 289
+
+
+Estado 286
+
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI • statement_list CHAVES_FIM
+
+    error           reduzir usando a regra 17 (statement_list)
+    TYPE            reduzir usando a regra 17 (statement_list)
+    ID              reduzir usando a regra 17 (statement_list)
+    RETURN          reduzir usando a regra 17 (statement_list)
+    IF              reduzir usando a regra 17 (statement_list)
+    WRITE           reduzir usando a regra 17 (statement_list)
+    WRITELN         reduzir usando a regra 17 (statement_list)
+    READ            reduzir usando a regra 17 (statement_list)
+    EXISTS          reduzir usando a regra 17 (statement_list)
+    ADD             reduzir usando a regra 17 (statement_list)
+    REMOVE          reduzir usando a regra 17 (statement_list)
+    FOR             reduzir usando a regra 17 (statement_list)
+    FORALL          reduzir usando a regra 17 (statement_list)
+    INTEGER         reduzir usando a regra 17 (statement_list)
+    FLOAT           reduzir usando a regra 17 (statement_list)
+    NEGATION        reduzir usando a regra 17 (statement_list)
+    CHAVES_FIM      reduzir usando a regra 17 (statement_list)
+    PARENTESES_INI  reduzir usando a regra 17 (statement_list)
+
+    statement_list  ir ao estado 290
+
+
 Estado 287
+
+   28 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement •
+
+    error           reduzir usando a regra 28 (forStatement)
+    TYPE            reduzir usando a regra 28 (forStatement)
+    ID              reduzir usando a regra 28 (forStatement)
+    RETURN          reduzir usando a regra 28 (forStatement)
+    IF              reduzir usando a regra 28 (forStatement)
+    ELSE            reduzir usando a regra 28 (forStatement)
+    WRITE           reduzir usando a regra 28 (forStatement)
+    WRITELN         reduzir usando a regra 28 (forStatement)
+    READ            reduzir usando a regra 28 (forStatement)
+    EXISTS          reduzir usando a regra 28 (forStatement)
+    ADD             reduzir usando a regra 28 (forStatement)
+    REMOVE          reduzir usando a regra 28 (forStatement)
+    FOR             reduzir usando a regra 28 (forStatement)
+    FORALL          reduzir usando a regra 28 (forStatement)
+    INTEGER         reduzir usando a regra 28 (forStatement)
+    FLOAT           reduzir usando a regra 28 (forStatement)
+    NEGATION        reduzir usando a regra 28 (forStatement)
+    CHAVES_FIM      reduzir usando a regra 28 (forStatement)
+    PARENTESES_INI  reduzir usando a regra 28 (forStatement)
+
+
+Estado 288
+
+   43 forAllStatement: FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
+
+    error           reduzir usando a regra 43 (forAllStatement)
+    TYPE            reduzir usando a regra 43 (forAllStatement)
+    ID              reduzir usando a regra 43 (forAllStatement)
+    RETURN          reduzir usando a regra 43 (forAllStatement)
+    IF              reduzir usando a regra 43 (forAllStatement)
+    ELSE            reduzir usando a regra 43 (forAllStatement)
+    WRITE           reduzir usando a regra 43 (forAllStatement)
+    WRITELN         reduzir usando a regra 43 (forAllStatement)
+    READ            reduzir usando a regra 43 (forAllStatement)
+    EXISTS          reduzir usando a regra 43 (forAllStatement)
+    ADD             reduzir usando a regra 43 (forAllStatement)
+    REMOVE          reduzir usando a regra 43 (forAllStatement)
+    FOR             reduzir usando a regra 43 (forAllStatement)
+    FORALL          reduzir usando a regra 43 (forAllStatement)
+    INTEGER         reduzir usando a regra 43 (forAllStatement)
+    FLOAT           reduzir usando a regra 43 (forAllStatement)
+    NEGATION        reduzir usando a regra 43 (forAllStatement)
+    CHAVES_FIM      reduzir usando a regra 43 (forAllStatement)
+    PARENTESES_INI  reduzir usando a regra 43 (forAllStatement)
+
+
+Estado 289
+
+   16 statement_list: statement_list • statement
+   47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list • CHAVES_FIM
+
+    error           deslocar, e ir ao estado 173
+    TYPE            deslocar, e ir ao estado 26
+    ID              deslocar, e ir ao estado 27
+    RETURN          deslocar, e ir ao estado 28
+    IF              deslocar, e ir ao estado 29
+    WRITE           deslocar, e ir ao estado 30
+    WRITELN         deslocar, e ir ao estado 31
+    READ            deslocar, e ir ao estado 32
+    EXISTS          deslocar, e ir ao estado 33
+    ADD             deslocar, e ir ao estado 34
+    REMOVE          deslocar, e ir ao estado 35
+    FOR             deslocar, e ir ao estado 36
+    FORALL          deslocar, e ir ao estado 37
+    INTEGER         deslocar, e ir ao estado 38
+    FLOAT           deslocar, e ir ao estado 39
+    NEGATION        deslocar, e ir ao estado 40
+    CHAVES_FIM      deslocar, e ir ao estado 291
+    PARENTESES_INI  deslocar, e ir ao estado 41
+
+    variable_declaration  ir ao estado 42
+    statement             ir ao estado 43
+    forStatement          ir ao estado 44
+    callFuncStatement     ir ao estado 45
+    inputStatement        ir ao estado 46
+    outPutStatement       ir ao estado 47
+    forAllStatement       ir ao estado 48
+    ifStatement           ir ao estado 49
+    exp                   ir ao estado 50
+    assignmentExp         ir ao estado 51
+    setExp                ir ao estado 52
+    aritExp               ir ao estado 53
+    relExp                ir ao estado 54
+    terminal              ir ao estado 55
+
+
+Estado 290
+
+   16 statement_list: statement_list • statement
+   27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list • CHAVES_FIM
+
+    error           deslocar, e ir ao estado 173
+    TYPE            deslocar, e ir ao estado 26
+    ID              deslocar, e ir ao estado 27
+    RETURN          deslocar, e ir ao estado 28
+    IF              deslocar, e ir ao estado 29
+    WRITE           deslocar, e ir ao estado 30
+    WRITELN         deslocar, e ir ao estado 31
+    READ            deslocar, e ir ao estado 32
+    EXISTS          deslocar, e ir ao estado 33
+    ADD             deslocar, e ir ao estado 34
+    REMOVE          deslocar, e ir ao estado 35
+    FOR             deslocar, e ir ao estado 36
+    FORALL          deslocar, e ir ao estado 37
+    INTEGER         deslocar, e ir ao estado 38
+    FLOAT           deslocar, e ir ao estado 39
+    NEGATION        deslocar, e ir ao estado 40
+    CHAVES_FIM      deslocar, e ir ao estado 292
+    PARENTESES_INI  deslocar, e ir ao estado 41
+
+    variable_declaration  ir ao estado 42
+    statement             ir ao estado 43
+    forStatement          ir ao estado 44
+    callFuncStatement     ir ao estado 45
+    inputStatement        ir ao estado 46
+    outPutStatement       ir ao estado 47
+    forAllStatement       ir ao estado 48
+    ifStatement           ir ao estado 49
+    exp                   ir ao estado 50
+    assignmentExp         ir ao estado 51
+    setExp                ir ao estado 52
+    aritExp               ir ao estado 53
+    relExp                ir ao estado 54
+    terminal              ir ao estado 55
+
+
+Estado 291
 
    47 ifStatement: IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM •
 
@@ -4530,7 +4571,7 @@ Estado 287
     PARENTESES_INI  reduzir usando a regra 47 (ifStatement)
 
 
-Estado 288
+Estado 292
 
    27 forStatement: FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM •
 

@@ -123,6 +123,34 @@ int searchFunctionVariable(char*symbol,char*symbol_scope){
 	}
 }
 
+/*
+
+TYPES:
+
+0 = nao definido ainda
+1 = int
+2 = float
+3 = set
+4 = elem 
+
+*/
+
+int translate_type(char*tipo){
+int tipo_numerico;
+	if(strcmp(tipo,"int")==0)
+		tipo_numerico = 1;
+	
+	if(strcmp(tipo,"float")==0)
+		tipo_numerico = 2;
+
+	if(strcmp(tipo,"set")==0)
+		tipo_numerico = 3;
+
+	if(strcmp(tipo,"elem")==0)
+		tipo_numerico = 4;
+
+	return tipo_numerico;
+}
 
 
 %}
@@ -145,7 +173,7 @@ int searchFunctionVariable(char*symbol,char*symbol_scope){
 
 %type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock assignmentExp statement_list
 %type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement //forRel
-%type<tree> ifStatement exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement //forExp expTerminal
+%type<tree> ifStatement exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement CONST//forExp expTerminal
 
 %nonassoc THEN
 %nonassoc ELSE
@@ -180,13 +208,6 @@ declarationList:
 		}
 	}
 
-	/*| error {
-		if(passagem == 1){
-			erro_count = erro_count +1;
-			$$ = add_tree_node("Erro Sintatico");
-			yyerror(yymsg);
-		}
-	}*/
 ;
 declaration:
 	variable_declaration{
@@ -689,6 +710,13 @@ assignmentExp:
 			$$ -> leaf2 = $3;
 		}
 	}
+	|terminal EQUALS CONST {
+		if(passagem == 1){
+			$$ = add_tree_node("assigmentExp");
+			$$ -> leaf1 = $1;
+			$$ -> leaf2 = $3;
+		}
+	}
 ;
 	 
 setExp:
@@ -845,11 +873,24 @@ rel:
 
 ;
 
+
+/*
+
+TYPES:
+
+0 = nao definido ainda
+1 = int
+2 = float
+3 = set
+4 = elem 
+
+*/
+
 terminal:
 	ID {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal ID");
-			
+			$$ -> type = translate_type(searchVarType($1,escopoAtual));
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($1);
@@ -867,12 +908,14 @@ terminal:
 	|FLOAT {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal FLOAT");
+			$$ -> type = 2;
 		}
 		 
 	 }
 	|INTEGER {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal INTEGER");
+			$$ -> type = 1;
 		}
 		 
 	 }
@@ -881,11 +924,24 @@ terminal:
 		if(passagem == 1){
 			$$ = add_tree_node("terminal EXP");
 			$$->leaf1 =$2;
+			$$ -> type = $2 -> type;
 		}
 	}
 
 ;
 
+CONST:
+
+EMPTY{
+
+	if(passagem == 1){
+			$$ = add_tree_node("EMPTY");
+		}
+
+}
+
+
+;
 %%
 
 extern void yyerror(const char* a) {

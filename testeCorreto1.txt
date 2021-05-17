@@ -9,9 +9,10 @@ float teste(int a, int b){
 
 int main(){
     int i;
+    i = EMPTY;
     i = !(1==1);
-    int x1;
-    int y1;
+    float x1;
+    elem y1;
     x1 = x1 + ((8*x1)/2) * (23 + y1)*9;
     set SET1;
     set SET2;
