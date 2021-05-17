@@ -1,12 +1,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+/*
+
+TYPES:
+
+0 = nao definido ainda
+1 = int
+2 = float
+3 = set
+4 = elem 
+
+*/
+
+
 //int current_node_ident = 0;
 /* Tree Node*/
 
 typedef struct node { 
     //char * node_type;
     char * node_name;
+    int type;
     struct node * leaf1;
     struct node * leaf2;
     struct node * leaf3;
@@ -18,6 +33,7 @@ typedef struct node {
 treeNode*add_tree_node(char*name){
     treeNode * node = (treeNode*)malloc(sizeof(treeNode));
     node -> node_name = name;
+    node -> type = 0;
     node -> leaf1 = NULL;
     node -> leaf2 = NULL;    
     node -> leaf3 = NULL;    

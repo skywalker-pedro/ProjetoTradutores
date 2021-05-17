@@ -18,7 +18,7 @@ extern Hash_table * hashed_symbol_table;
 int symbol_ID = 0;
 treeNode* tree = NULL;
 
-/////////////////////////////////// Variaveis de controle de escolpo, declaracao e checagem de tipos
+/////////////////////////////////// Variaveis de controle de escopo, declaracao e checagem de tipos
 int existe_simbolo;
 int existe_main = 0;
 int flag_redeclaracao_funcao;
@@ -409,7 +409,7 @@ statement:
 ;
 
 forStatement:
-	FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement CHAVES_FIM{
+	FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM{
 			if(passagem == 1){
 				$$ = add_tree_node("ForStatement");
 				$$ -> leaf1 = $3;
@@ -552,6 +552,33 @@ forAllStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("forAllStatement");
 			$$ -> leaf1 = $7;
+		}
+		if(passagem == 2){
+			existe_simbolo = searchSymbol($3);
+			if(existe_simbolo != 1){
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope($3,escopoAtual);
+				if(escopo_correto!=1){
+					printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
+			}
+			existe_simbolo = searchSymbol($5);
+			if(existe_simbolo != 1){
+				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel nao declarada\n", num_linha,posicao_linha);
+			}else{
+				escopo_correto = searchScope($3,escopoAtual);
+				if(escopo_correto!=1){
+					printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: Variavel utilizada no escopo errado\n", num_linha,posicao_linha);
+				}
+			}
+		}
+	 }
+
+	| FORALL PARENTESES_INI ID IN ID PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM{
+		if(passagem == 1){
+			$$ = add_tree_node("forAllStatement");
+			$$ -> leaf1 = $8;
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($3);
