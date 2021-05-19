@@ -11,8 +11,6 @@ int main(){
 
 	
 	int x2;
-	
-	
 	soma(x1,x2);
                                              	
                              

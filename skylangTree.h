@@ -70,6 +70,20 @@ int i;
             printf("->");
         }
         printf("%s",node->node_name);
+        if(node->type != 0){
+            printf("\n");
+            for(i=0;i<conta_identacao+1;i++){
+                printf(" ");
+            }
+            if (node->type == 1)
+                printf("-> INT"); 
+            if (node->type == 2)
+                printf("-> FLOAT");
+            if (node->type == 3)
+                printf("-> SET");
+            if (node->type == 4)
+                printf("-> ELEM");
+        }
     }
     if(node->leaf1!=NULL){
         conta_identacao = conta_identacao + 1;

@@ -24,6 +24,7 @@ int existe_main = 0;
 int flag_redeclaracao_funcao;
 int flag_redeclaracao_variavel;
 int registrador_atual = 0;
+char* tipo_funcao_atual;
 
 //int erro_count = 0;
 int aux=1;
@@ -70,6 +71,22 @@ char * searchVarType(char*symbol,char*symbol_scope){
 			if (strcmp(aux->escopo,symbol_scope)==0){
 				return aux -> varType;
 			}
+		}
+        aux = aux -> hh.next;
+    }
+	return temp;
+	//free(aux);
+}
+
+
+//Search symbol type in symbol table
+char * searchFuncType(char*func){
+	Hash_table* aux = hashed_symbol_table;
+	char* temp = "not_found";
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,func)==0){
+			return aux -> type;
 		}
         aux = aux -> hh.next;
     }
@@ -166,7 +183,7 @@ int tipo_numerico;
 
 int check_set_type(int tipo1, int tipo2){
 	if (tipo1 == 3 || tipo2 == 3){
-		printf("\nERRO SEMANTICO LINHA %d, coluna %d: Operacao nao permitida para o tipo SET 1",num_linha_1,posicao_linha_1);
+		printf("\nERRO SEMANTICO LINHA %d, coluna %d: Operacao nao permitida para o tipo SET ",num_linha_1,posicao_linha_1);
 		return 1;
 	}else{
 		return 0;
@@ -317,6 +334,7 @@ func_declaration:
 									printf("\n--> ERRO SEMANTICO: redeclaracao da FUNCAO -> %s <- na linha %d",$2,num_linha_1);
 									flag_redeclaracao_funcao = 1;
 								}
+								tipo_funcao_atual = $1;
 							}
 							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
 																					if(passagem == 1){
@@ -473,7 +491,8 @@ statement:
 			$$ = add_tree_node("RETURN statement");
 			$$ -> leaf1 = $2;
 			$$ -> type = $2 -> type;
-			
+			if($$ -> type != translate_type(tipo_funcao_atual))
+				printf("\n--> ERRO SEMANTICO: Tipo do retorno da funcao -> %s <- incorreto na linha %d",escopoAtual,num_linha_1);
 		}
 	 }
 
@@ -983,6 +1002,7 @@ terminal:
 		if(passagem == 1){
 			$$ = add_tree_node("terminal ID");
 			$$ -> type = translate_type(searchVarType($1,escopoAtual));
+			//printf("\n--. AQUIIIII2222   %d : %s",translate_type(searchVarType($1,escopoAtual)),escopoAtual);
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($1);

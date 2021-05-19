@@ -1,14 +1,15 @@
 elem semEscopo;
 int semescopo;
-set $$;
 
 float teste(int a, int b){
-    return (a+b);
+
+    
     float x;
+    return x;
 }
 
-int main2(){
-
+set main2(){
+   
     int x1;
     int y1;
     x1 = x1 + (8*5);
@@ -43,6 +44,6 @@ int main2(){
     }
     teste4(x,y1);
 
-return 0;
-return 0;
+return cv;
+
 }

@@ -1,11 +1,7 @@
-int main(){
-    
+float main(){ 
     int x;
-    int b;
-    set d;
-    int a;
-   
-    x = (-1.2--2)*(a + b);
+    x = 1;
 
-return 0;
+
+    return 3.5;
 }

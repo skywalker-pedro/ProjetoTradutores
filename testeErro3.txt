@@ -1,3 +1,15 @@
+int main(){
+    
+    int x;
+    elem b;
+    elem d;
+    elem a;
+   
+    x = (-1.2--2)*(a + d);
+
+return 0;
+}
+
 elem semEscopo;
 int semescopo;
 
