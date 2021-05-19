@@ -1,58 +1,11 @@
-elem semEscopo;
-int var2;
-
-
-float teste(int a, int b){
-    return (a+b);
-    float x;
-}
-
 int main(){
-    int i;
-    i = EMPTY;
-    i = !(1==1);
-    float x1;
-    elem y1;
-    x1 = x1 + ((8*x1)/2) * (23 + y1)*9;
-    set SET1;
-    set SET2;
-    add(8 in SET2);
-    add(x1 in SET1);
-    remove(x1 in SET1);
-    exists(x1 in SET1);
-    remove((exists (x1 in SET1)) in SET2);
-
-    forall(x1 in SET1){
-        writeln("escrevendoString");
-        x1 = x1+1;
-    }
-    for(i=0;i<232;i=i+1) writeln("Funcionou"); 
-
-    for(i=0;i<232;i=i+1){
-        writeln("Funcionou");
-        writeln("Funcionou");
-    }
-
-    writeln('\t');
-    writeln("string");
-    write(x1);
-    write(x1);
-    teste(x1,y1);
-    read(x1);
-    if (x1==1) 
-        writeln("string1DoIf");
-    else 
-        x1=1;
-
-    if (x1==1){
-        writeln("string1DoIf");
-        writeln("string1DoIf"); 
-    }
-    else{
-        x1=1;
-        writeln("string1DoIf");
-        
-    }
+    
+    int x;
+    int b;
+    set d;
+    int a;
    
+    x = (-1.2--2)*(a + b);
+
 return 0;
 }

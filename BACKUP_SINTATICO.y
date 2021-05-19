@@ -63,7 +63,6 @@ int searchSymbol(char*symbol){
 //Search symbol type in symbol table
 char * searchVarType(char*symbol,char*symbol_scope){
 	Hash_table* aux = hashed_symbol_table;
-	char* temp = "not_found";
     while(aux!=NULL){
 		//strcmp retorna 0 caso as strings sejam iguais
         if (strcmp(aux->name,symbol)==0){
@@ -73,7 +72,7 @@ char * searchVarType(char*symbol,char*symbol_scope){
 		}
         aux = aux -> hh.next;
     }
-	return temp;
+	return NULL;
 	//free(aux);
 }
 
@@ -139,34 +138,24 @@ TYPES:
 
 int translate_type(char*tipo){
 int tipo_numerico;
-	if(strcmp(tipo,"not_found")==0){
-		tipo_numerico = 0;
-		return tipo_numerico;
-	}
-	if(strcmp(tipo,"int")==0){
+	if(strcmp(tipo,"int")==0)
 		tipo_numerico = 1;
-		return tipo_numerico;
-	}
-	if(strcmp(tipo,"float")==0){
+	
+	if(strcmp(tipo,"float")==0)
 		tipo_numerico = 2;
-		return tipo_numerico;
-	}
 
-	if(strcmp(tipo,"set")==0){
+	if(strcmp(tipo,"set")==0)
 		tipo_numerico = 3;
-		return tipo_numerico;
-	}
-	if(strcmp(tipo,"elem")==0){
+
+	if(strcmp(tipo,"elem")==0)
 		tipo_numerico = 4;
-		return tipo_numerico;
-	}
-	tipo_numerico = 0;
+
 	return tipo_numerico;
 }
 
 int check_set_type(int tipo1, int tipo2){
 	if (tipo1 == 3 || tipo2 == 3){
-		printf("\nERRO SEMANTICO LINHA %d, coluna %d: Operacao nao permitida para o tipo SET 1",num_linha_1,posicao_linha_1);
+		printf("\nERRO SEMANTICO LINHA %d, coluna %d: Operacao nao permitida para o tipo SET",num_linha_1,posicao_linha_1);
 		return 1;
 	}else{
 		return 0;
@@ -204,7 +193,7 @@ int check_conversao(int tipo1, int tipo2){
 		return 6;
 	if(tipo1 == 2  && tipo2 == 4) // elem to float
 		return 5;
-	return 0; //excecoess
+	return 0;
 }
 
 %}

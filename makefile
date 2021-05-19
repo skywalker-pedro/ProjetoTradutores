@@ -14,3 +14,6 @@ testeErrado1:
 	
 testeErrado2:	
 	echo testeErro2.txt| ./skylang
+
+testeCoringa:
+	echo testeCoringa.txt| ./skylang

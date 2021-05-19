@@ -14,6 +14,17 @@ TYPES:
 
 */
 
+/*
+Politica de conversao de tipo
+
+0 = não teve conversao
+1 = intToFLoat
+2 = floatToInt
+3 = elemToInt
+4 = IntToElem
+5 = elemToFloat
+6 = floatToElem
+*/
 
 //int current_node_ident = 0;
 /* Tree Node*/
@@ -22,6 +33,7 @@ typedef struct node {
     //char * node_type;
     char * node_name;
     int type;
+    int conversao;
     struct node * leaf1;
     struct node * leaf2;
     struct node * leaf3;
@@ -34,6 +46,7 @@ treeNode*add_tree_node(char*name){
     treeNode * node = (treeNode*)malloc(sizeof(treeNode));
     node -> node_name = name;
     node -> type = 0;
+    node -> conversao = 0;
     node -> leaf1 = NULL;
     node -> leaf2 = NULL;    
     node -> leaf3 = NULL;    
