@@ -20,7 +20,7 @@ void LexicalError(){
 %}
 
 string \"(\\.|[^"\\])*\"
-char (\'(.|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\\\|\\\'|\\\"|\\\?)\')
+char (\'(.|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\x|\\\\|\\\'|\\\"|\\\?)\')
 new_line  \n
 tabulacao	\t
 espaco " "

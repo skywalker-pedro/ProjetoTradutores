@@ -2,6 +2,9 @@ float main(){
     int x;
     x = 1;
 
+    write('\n');
+    write('\?');
+    write('\x');
 
     return 3.5;
 }
