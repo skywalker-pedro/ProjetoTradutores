@@ -7,4 +7,7 @@ float main(){
     write('\x');
 
     return 3.5;
+
+
+    
 }
