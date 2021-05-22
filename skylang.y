@@ -662,6 +662,9 @@ outPutStatement:
 			$$ = add_tree_node("writeln");
 			$$ -> flag_print = 1;
 			$$ -> leaf1 = $3;
+			snprintf(codigo_tac,1100,"println %s", $3 -> value_tac);
+			$$ -> linha_tac = strdup(codigo_tac);
+			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 			//$$ -> leaf1 = $3;
 		}
 	 }

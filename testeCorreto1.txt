@@ -4,5 +4,5 @@ int main(){
     y = -9;
     x = 1;
     x = x + (y * 2) + (2 - -2);
-    write(x);
+    writeln(x*x);
 }
