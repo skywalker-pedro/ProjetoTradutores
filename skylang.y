@@ -641,6 +641,10 @@ outPutStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("write");
 			$$ -> flag_print = 1;
+			$$ -> leaf1 = $3;
+			snprintf(codigo_tac,1100,"print %s", $3 -> value_tac);
+			$$ -> linha_tac = strdup(codigo_tac);
+			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 			//$$ -> leaf1 = $3;
 		}
 	 }
@@ -657,6 +661,7 @@ outPutStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("writeln");
 			$$ -> flag_print = 1;
+			$$ -> leaf1 = $3;
 			//$$ -> leaf1 = $3;
 		}
 	 }
@@ -930,7 +935,7 @@ aritExp:
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"%s, $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
+			snprintf(codigo_tac,1100,"%s $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
 			//printf("\n%s",codigo_tac);
 			snprintf(char_reg,999,"$%d",registrador_atual);
 			$$ -> result = strdup(char_reg);
@@ -1075,7 +1080,7 @@ OP:
 		if(passagem == 1){
 			$$ = add_tree_node(" *");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "mult";
+			$$ -> value_tac = "mul";
 		}
 	 }
 	| PLUS {

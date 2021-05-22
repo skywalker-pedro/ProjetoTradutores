@@ -2,19 +2,7 @@ int main(){
     int x;
     float y;
     y = -9;
-    y + 1;
-    x + (y * 2) + (2 - -2);
-
-}
-
-int teste(){
-
-    float x;
-    int x1;
-    x1 = 2;
-    elem y1;
-    y1 = -9;
-    x = ((8*x1)/2) * (23 + y1) * 9;
-
-return 2;
+    x = 1;
+    x = x + (y * 2) + (2 - -2);
+    write(x);
 }
