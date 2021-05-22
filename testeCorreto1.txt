@@ -5,4 +5,11 @@ int main(){
     x = 1;
     x = x + (y * 2) + (2 - -2);
     writeln(x*x);
+
+    if(x<1)
+        write('\t');
+    else
+        write('\n');
+
+return 0;
 }

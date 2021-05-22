@@ -132,42 +132,42 @@ Terminais, com as regras onde eles aparecem
     $end (0) 0
     error (256) 7
     TYPE <str> (258) 6 9 14
-    ID <str> (259) 6 9 14 29 35 40 41 58 71
-    INTEGER <str> (260) 60 73
-    FLOAT <str> (261) 59 72
-    CHAR <str> (262) 81
-    STRING <str> (263) 82
-    RETURN (264) 25
-    IF (265) 42 43 44 45
-    ELSE (266) 43 45
-    WHILE (267)
-    WRITE (268) 36 37
-    WRITELN (269) 38 39
-    READ (270) 35
-    EXISTS (271) 56 61
-    ADD (272) 54
-    REMOVE (273) 55
-    FOR (274) 27 28
-    FORALL (275) 40 41
-    IN (276) 40 41 54 55 56 61
-    IS_IN (277)
-    IS_SET (278)
-    OR (279)
-    CLE <tree> (280) 69
-    CLT <tree> (281) 67
-    CNE <tree> (282) 66
-    CGT <tree> (283) 65
-    AND <tree> (284) 68
-    CEQ <tree> (285) 70
-    CGE <tree> (286) 64
-    NEGATION (287) 46
-    EQUALS (288) 75
-    APOST (289)
-    CHAVES_INI (290) 9 27 41 44 45
-    CHAVES_FIM (291) 9 27 41 44 45
-    PARENTESES_INI (292) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 54 55 56 61 74
-    PARENTESES_FIM (293) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 54 55 56 61 74
-    EMPTY (294) 80
+    CLE <str> (259) 69
+    CLT <str> (260) 67
+    CNE <str> (261) 66
+    CGT <str> (262) 65
+    AND <str> (263) 68
+    CEQ <str> (264) 70
+    CGE <str> (265) 64
+    ID <str> (266) 6 9 14 29 35 40 41 58 71
+    INTEGER <str> (267) 60 73
+    FLOAT <str> (268) 59 72
+    CHAR <str> (269) 81
+    STRING <str> (270) 82
+    EMPTY <str> (271) 80
+    RETURN (272) 25
+    IF (273) 42 43 44 45
+    ELSE (274) 43 45
+    WHILE (275)
+    WRITE (276) 36 37
+    WRITELN (277) 38 39
+    READ (278) 35
+    EXISTS (279) 56 61
+    ADD (280) 54
+    REMOVE (281) 55
+    FOR (282) 27 28
+    FORALL (283) 40 41
+    IN (284) 40 41 54 55 56 61
+    IS_IN (285)
+    IS_SET (286)
+    OR (287)
+    NEGATION (288) 46
+    EQUALS (289) 75
+    APOST (290)
+    CHAVES_INI (291) 9 27 41 44 45
+    CHAVES_FIM (292) 9 27 41 44 45
+    PARENTESES_INI (293) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 54 55 56 61 74
+    PARENTESES_FIM (294) 9 27 28 29 35 36 37 38 39 40 41 42 43 44 45 54 55 56 61 74
     SEMICOLON (295) 6 19 22 23 24 25 27 28
     COLON (296) 11 31
     PLUS (297) 77
@@ -1056,12 +1056,12 @@ Estado 61
     FLOAT           deslocar, e ir ao estado 173
     CHAR            deslocar, e ir ao estado 96
     STRING          deslocar, e ir ao estado 97
+    EMPTY           deslocar, e ir ao estado 98
     EXISTS          deslocar, e ir ao estado 174
     ADD             deslocar, e ir ao estado 175
     REMOVE          deslocar, e ir ao estado 176
     NEGATION        deslocar, e ir ao estado 177
     PARENTESES_INI  deslocar, e ir ao estado 178
-    EMPTY           deslocar, e ir ao estado 98
 
     exp            ir ao estado 99
     assignmentExp  ir ao estado 179
@@ -1082,12 +1082,12 @@ Estado 62
     FLOAT           deslocar, e ir ao estado 173
     CHAR            deslocar, e ir ao estado 96
     STRING          deslocar, e ir ao estado 97
+    EMPTY           deslocar, e ir ao estado 98
     EXISTS          deslocar, e ir ao estado 174
     ADD             deslocar, e ir ao estado 175
     REMOVE          deslocar, e ir ao estado 176
     NEGATION        deslocar, e ir ao estado 177
     PARENTESES_INI  deslocar, e ir ao estado 178
-    EMPTY           deslocar, e ir ao estado 98
 
     exp            ir ao estado 101
     assignmentExp  ir ao estado 179
@@ -1391,12 +1391,12 @@ Estado 82
     FLOAT           reduzir usando a regra 75 (ASSIGN)
     CHAR            reduzir usando a regra 75 (ASSIGN)
     STRING          reduzir usando a regra 75 (ASSIGN)
+    EMPTY           reduzir usando a regra 75 (ASSIGN)
     EXISTS          reduzir usando a regra 75 (ASSIGN)
     ADD             reduzir usando a regra 75 (ASSIGN)
     REMOVE          reduzir usando a regra 75 (ASSIGN)
     NEGATION        reduzir usando a regra 75 (ASSIGN)
     PARENTESES_INI  reduzir usando a regra 75 (ASSIGN)
-    EMPTY           reduzir usando a regra 75 (ASSIGN)
 
 
 Estado 83
@@ -1486,12 +1486,12 @@ Estado 88
     FLOAT           deslocar, e ir ao estado 29
     CHAR            deslocar, e ir ao estado 189
     STRING          deslocar, e ir ao estado 190
+    EMPTY           deslocar, e ir ao estado 191
     EXISTS          deslocar, e ir ao estado 35
     ADD             deslocar, e ir ao estado 36
     REMOVE          deslocar, e ir ao estado 37
     NEGATION        deslocar, e ir ao estado 40
     PARENTESES_INI  deslocar, e ir ao estado 41
-    EMPTY           deslocar, e ir ao estado 191
 
     exp            ir ao estado 116
     assignmentExp  ir ao estado 51
@@ -3294,12 +3294,12 @@ Estado 217
     FLOAT           deslocar, e ir ao estado 173
     CHAR            deslocar, e ir ao estado 96
     STRING          deslocar, e ir ao estado 97
+    EMPTY           deslocar, e ir ao estado 98
     EXISTS          deslocar, e ir ao estado 174
     ADD             deslocar, e ir ao estado 175
     REMOVE          deslocar, e ir ao estado 176
     NEGATION        deslocar, e ir ao estado 177
     PARENTESES_INI  deslocar, e ir ao estado 178
-    EMPTY           deslocar, e ir ao estado 98
 
     exp            ir ao estado 235
     assignmentExp  ir ao estado 179

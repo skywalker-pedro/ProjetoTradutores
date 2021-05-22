@@ -9,7 +9,7 @@ float teste(int a, int b){
 }
 
 set main2(){
-   
+    int cv;
     int x1;
     int y1;
     x1 = x1 + (8*5);
@@ -45,5 +45,4 @@ set main2(){
     teste4(x,y1);
 
 return cv;
-
 }

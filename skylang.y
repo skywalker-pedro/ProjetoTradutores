@@ -251,13 +251,12 @@ int check_conversao(int tipo1, int tipo2){
 	struct node* tree;
 };
 
-%token <str> TYPE
-%token <str> ID INTEGER FLOAT CHAR STRING
+%token <str> TYPE CLE CLT CNE CGT AND CEQ CGE 
+%token <str> ID INTEGER FLOAT CHAR STRING EMPTY
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
-%token <tree> CLE CLT CNE CGT AND CEQ CGE 
 %token NEGATION EQUALS
 %token APOST
-%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON COLON
+%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM SEMICOLON COLON
 
 %left PLUS MINUS MULT DIV
 
@@ -358,7 +357,7 @@ func_declaration:
 								tipo_funcao_atual = $1;
 								
 							}
-							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
+							} params PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM { 
 																					if(passagem == 1){
 											
 																						insert_symbol(symbol_ID, $2,"FUNCAO",$1,escopoAtual,-1);
@@ -367,6 +366,9 @@ func_declaration:
 																						$$ = add_tree_node("func_declaration");																		
 																						$$ -> leaf1 = $5;
 																						$$ -> leaf2 = $8;
+																						$$ -> value = $2;
+																						$$ -> type = translate_type($1);
+																						$$ -> flag_print =1;
 																						snprintf(codigo_tac,1100,"%s:",$2);
 																						$$->linha_tac = strdup(codigo_tac);
 																						
@@ -632,6 +634,7 @@ outPutStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("write");
 			$$ -> flag_print = 1;
+			$$ -> leaf1 = $3;
 			//$$ -> leaf1 = $3;
 		}
 	 }
@@ -651,6 +654,7 @@ outPutStatement:
 	|WRITELN PARENTESES_INI CONST PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("writeln");
+			$$ -> leaf1 = $3;
 			$$ -> flag_print = 1;
 			//$$ -> leaf1 = $3;
 		}
@@ -734,6 +738,7 @@ ifStatement:
 			$$ = add_tree_node("ifStatement");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
+			$$ -> flag_print = 1;
 		}
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM statement ELSE statement {
@@ -742,6 +747,7 @@ ifStatement:
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
 			$$ -> leaf3 = $7;
+			$$ -> flag_print = 1;
 		}
 	 }
 
@@ -750,6 +756,7 @@ ifStatement:
 			$$ = add_tree_node("ifStatement");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $6;
+			$$ -> flag_print = 1;
 		}
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM {
@@ -758,6 +765,7 @@ ifStatement:
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $6;
 			$$ -> leaf3 = $10;
+			$$ -> flag_print = 1;
 		}
 	 }
 ;
@@ -964,37 +972,58 @@ relExp:
 rel:
 	CGE {
 		if(passagem == 1){
-			$$ = add_tree_node("rel CGE");
+			$$ = add_tree_node("   >=");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	 }
 	| CGT {
 		if(passagem == 1){
-			$$ = add_tree_node("rel");
+			$$ = add_tree_node("   >");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	 }
 	| CNE {
 		if(passagem == 1){
-			$$ = add_tree_node("rel");
+			$$ = add_tree_node("   !=");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	 }
 	| CLT {
 		if(passagem == 1){
-			$$ = add_tree_node("rel");
+			$$ = add_tree_node("   <");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	 }
 	| AND {
 		if(passagem == 1){
-			$$ = add_tree_node("rel");
+			$$ = add_tree_node("   &&");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	 }
 	| CLE {
 		if(passagem == 1){
-			$$ = add_tree_node("rel");
+			$$ = add_tree_node("<=");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	 }
 	| CEQ {
 		if(passagem == 1){
-			$$ = add_tree_node("rel CEQ");
+			$$ = add_tree_node("==");
+			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print = 1;
 		}
 	}
 
@@ -1037,7 +1066,7 @@ terminal:
 	}
 	|FLOAT {
 		if(passagem == 1){
-			$$ = add_tree_node("terminal FLOAT");
+			$$ = add_tree_node("terminal CONST");
 			$$ -> type = 2;
 			$$ -> flag_print = 1;
 			$$ -> value = $1;
@@ -1047,7 +1076,7 @@ terminal:
 	 }
 	|INTEGER {
 		if(passagem == 1){
-			$$ = add_tree_node("terminal INTEGER");
+			$$ = add_tree_node("terminal CONST");
 			$$ -> type = 1;
 			$$ -> flag_print = 1;
 			$$ -> value = $1;
@@ -1115,6 +1144,7 @@ EMPTY{
 	if(passagem == 1){
 			$$ = add_tree_node("EMPTY");
 			$$ -> type = 3;
+			$$ -> value = $1;
 		}
 }
 
@@ -1122,6 +1152,8 @@ EMPTY{
 	if(passagem == 1){
 			$$ = add_tree_node("CHAR");
 			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print=1;
 		}
 }
 
@@ -1129,6 +1161,8 @@ EMPTY{
 	if(passagem == 1){
 			$$ = add_tree_node("STRING");
 			$$ -> value_tac = $1;
+			$$ -> value = $1;
+			$$ -> flag_print=1;
 		}
 }
 
