@@ -248,11 +248,11 @@ int check_conversao(int tipo1, int tipo2){
 	struct node* tree;
 };
 
-%token <str> TYPE
-%token <str> ID INTEGER FLOAT CHAR STRING
+%token<str>TYPE
+%token<str>ID INTEGER FLOAT
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
 %token <tree> CLE CLT CNE CGT AND CEQ CGE 
-%token NEGATION EQUALS
+%token CHAR STRING NEGATION EQUALS
 %token APOST
 %token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON COLON
 
@@ -351,7 +351,6 @@ func_declaration:
 									flag_redeclaracao_funcao = 1;
 								}
 								tipo_funcao_atual = $1;
-								
 							}
 							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
 																					if(passagem == 1){
@@ -362,8 +361,6 @@ func_declaration:
 																						$$ = add_tree_node("func_declaration");																		
 																						$$ -> leaf1 = $5;
 																						$$ -> leaf2 = $8;
-																						snprintf(codigo_tac,1100,"%s:",$2);
-																						$$->linha_tac = strdup(codigo_tac);
 																					}
 																					if(passagem ==2 ){
 																						aux = strcmp($2,"main");
@@ -785,7 +782,8 @@ exp:
 			$$ = add_tree_node("exp");
 			$$ -> leaf1 = $1;
 			$$ -> type = $1 -> type;
-			$$ -> value_tac = $1 -> result;
+			$$ -> value_tac = $1 -> value_tac;
+
 		}
 	 }
 	|relExp {
@@ -824,8 +822,6 @@ assignmentExp:
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"mov %s, %s", $1->value_tac,$3->value_tac);
-			$$ -> linha_tac = strdup(codigo_tac);
 		}
 	}
 	|terminal ASSIGN CONST {
@@ -928,23 +924,22 @@ Politica de conversao de tipo
 aritExp:
 	terminal OP exp {
 		if(passagem == 1){
+			int_reg = registrador_atual;
+			registrador_atual = registrador_atual+1;
+			snprintf(char_reg,999,"$%d",int_reg);
 			$$ = add_tree_node("aritExp");
 			$$ -> leaf1 = $1;
 			$$ -> leaf2 = $2;
 			$$ -> leaf3 = $3;
-			//$$ -> value_tac = char_reg;
+			$$ -> value_tac = char_reg;
 			if (check_set_type($1->type,$3->type)==0){
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"%s, $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
-			printf("\n%s",codigo_tac);
-			snprintf(char_reg,999,"$%d",registrador_atual);
-			$$ -> result = strdup(char_reg);
-			registrador_atual ++;
-			$$ -> linha_tac = strdup(codigo_tac);
-			$$ -> printa_tac = 1;
-		} 
+			printf("\nTERMINAL : %s",$1 -> value_tac);
+			snprintf(codigo_tac,1100,"%s, $%d, %s, %s",$2 -> value_tac, int_reg, $1 -> value_tac, $3 -> value_tac);
+			printf("\n Codigo Tac: %s", codigo_tac);
+		}
 	 }
 ;
 relExp:
@@ -1016,7 +1011,8 @@ terminal:
 			$$ = add_tree_node("terminal ID");
 			$$ -> flag_print = 1;
 			$$ -> type = translate_type(searchVarType($1,escopoAtual));
-			$$ -> value_tac = strdup(char_reg);
+			$$ -> value_tac = char_reg;
+			printf("\nTERMINAL ID: %s",$$ -> value_tac);
 			$$ -> value = $1;
 		}
 		if(passagem == 2){
@@ -1081,28 +1077,28 @@ OP:
 		if(passagem == 1){
 			$$ = add_tree_node(" *");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "mult";
+			$$ -> value_tac = "MULT";
 		}
 	 }
 	| PLUS {
 		if(passagem == 1){
 			$$ = add_tree_node(" +");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "add";
+			$$ -> value_tac = "ADD";
 		}
 	 }
 	| MINUS {
 		if(passagem == 1){
 			$$ = add_tree_node(" -");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "sub";
+			$$ -> value_tac = "SUB";
 		}
 	 }
 	| DIV {
 		if(passagem == 1){
 			$$ = add_tree_node(" /");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "div";
+			$$ -> value_tac = "DIV";
 		}
 	 }
 ;
@@ -1157,9 +1153,6 @@ char fname[100];
 	if(flag_redeclaracao_variavel==1){
 		printf("\n--> ERRO: Redeclaracao de VARIAVEL (checar inicio da primeira passagem para mais detalhes)\n");
 	}
-	printf("\n==================== TAC =====================\n\n");
-	printf(".table\n.code\n");
-	print_tac(tree);
     yylex_destroy();
 	free_tree(tree);
 	//free_TS(hashed_symbol_table);

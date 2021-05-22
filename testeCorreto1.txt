@@ -1,13 +1,12 @@
-float main(){ 
+int main(){
     int x;
-    x = 1;
-
-    write('\n');
-    write('\?');
-    write('\x');
-
-    return 3.5;
-
+    float y;
 
     
+    y = -2;
+
+    y + 1;
+    x + (y * 2) + (2 - -2);
+
+
 }

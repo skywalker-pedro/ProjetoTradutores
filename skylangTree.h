@@ -32,8 +32,14 @@ Politica de conversao de tipo
 typedef struct node { 
     //char * node_type;
     char * node_name;
+    int flag_print;
+    int printa_tac;
     int type;
     int conversao;
+    char * value_tac;
+    char* value;
+    char* linha_tac;
+    char*result;
     struct node * leaf1;
     struct node * leaf2;
     struct node * leaf3;
@@ -44,8 +50,14 @@ typedef struct node {
 /*add a tree node to the tree*/
 treeNode*add_tree_node(char*name){
     treeNode * node = (treeNode*)malloc(sizeof(treeNode));
+    node -> flag_print = 0;
     node -> node_name = name;
+    node -> printa_tac =0;
     node -> type = 0;
+    node -> value = NULL;
+    node -> result = NULL;
+    node -> value_tac = NULL;
+    node -> linha_tac = NULL;
     node -> conversao = 0;
     node -> leaf1 = NULL;
     node -> leaf2 = NULL;    
@@ -63,14 +75,18 @@ int i;
         return;
     }
     if (conta_identacao == 0) {
-        printf("\n%s",node->node_name);
+        if(node->flag_print != 0)
+            printf("\n%s",node->node_name);
     }else{
-        printf("\n");
+        if(node->flag_print != 0) 
+           printf("\n");
         for(i=0;i<conta_identacao+1;i++){
-            printf("->");
+            if(node->flag_print != 0)  
+                printf("->");
         }
-        printf("%s",node->node_name);
-        if(node->type != 0){
+        if(node->flag_print != 0)
+            printf("%s",node->node_name);
+        if(node->flag_print != 0){
             printf("\n");
             for(i=0;i<conta_identacao+1;i++){
                 printf(" ");
@@ -83,6 +99,8 @@ int i;
                 printf("-> SET");
             if (node->type == 4)
                 printf("-> ELEM");
+            if(node->value != NULL)
+                printf("  %s",node->value);
         }
     }
     if(node->leaf1!=NULL){
@@ -105,6 +123,33 @@ int i;
         conta_identacao = conta_identacao + 1;
         print_tree(conta_identacao,node->leaf5);
     };
+    //printf("\nNada\n");
+}
+
+void print_tac(struct node * node){
+
+    if(node==NULL){
+        return;
+    }
+    if(node->linha_tac!=NULL){
+        printf("%s",node->linha_tac);
+        printf("\n");
+    }
+    if(node->leaf1!=NULL){
+       print_tac(node->leaf1);
+    }
+   if(node->leaf2!=NULL){
+       print_tac(node->leaf2);
+    }
+   if(node->leaf3!=NULL){
+       print_tac(node->leaf3);
+    }
+    if(node->leaf4!=NULL){
+       print_tac(node->leaf4);
+    }
+   if(node->leaf5!=NULL){
+       print_tac(node->leaf5);
+    }
     //printf("\nNada\n");
 }
 

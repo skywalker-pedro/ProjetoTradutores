@@ -8,31 +8,33 @@
 #include "skylang.h"
 #include "symbol_table.h"
 #include "skylangTree.h"
+#include "tac_functions.h"
 #include <string.h>
+#include "utstring.h"
 
 extern int yylex();
 extern void yyerror(const char* msg);
 extern int yylex_destroy();
 extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
+char *teste_linha =  ".table\n.code\n";
 int symbol_ID = 0;
 treeNode* tree = NULL;
-
+tac_lines* tac_file = NULL;
+UT_string *s;
+UT_string *t;
 /////////////////////////////////// Variaveis de controle de escopo, declaracao e checagem de tipos
 int existe_simbolo;
+int reg;
 int existe_main = 0;
 int flag_redeclaracao_funcao;
 int flag_redeclaracao_variavel;
 int registrador_atual = 0;
 char* tipo_funcao_atual;
-
 //int erro_count = 0;
 int aux=1;
 int escopo_correto;
 int argumento_func;
-char char_reg[999];
-int int_reg;
-char codigo_tac[1100];
 //////////////////////////////////
 char * escopoAtual = "Global";
 /* Print TS Function*/
@@ -42,22 +44,6 @@ void printTS(){
         printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s | Registrador: $%d",aux->id,aux->name,aux->type,aux->varType, aux -> escopo,aux -> registrador);
         aux = aux -> hh.next;
     }
-	//free(aux);
-}
-
-int get_id_reg(char*symbol,char*symbol_scope){
-	Hash_table* aux = hashed_symbol_table;
-	int temp = -999;
-    while(aux!=NULL){
-		//strcmp retorna 0 caso as strings sejam iguais
-        if (strcmp(aux->name,symbol)==0){
-			if (strcmp(aux->escopo,symbol_scope)==0){
-				return aux -> registrador;
-			}
-		}
-        aux = aux -> hh.next;
-    }
-	return temp;
 	//free(aux);
 }
 
@@ -97,7 +83,21 @@ char * searchVarType(char*symbol,char*symbol_scope){
 	//free(aux);
 }
 
-
+int get_id_reg(char*symbol,char*symbol_scope){
+	Hash_table* aux = hashed_symbol_table;
+	int temp = -999;
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->name,symbol)==0){
+			if (strcmp(aux->escopo,symbol_scope)==0){
+				return aux -> registrador;
+			}
+		}
+        aux = aux -> hh.next;
+    }
+	return temp;
+	//free(aux);
+}
 //Search symbol type in symbol table
 char * searchFuncType(char*func){
 	Hash_table* aux = hashed_symbol_table;
@@ -162,12 +162,15 @@ int searchFunctionVariable(char*symbol,char*symbol_scope){
 }
 
 /*
+
 TYPES:
+
 0 = nao definido ainda
 1 = int
 2 = float
 3 = set
 4 = elem 
+
 */
 
 int translate_type(char*tipo){
@@ -246,10 +249,11 @@ int check_conversao(int tipo1, int tipo2){
 {
 	char *str;
 	struct node* tree;
+
 };
 
-%token <str> TYPE
-%token <str> ID INTEGER FLOAT CHAR STRING
+%token<str>TYPE
+%token<str>ID INTEGER FLOAT CHAR  STRING
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
 %token <tree> CLE CLT CNE CGT AND CEQ CGE 
 %token NEGATION EQUALS
@@ -260,7 +264,7 @@ int check_conversao(int tipo1, int tipo2){
 
 %type<tree> programa  declarationList declaration variable_declaration func_declaration params params_list param codeBlock assignmentExp statement_list
 %type<tree> statement callFuncStatement call_params call_params_list call_param inputStatement outPutStatement forAllStatement //forRel
-%type<tree> OP ASSIGN ifStatement exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement CONST//forExp expTerminal
+%type<tree> ifStatement exp setExp terms_set aritSetExp relExp rel terminal aritExp forStatement CONST//forExp expTerminal
 
 %nonassoc THEN
 %nonassoc ELSE
@@ -351,7 +355,9 @@ func_declaration:
 									flag_redeclaracao_funcao = 1;
 								}
 								tipo_funcao_atual = $1;
-								
+								utstring_new(s);
+								utstring_printf(s, "coco%s:",$2 );																
+							    tac_file = add_tac_line(tac_file,utstring_body(s),passagem);	
 							}
 							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
 																					if(passagem == 1){
@@ -362,14 +368,16 @@ func_declaration:
 																						$$ = add_tree_node("func_declaration");																		
 																						$$ -> leaf1 = $5;
 																						$$ -> leaf2 = $8;
-																						snprintf(codigo_tac,1100,"%s:",$2);
-																						$$->linha_tac = strdup(codigo_tac);
+																						
 																					}
 																					if(passagem ==2 ){
+																						
 																						aux = strcmp($2,"main");
 																						if(aux == 0 ){
 																							existe_main = 1;
 																						}
+																						
+																						
 																					}
 
 																					/*if(passagem == 2){
@@ -507,10 +515,9 @@ statement:
 
     |RETURN exp SEMICOLON {
 		if(passagem == 1){
-			$$ = add_tree_node("RETURN");
+			$$ = add_tree_node("RETURN statement");
 			$$ -> leaf1 = $2;
 			$$ -> type = $2 -> type;
-			$$ -> flag_print = 1;
 			if($$ -> type != translate_type(tipo_funcao_atual))
 				printf("\n--> ERRO SEMANTICO: Tipo do retorno da funcao -> %s <- incorreto na linha %d",escopoAtual,num_linha_1);
 		}
@@ -612,8 +619,7 @@ inputStatement:
 
 	READ PARENTESES_INI ID PARENTESES_FIM {
 		if(passagem == 1){
-			$$ = add_tree_node("read ID");	 
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("inputStatement");	 
 			//$$ -> leaf1 = $3;
 		}
 	}
@@ -623,31 +629,27 @@ inputStatement:
 outPutStatement:
 	WRITE PARENTESES_INI STRING PARENTESES_FIM  {
 		if(passagem == 1){
-			$$ = add_tree_node("write");
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
 
 	|WRITE PARENTESES_INI CHAR PARENTESES_FIM  {
 		if(passagem == 1){
-			$$ = add_tree_node("write");
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
 
 	|WRITE PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
-			$$ = add_tree_node("write");
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
 	|WRITELN PARENTESES_INI STRING PARENTESES_FIM  {
 		if(passagem == 1){
-			$$ = add_tree_node("writeln");
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
@@ -655,16 +657,14 @@ outPutStatement:
 
 	 |WRITELN PARENTESES_INI CHAR PARENTESES_FIM  {
 		if(passagem == 1){
-			$$ = add_tree_node("writeln");
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
 
 	 |WRITELN PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
-			$$ = add_tree_node("writeln");
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("outPutStatement");
 			//$$ -> leaf1 = $3;
 		}
 	 }
@@ -785,7 +785,7 @@ exp:
 			$$ = add_tree_node("exp");
 			$$ -> leaf1 = $1;
 			$$ -> type = $1 -> type;
-			$$ -> value_tac = $1 -> result;
+			$$ -> value_tac = $1 -> value_tac;
 		}
 	 }
 	|relExp {
@@ -814,26 +814,22 @@ exp:
 ;
 
 assignmentExp:
-	terminal ASSIGN exp {
+	terminal EQUALS exp {
 		if(passagem == 1){
 			$$ = add_tree_node("assigmentExp");
 			$$ -> leaf1 = $1;
-			$$ -> leaf2 = $2;
-			$$ -> leaf3 = $3;
+			$$ -> leaf2 = $3;
 			if (check_set_type($1->type,$3->type)==0){
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"mov %s, %s", $1->value_tac,$3->value_tac);
-			$$ -> linha_tac = strdup(codigo_tac);
 		}
 	}
-	|terminal ASSIGN CONST {
+	|terminal EQUALS CONST {
 		if(passagem == 1){
 			$$ = add_tree_node("assigmentExp");
 			$$ -> leaf1 = $1;
-			$$ -> leaf2 = $2;
-			$$ -> leaf3 = $3;
+			$$ -> leaf2 = $3;
 			if ($1->type != 3)
 				printf("\n--> ERRO SEMANTICO LINHA %d, COLUNA %d: ID com tipo incompativel com constante EMPTY\n", num_linha_1,posicao_linha_1);
 		}
@@ -916,6 +912,7 @@ aritSetExp:
 
 /*
 Politica de conversao de tipo
+
 0 = não teve conversao
 1 = intToFLoat
 2 = floatToInt
@@ -926,25 +923,54 @@ Politica de conversao de tipo
 */
 
 aritExp:
-	terminal OP exp {
+	terminal MULT exp {
 		if(passagem == 1){
-			$$ = add_tree_node("aritExp");
+			$$ = add_tree_node("aritExp MULT");
 			$$ -> leaf1 = $1;
-			$$ -> leaf2 = $2;
-			$$ -> leaf3 = $3;
-			//$$ -> value_tac = char_reg;
+			$$ -> leaf2 = $3;
+			$3 -> value_tac = "$000";
+			$$ -> value_tac = $3 -> value_tac;
+			//printf("\nAAA->%s, %s", $1 -> value_tac, $3 -> value_tac);
 			if (check_set_type($1->type,$3->type)==0){
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"%s, $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
-			printf("\n%s",codigo_tac);
-			snprintf(char_reg,999,"$%d",registrador_atual);
-			$$ -> result = strdup(char_reg);
-			registrador_atual ++;
-			$$ -> linha_tac = strdup(codigo_tac);
-			$$ -> printa_tac = 1;
-		} 
+			utstring_new(t);
+			utstring_printf(t, "MULT $999, %s",$1 -> value_tac);
+			utstring_printf(t, ", %s", $3 -> value_tac );
+			printf("\n OFRA _%s", utstring_body(t));
+			add_tac_line(tac_file, utstring_body(t),passagem);
+			//printf("FOI");
+		}
+	
+	 }
+
+	|terminal PLUS exp {
+		if(passagem == 1){
+			$$ = add_tree_node("aritExp ADD");
+			$$ -> leaf1 = $1;
+			$$ -> leaf2 = $3;
+			if (check_set_type($1->type,$3->type)==0)
+				$$->type = $1 -> type;
+		}
+	 }
+	|terminal MINUS exp {
+		if(passagem == 1){
+			$$ = add_tree_node("aritExp MNUS");
+			$$ -> leaf1 = $1;
+			$$ -> leaf2 = $3;
+			if (check_set_type($1->type,$3->type)==0)
+				$$->type = $1 -> type;
+		}
+	 }
+	|terminal DIV exp {
+		if(passagem == 1){
+			$$ = add_tree_node("aritExp DIV");
+			$$ -> leaf1 = $1;
+			$$ -> leaf2 = $3;
+			if (check_set_type($1->type,$3->type)==0)
+				$$->type = $1 -> type;
+		}
 	 }
 ;
 relExp:
@@ -1000,24 +1026,28 @@ rel:
 
 
 /*
+
 TYPES:
+
 0 = nao definido ainda
 1 = int
 2 = float
 3 = set
 4 = elem 
+
 */
 
 terminal:
 	ID {
 		if(passagem == 1){
-			int_reg  = get_id_reg($1,escopoAtual);
-			snprintf(char_reg, 999, "$%d",int_reg );
 			$$ = add_tree_node("terminal ID");
-			$$ -> flag_print = 1;
 			$$ -> type = translate_type(searchVarType($1,escopoAtual));
-			$$ -> value_tac = strdup(char_reg);
-			$$ -> value = $1;
+			//printf("\n--. AQUIIIII2222   %d : %s",translate_type(searchVarType($1,escopoAtual)),escopoAtual);
+			reg = get_id_reg($1,escopoAtual);
+			utstring_new(s);
+			utstring_printf(s, "$%d",reg);
+			$$ -> value_tac = utstring_body(s);
+			//printf("\nHEREEEE %s",$$ -> value_tac);
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($1);
@@ -1037,19 +1067,15 @@ terminal:
 		if(passagem == 1){
 			$$ = add_tree_node("terminal FLOAT");
 			$$ -> type = 2;
-			$$ -> flag_print = 1;
-			$$ -> value = $1;
-			$$ -> value_tac = $1;
 		}
 		 
 	 }
 	|INTEGER {
 		if(passagem == 1){
 			$$ = add_tree_node("terminal INTEGER");
-			$$ -> type = 1;
-			$$ -> flag_print = 1;
-			$$ -> value = $1;
+			$$ -> type = 1;	
 			$$ -> value_tac = $1;
+			printf("AAAQUIIIII: %s",$1);
 		}
 		 
 	 }
@@ -1059,52 +1085,9 @@ terminal:
 			$$ = add_tree_node("terminal EXP");
 			$$->leaf1 =$2;
 			$$ -> type = $2 -> type;
-			$$ -> value_tac = $2 -> value_tac;
 		}
 	}
 
-;
-
-ASSIGN:
-
-EQUALS {
-		if(passagem == 1){
-			$$ = add_tree_node(" =");
-			$$ -> flag_print = 1;
-		}
-	 }
-
-;
-
-OP:
-	MULT {
-		if(passagem == 1){
-			$$ = add_tree_node(" *");
-			$$ -> flag_print = 1;
-			$$ -> value_tac = "mult";
-		}
-	 }
-	| PLUS {
-		if(passagem == 1){
-			$$ = add_tree_node(" +");
-			$$ -> flag_print = 1;
-			$$ -> value_tac = "add";
-		}
-	 }
-	| MINUS {
-		if(passagem == 1){
-			$$ = add_tree_node(" -");
-			$$ -> flag_print = 1;
-			$$ -> value_tac = "sub";
-		}
-	 }
-	| DIV {
-		if(passagem == 1){
-			$$ = add_tree_node(" /");
-			$$ -> flag_print = 1;
-			$$ -> value_tac = "div";
-		}
-	 }
 ;
 
 CONST:
@@ -1129,20 +1112,25 @@ extern void yyerror(const char* a) {
 
 
 int main(){
+tac_file = (tac_lines*)malloc(sizeof(tac_lines));
+tac_file -> next = NULL;
+passagem=1;
+tac_file = add_tac_line(tac_file,teste_linha,passagem);
+//printf("\nTESTE LINHA :%s",tac_file -> line);
 char fname[100];
     scanf("%s",fname);
     yyin=fopen(fname,"r+");
-	passagem=1;
 	printf("\n=================== PRIMEIRA PASSAGEM (TS, ARVORE e erros de Redeclaracao ) ====================\n\n");
     yyparse();
     //yylex();
 	fclose(yyin);
 	printf("\n");
-	printf("\n---------> ARVORE SINTATICA ABSTRATA ANOTADA: <---------\n");
+	printf("\n---------> ARVORE: <---------\n");
 	print_tree(0,tree);
 	printf("\n\n---------> Tabela de Simbolos <---------\n");
 	printTS();
 	printf("\n");
+	print_tac(tac_file);
 	passagem=2;
 	yyin=fopen(fname,"r+");
 	printf("\n==================== SEGUNDA PASSAGEM (TRATAMENTO DE ERROS) =====================\n\n");
@@ -1157,11 +1145,11 @@ char fname[100];
 	if(flag_redeclaracao_variavel==1){
 		printf("\n--> ERRO: Redeclaracao de VARIAVEL (checar inicio da primeira passagem para mais detalhes)\n");
 	}
-	printf("\n==================== TAC =====================\n\n");
-	printf(".table\n.code\n");
-	print_tac(tree);
+	
     yylex_destroy();
 	free_tree(tree);
+	utstring_free(s);
+	utstring_free(t);
 	//free_TS(hashed_symbol_table);
     return 0;
 }

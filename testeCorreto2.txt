@@ -10,8 +10,9 @@ int soma(int a1,int b2){
 int main(){
 
 	
+	int x3;
 	int x2;
-	soma(x1,x2);
+	soma(x3,x2);
                                              	
                              
 return 0;

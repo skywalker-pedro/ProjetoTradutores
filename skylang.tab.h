@@ -56,33 +56,33 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     TYPE = 258,                    /* TYPE  */
     ID = 259,                      /* ID  */
-    RETURN = 260,                  /* RETURN  */
-    IF = 261,                      /* IF  */
-    ELSE = 262,                    /* ELSE  */
-    WHILE = 263,                   /* WHILE  */
-    WRITE = 264,                   /* WRITE  */
-    WRITELN = 265,                 /* WRITELN  */
-    READ = 266,                    /* READ  */
-    EXISTS = 267,                  /* EXISTS  */
-    ADD = 268,                     /* ADD  */
-    REMOVE = 269,                  /* REMOVE  */
-    FOR = 270,                     /* FOR  */
-    FORALL = 271,                  /* FORALL  */
-    IN = 272,                      /* IN  */
-    IS_IN = 273,                   /* IS_IN  */
-    IS_SET = 274,                  /* IS_SET  */
-    OR = 275,                      /* OR  */
-    CLE = 276,                     /* CLE  */
-    CLT = 277,                     /* CLT  */
-    CNE = 278,                     /* CNE  */
-    CGT = 279,                     /* CGT  */
-    AND = 280,                     /* AND  */
-    CEQ = 281,                     /* CEQ  */
-    CGE = 282,                     /* CGE  */
-    INTEGER = 283,                 /* INTEGER  */
-    FLOAT = 284,                   /* FLOAT  */
-    CHAR = 285,                    /* CHAR  */
-    STRING = 286,                  /* STRING  */
+    INTEGER = 260,                 /* INTEGER  */
+    FLOAT = 261,                   /* FLOAT  */
+    CHAR = 262,                    /* CHAR  */
+    STRING = 263,                  /* STRING  */
+    RETURN = 264,                  /* RETURN  */
+    IF = 265,                      /* IF  */
+    ELSE = 266,                    /* ELSE  */
+    WHILE = 267,                   /* WHILE  */
+    WRITE = 268,                   /* WRITE  */
+    WRITELN = 269,                 /* WRITELN  */
+    READ = 270,                    /* READ  */
+    EXISTS = 271,                  /* EXISTS  */
+    ADD = 272,                     /* ADD  */
+    REMOVE = 273,                  /* REMOVE  */
+    FOR = 274,                     /* FOR  */
+    FORALL = 275,                  /* FORALL  */
+    IN = 276,                      /* IN  */
+    IS_IN = 277,                   /* IS_IN  */
+    IS_SET = 278,                  /* IS_SET  */
+    OR = 279,                      /* OR  */
+    CLE = 280,                     /* CLE  */
+    CLT = 281,                     /* CLT  */
+    CNE = 282,                     /* CNE  */
+    CGT = 283,                     /* CGT  */
+    AND = 284,                     /* AND  */
+    CEQ = 285,                     /* CEQ  */
+    CGE = 286,                     /* CGE  */
     NEGATION = 287,                /* NEGATION  */
     EQUALS = 288,                  /* EQUALS  */
     APOST = 289,                   /* APOST  */
@@ -106,7 +106,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 230 "skylang.y"
+#line 246 "skylang.y"
 
 	char *str;
 	struct node* tree;
