@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-
+#include "utlist.h"
 
 /*
 
@@ -47,34 +46,33 @@ void print_tac(tac_lines*tac){
     printf("\n");
 }
 
-/*add a tree node to the tree*/
-tac_lines* add_tac_line(tac_lines*tac,char*line_t, int pass){
-    printf("\nPASSAGEM:%d",pass);
-    tac_lines * current = (tac_lines*)malloc(sizeof(tac_lines));
-    //printf("\nDENTRO DA %s",line_t);
-    current -> line = line_t;
-    printf("\nDENTRO TAC ->%s",current -> line);
-    current -> next = tac;
-    tac=current;
+tac_lines * tac_completo = NULL;
+tac_lines * elt;
+ 
+void adiciona_linha_tac(tac_lines*tac,char* linha){
+tac_lines* nodo=(tac_lines*)malloc(sizeof(tac_lines));
+    nodo->line = linha;
+    LL_APPEND(tac_completo, nodo);
 
-    printf("\n----------------");
-
-    print_tac(tac);
-
-    printf("\n----------------\n");
-    return tac;
 }
 
+void printa_linha_tac(tac_lines*tac,tac_lines* elt){
+    printf("\n");
+    LL_FOREACH(tac,elt) printf("%s\n", elt -> line);
 
-
-
-tac_lines * initialize_tac(tac_lines* tac,char*valor){
-    tac_lines * current = (tac_lines*)malloc(sizeof(tac_lines));
-    current->line = valor;
-    current-> next = NULL;
-    tac -> next = current;
-    return tac;
 }
+
+void cria_arquivo_tac(tac_lines*tac,tac_lines*elt){
+    
+   FILE*fp = fopen("skylang.tac", "w");
+   fprintf(fp, ".table\n");
+   fprintf(fp, ".code\n");
+   LL_FOREACH(tac,elt)
+       fprintf(fp,"%s\n", elt -> line);
+   fclose(fp);
+
+}
+
 void free_tac_lines(struct tac * tac){
     tac_lines * aux;
     aux = tac;

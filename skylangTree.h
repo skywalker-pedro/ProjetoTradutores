@@ -126,7 +126,7 @@ int i;
     //printf("\nNada\n");
 }
 
-void print_tac(struct node * node){
+void print_tac_tree(struct node * node){
 
     if(node==NULL){
         return;
@@ -136,19 +136,19 @@ void print_tac(struct node * node){
         printf("\n");
     }
     if(node->leaf1!=NULL){
-       print_tac(node->leaf1);
+       print_tac_tree(node->leaf1);
     }
-   if(node->leaf2!=NULL){
-       print_tac(node->leaf2);
+    if(node->leaf2!=NULL){
+       print_tac_tree(node->leaf2);
     }
-   if(node->leaf3!=NULL){
-       print_tac(node->leaf3);
+    if(node->leaf3!=NULL){
+       print_tac_tree(node->leaf3);
     }
     if(node->leaf4!=NULL){
-       print_tac(node->leaf4);
+       print_tac_tree(node->leaf4);
     }
-   if(node->leaf5!=NULL){
-       print_tac(node->leaf5);
+    if(node->leaf5!=NULL){
+       print_tac_tree(node->leaf5);
     }
     //printf("\nNada\n");
 }

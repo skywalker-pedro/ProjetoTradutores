@@ -8,6 +8,7 @@
 #include "skylang.h"
 #include "symbol_table.h"
 #include "skylangTree.h"
+#include "tac_functions.h"
 #include <string.h>
 
 extern int yylex();
@@ -15,6 +16,8 @@ extern void yyerror(const char* msg);
 extern int yylex_destroy();
 extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
+extern tac_lines * tac_completo;
+extern tac_lines * elt;
 int symbol_ID = 0;
 treeNode* tree = NULL;
 
@@ -350,6 +353,8 @@ func_declaration:
 									printf("\n--> ERRO SEMANTICO: redeclaracao da FUNCAO -> %s <- na linha %d",$2,num_linha_1);
 									flag_redeclaracao_funcao = 1;
 								}
+								snprintf(char_reg,999,"%s:",$2);
+								adiciona_linha_tac(tac_completo,strdup(char_reg));
 								tipo_funcao_atual = $1;
 								
 							}
@@ -364,6 +369,8 @@ func_declaration:
 																						$$ -> leaf2 = $8;
 																						snprintf(codigo_tac,1100,"%s:",$2);
 																						$$->linha_tac = strdup(codigo_tac);
+																						
+																	
 																					}
 																					if(passagem ==2 ){
 																						aux = strcmp($2,"main");
@@ -621,7 +628,7 @@ inputStatement:
 ;
 
 outPutStatement:
-	WRITE PARENTESES_INI STRING PARENTESES_FIM  {
+	WRITE PARENTESES_INI CONST PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("write");
 			$$ -> flag_print = 1;
@@ -629,13 +636,6 @@ outPutStatement:
 		}
 	 }
 
-	|WRITE PARENTESES_INI CHAR PARENTESES_FIM  {
-		if(passagem == 1){
-			$$ = add_tree_node("write");
-			$$ -> flag_print = 1;
-			//$$ -> leaf1 = $3;
-		}
-	 }
 
 	|WRITE PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
@@ -644,7 +644,7 @@ outPutStatement:
 			//$$ -> leaf1 = $3;
 		}
 	 }
-	|WRITELN PARENTESES_INI STRING PARENTESES_FIM  {
+	|WRITELN PARENTESES_INI CONST PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("writeln");
 			$$ -> flag_print = 1;
@@ -652,14 +652,6 @@ outPutStatement:
 		}
 	 }
 
-
-	 |WRITELN PARENTESES_INI CHAR PARENTESES_FIM  {
-		if(passagem == 1){
-			$$ = add_tree_node("writeln");
-			$$ -> flag_print = 1;
-			//$$ -> leaf1 = $3;
-		}
-	 }
 
 	 |WRITELN PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
@@ -826,6 +818,7 @@ assignmentExp:
 			}
 			snprintf(codigo_tac,1100,"mov %s, %s", $1->value_tac,$3->value_tac);
 			$$ -> linha_tac = strdup(codigo_tac);
+			adiciona_linha_tac(tac_completo,$$->linha_tac);
 		}
 	}
 	|terminal ASSIGN CONST {
@@ -938,12 +931,13 @@ aritExp:
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
 			snprintf(codigo_tac,1100,"%s, $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
-			printf("\n%s",codigo_tac);
+			//printf("\n%s",codigo_tac);
 			snprintf(char_reg,999,"$%d",registrador_atual);
 			$$ -> result = strdup(char_reg);
 			registrador_atual ++;
 			$$ -> linha_tac = strdup(codigo_tac);
 			$$ -> printa_tac = 1;
+			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 		} 
 	 }
 ;
@@ -1116,6 +1110,20 @@ EMPTY{
 		}
 }
 
+|CHAR{
+	if(passagem == 1){
+			$$ = add_tree_node("CHAR");
+			$$ -> value_tac = $1;
+		}
+}
+
+|STRING{
+	if(passagem == 1){
+			$$ = add_tree_node("STRING");
+			$$ -> value_tac = $1;
+		}
+}
+
 
 ;
 %%
@@ -1159,7 +1167,8 @@ char fname[100];
 	}
 	printf("\n==================== TAC =====================\n\n");
 	printf(".table\n.code\n");
-	print_tac(tree);
+	printa_linha_tac(tac_completo,elt);
+	cria_arquivo_tac(tac_completo,elt);
     yylex_destroy();
 	free_tree(tree);
 	//free_TS(hashed_symbol_table);

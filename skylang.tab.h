@@ -106,7 +106,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 246 "skylang.y"
+#line 249 "skylang.y"
 
 	char *str;
 	struct node* tree;

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "uthash.h"
 
+
 typedef struct hash_table {
     int id;
     char * type; //if it is a variable, or function    

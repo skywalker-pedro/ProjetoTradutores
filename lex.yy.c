@@ -581,7 +581,7 @@ int posicao_linha_1 = 0;
 int passagem;
 
 void LexicalError(){
-	printf("\n--> ERRO LEXICO: Token %s nao reconhecido na linha %d\n, coluna %d",yytext,num_linha,posicao_linha);
+	printf("\n--> ERRO LEXICO: Lexema %s nao reconhecido na linha %d, coluna %d",yytext,num_linha,posicao_linha);
 }
 
 #line 588 "lex.yy.c"
