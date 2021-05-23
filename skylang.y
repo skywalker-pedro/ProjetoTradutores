@@ -43,7 +43,7 @@ char * escopoAtual = "Global";
 void printTS(){
 	Hash_table* aux = hashed_symbol_table;
     while(aux!=NULL){
-        printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s | Registrador: $%d",aux->id,aux->name,aux->type,aux->varType, aux -> escopo,aux -> registrador);
+        printf("\n Id simbolo: %d | Nome simbolo: %s | Tipo simbolo: %s %s | Escopo: %s |",aux->id,aux->name,aux->type,aux->varType, aux -> escopo);
         aux = aux -> hh.next;
     }
 	//free(aux);
@@ -544,6 +544,7 @@ forStatement:
 				$$ -> leaf2 = $5;
 				$$ -> leaf3 = $7;
 				$$ -> leaf4 = $10;
+				$$ -> flag_print = 1;
 			}
 	}
 | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement{
@@ -553,6 +554,7 @@ forStatement:
 				$$ -> leaf2 = $5;
 				$$ -> leaf3 = $7;
 				$$ -> leaf4 = $9;
+				$$ -> flag_print = 1;
 			}
 	}
 ;
@@ -564,6 +566,7 @@ callFuncStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("CallFunStatement");
 			$$ -> leaf1 = $3;
+			$$ -> flag_print = 1;
 		}
 
 		if(passagem == 2){
@@ -623,9 +626,10 @@ inputStatement:
 
 	READ PARENTESES_INI ID PARENTESES_FIM {
 		if(passagem == 1){
-			$$ = add_tree_node("read ID");	 
+			$$ = add_tree_node("read Statement");	 
 			$$ -> flag_print = 1;
 			//$$ -> leaf1 = $3;
+			$$ -> flag_print = 1;
 		}
 	}
 
@@ -637,7 +641,7 @@ outPutStatement:
 			$$ = add_tree_node("write");
 			$$ -> flag_print = 1;
 			$$ -> leaf1 = $3;
-			//$$ -> leaf1 = $3;
+			$$ -> flag_print = 1;
 		}
 	 }
 
@@ -650,7 +654,6 @@ outPutStatement:
 			snprintf(codigo_tac,1100,"print %s", $3 -> value_tac);
 			$$ -> linha_tac = strdup(codigo_tac);
 			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
-			//$$ -> leaf1 = $3;
 		}
 	 }
 	|WRITELN PARENTESES_INI CONST PARENTESES_FIM  {
@@ -658,7 +661,6 @@ outPutStatement:
 			$$ = add_tree_node("writeln");
 			$$ -> leaf1 = $3;
 			$$ -> flag_print = 1;
-			//$$ -> leaf1 = $3;
 		}
 	 }
 
@@ -671,7 +673,6 @@ outPutStatement:
 			snprintf(codigo_tac,1100,"println %s", $3 -> value_tac);
 			$$ -> linha_tac = strdup(codigo_tac);
 			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
-			//$$ -> leaf1 = $3;
 		}
 	 }
 ;
@@ -682,6 +683,7 @@ forAllStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("forAllStatement");
 			$$ -> leaf1 = $7;
+			$$ -> flag_print = 1;
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($3);
@@ -709,6 +711,7 @@ forAllStatement:
 		if(passagem == 1){
 			$$ = add_tree_node("forAllStatement");
 			$$ -> leaf1 = $8;
+			$$ -> flag_print = 1;
 		}
 		if(passagem == 2){
 			existe_simbolo = searchSymbol($3);
@@ -789,9 +792,10 @@ exp:
 
 	NEGATION exp  {
 		if(passagem == 1){
-			$$ = add_tree_node("exp");
+			$$ = add_tree_node("Not");
 			$$ -> leaf1 = $2;
 			$$ -> type = $2 -> type;
+			$$ -> flag_print = 1;
 		}
 	 }
 
@@ -872,6 +876,7 @@ setExp:
 			$$ = add_tree_node("setExp");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
+			$$ -> flag_print = 1;
 		}
 	}
 	| REMOVE PARENTESES_INI terms_set IN terms_set PARENTESES_FIM {
@@ -879,13 +884,21 @@ setExp:
 			$$ = add_tree_node("setExp");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
+			$$ -> flag_print =1;
 		}
 	}
+
+	|IS_SET PARENTESES_INI ID PARENTESES_FIM {
+		$$ = add_tree_node("IS_SET");
+		$$ -> flag_print =1;
+	}
+
 	| EXISTS PARENTESES_INI terms_set IN terms_set PARENTESES_FIM {
 		if(passagem == 1){
 			$$ = add_tree_node("setExp");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
+			$$ -> flag_print =1;
 		}
 	}
 ;
@@ -1020,6 +1033,7 @@ rel:
 			$$ -> value_tac = $1;
 			$$ -> value_tac = ">=";
 			$$ -> value = ">=";
+			$$ -> flag_print =1;
 		}
 	 }
 	| CGT {
@@ -1028,6 +1042,7 @@ rel:
 			$$ -> value_tac = $1;
 			$$ -> value_tac = ">";
 			$$ -> value = ">";
+			$$ -> flag_print =1;
 		}
 	 }
 	| CNE {
@@ -1036,6 +1051,7 @@ rel:
 			$$ -> value_tac = $1;
 			$$ -> value_tac = "!=";
 			$$ -> value = "!=";
+			$$ -> flag_print =1;
 		}
 	 }
 	| CLT {
@@ -1044,6 +1060,7 @@ rel:
 			$$ -> value_tac = $1;
 			$$ -> value_tac = "<";
 			$$ -> value = "<";
+			$$ -> flag_print =1;
 		}
 	 }
 	| AND {
@@ -1052,6 +1069,7 @@ rel:
 			$$ -> value_tac = $1;
 			$$ -> value_tac = "&&";
 			$$ -> value = "&&";
+			$$ -> flag_print =1;
 		}
 	 }
 	| CLE {

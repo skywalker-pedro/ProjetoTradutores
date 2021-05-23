@@ -1,11 +1,8 @@
-
-
 elem semEscopo;
 int var2;
 
-
 float teste(int a, int b){
-    return (a+b);
+    
     float x;
 }
 
@@ -24,10 +21,10 @@ int main(){
     remove((exists (x1 in SET1)) in SET2);
 
     forall(x1 in SET1){
-        x1 = !(x1 + 2)*3;
+        x1 = (x1 + 2)*3;
         writeln("escrevendoString");
     }
-    if (x1==1){
+    if (x1!=1){
         writeln("string1DoIf");
     }else{
         writeln("String2doIf");

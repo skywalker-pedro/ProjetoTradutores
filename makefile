@@ -8,7 +8,9 @@ testeCorreto1:
 testeCorreto2:
 	echo testeCorreto2.txt| ./skylang
 	
-	
+testeCorreto3:
+	echo testeCorreto3.txt| ./skylang
+
 testeErrado1:
 	echo testeErro1.txt| ./skylang
 	
