@@ -35,6 +35,9 @@ typedef struct tac {
     struct tac * next;
 }tac_lines;
 
+int namecmp(tac_lines *a, tac_lines *b) {
+    return strcmp(a->line,b->line);
+}
 
 void print_tac(tac_lines*tac){
     tac_lines * aux = tac;
@@ -54,6 +57,18 @@ tac_lines* nodo=(tac_lines*)malloc(sizeof(tac_lines));
     nodo->line = linha;
     LL_APPEND(tac_completo, nodo);
 
+}
+
+void substitui_linha_tac(char*delete, char*adiciona){
+tac_lines* add=(tac_lines*)malloc(sizeof(tac_lines));
+tac_lines* del=(tac_lines*)malloc(sizeof(tac_lines));
+tac_lines * elt;
+
+    add -> line = adiciona;
+    del -> line = delete;
+
+    LL_SEARCH(tac_completo,elt,del,namecmp);
+    LL_REPLACE_ELEM(tac_completo,elt,add);
 }
 
 void printa_linha_tac(tac_lines*tac,tac_lines* elt){

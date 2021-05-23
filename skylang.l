@@ -513,7 +513,7 @@ empty "EMPTY"
 
 {plus}	{
     		 //printf("Token valido: -> %s\n", yytext);
-			 //yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 				posicao_linha += yyleng;
 			}
@@ -540,7 +540,7 @@ empty "EMPTY"
 
 {ceq}	{
     		 //printf("Token valido equals: -> %s\n", yytext);
-			 //yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 				posicao_linha += yyleng;
 			}

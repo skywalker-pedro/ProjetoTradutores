@@ -36,6 +36,7 @@ int argumento_func;
 char char_reg[999];
 int int_reg;
 char codigo_tac[1100];
+int contador_if;
 //////////////////////////////////
 char * escopoAtual = "Global";
 /* Print TS Function*/
@@ -499,6 +500,7 @@ statement:
 		if(passagem == 1){
 			$$ = add_tree_node("statement");
 			$$ -> leaf1 = $1;
+			$$ -> linha_tac = $1 -> linha_tac;
 		}
 	 }
 	|inputStatement SEMICOLON {
@@ -739,6 +741,14 @@ ifStatement:
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
 			$$ -> flag_print = 1;
+			//////////////////////////////// substituir linha tac da exp ////////////////////////////////////
+			snprintf(codigo_tac,1100,"%s\nbrz saida_if_%d, %s",$3 -> linha_tac,contador_if,$3 -> result);
+			substitui_linha_tac($3 -> linha_tac,strdup(codigo_tac));
+			//////////////////////////////// substituir linha tac do statement ////////////////////////////////////
+			snprintf(codigo_tac,1100,"%s\nsaida_if_%d:",$5->linha_tac,contador_if);
+			printf("\nAQUI : %s",strdup(codigo_tac));
+			substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
+			contador_if = contador_if + 1;
 		}
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM statement ELSE statement {
@@ -801,6 +811,9 @@ exp:
 			$$ = add_tree_node("exp");
 			$$ -> leaf1 = $1;
 			$$ -> type = $1 -> type;
+			$$ -> value_tac = $1 -> result;
+			$$ -> linha_tac = $1 -> linha_tac;
+			$$ -> result = $1 -> result;
 		}
 	 }
 	|terminal {
@@ -965,6 +978,33 @@ relExp:
 			$$ -> leaf2 = $2;
 			$$ -> leaf3 = $3;
 			check_set_type($1->type,$3->type);
+			if(strcmp($2->value_tac, "==")==0){
+				
+				snprintf(codigo_tac,1100,"seq $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);
+				snprintf(char_reg,999,"$%d",registrador_atual);
+				$$ -> result = strdup(char_reg);
+				registrador_atual ++;
+				$$ -> linha_tac = strdup(codigo_tac);
+				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
+			}
+			if(strcmp($2->value_tac, "<=")==0){
+				
+				snprintf(codigo_tac,1100,"sleq $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);
+				snprintf(char_reg,999,"$%d",registrador_atual);
+				$$ -> result = strdup(char_reg);
+				registrador_atual ++;
+				$$ -> linha_tac = strdup(codigo_tac);
+				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
+			}
+			if(strcmp($2->value_tac, "<")==0){
+				
+				snprintf(codigo_tac,1100,"slt $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);
+				snprintf(char_reg,999,"$%d",registrador_atual);
+				$$ -> result = strdup(char_reg);
+				registrador_atual ++;
+				$$ -> linha_tac = strdup(codigo_tac);
+				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
+			}
 		}
 	 }
 ;
@@ -974,55 +1014,55 @@ rel:
 		if(passagem == 1){
 			$$ = add_tree_node("   >=");
 			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ -> value_tac = ">=";
+			$$ -> value = ">=";
 		}
 	 }
 	| CGT {
 		if(passagem == 1){
 			$$ = add_tree_node("   >");
 			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ -> value_tac = ">";
+			$$ -> value = ">";
 		}
 	 }
 	| CNE {
 		if(passagem == 1){
 			$$ = add_tree_node("   !=");
 			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ -> value_tac = "!=";
+			$$ -> value = "!=";
 		}
 	 }
 	| CLT {
 		if(passagem == 1){
 			$$ = add_tree_node("   <");
 			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ -> value_tac = "<";
+			$$ -> value = "<";
 		}
 	 }
 	| AND {
 		if(passagem == 1){
 			$$ = add_tree_node("   &&");
 			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ -> value_tac = "&&";
+			$$ -> value = "&&";
 		}
 	 }
 	| CLE {
 		if(passagem == 1){
-			$$ = add_tree_node("<=");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
+			$$ = add_tree_node("   <=");
+			$$ -> value_tac = "<=";
+			$$ -> value = "<=";
 			$$ -> flag_print = 1;
 		}
 	 }
 	| CEQ {
 		if(passagem == 1){
-			$$ = add_tree_node("==");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
+			$$ = add_tree_node("  ==");
+			$$ -> value_tac = "==";
+			$$ -> value = "==";
 			$$ -> flag_print = 1;
 		}
 	}
@@ -1209,6 +1249,7 @@ char fname[100];
 	}
 	printf("\n==================== TAC =====================\n\n");
 	printf(".table\n.code\n");
+	//print_tac_tree(tree);
 	printa_linha_tac(tac_completo,elt);
 	cria_arquivo_tac(tac_completo,elt);
     yylex_destroy();

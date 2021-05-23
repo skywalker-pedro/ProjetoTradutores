@@ -1403,7 +1403,7 @@ YY_RULE_SETUP
 #line 514 "skylang.l"
 {
     		 //printf("Token valido: -> %s\n", yytext);
-			 //yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 				posicao_linha += yyleng;
 			}
@@ -1436,7 +1436,7 @@ YY_RULE_SETUP
 #line 541 "skylang.l"
 {
     		 //printf("Token valido equals: -> %s\n", yytext);
-			 //yylval.str = (char *) strdup(yytext);
+			//yylval.str = (char *) strdup(yytext);
     		if(passagem == 2){
 				posicao_linha += yyleng;
 			}

@@ -1,15 +1,11 @@
 int main(){
     int x;
-    float y;
-    y = -9;
-    x = 1;
-    x = x + (y * 2) + (2 - -2);
-    writeln(x*x);
-
-    if(x<1)
-        write('\t');
-    else
-        write('\n');
-
+    x=2;
+    if(x==2)
+        writeln(1);
+    if(x==3)
+        writeln(2);
+    x = x + 2;
+    writeln(x);
 return 0;
 }
