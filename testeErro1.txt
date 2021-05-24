@@ -1,16 +1,12 @@
 elem semEscopo;
 int var2;
-int $$;
-
+int $;
 float teste(int a, int b){
+
+    a = a*b;    
+
     return (a+b);
 }
-
-float teste4(int a, int b){
-    return (a+b);
-    float x;
-}
-
 int main2(){
     int x;
     int x1;
@@ -22,8 +18,7 @@ int main2(){
     add(x1 in SET1);
     remove(x1 in SET1);
     exists(x1 in SET1);
-    remove(exists (x1 in SET1) in SET2);
-
+    add(1 in add(2 in add(5 in add(8 in SET1))));
     forall(x1 in SET1)
         writeln("escrevendoString");
     int x;
@@ -35,7 +30,7 @@ int main2(){
     for(i=0;i<232;i=i+1){
         writeln("Funcionou");
     }
-    teste4(x,y1,y1);
+    teste(x);
 
 return 0;;
 }

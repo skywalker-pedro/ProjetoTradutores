@@ -1,23 +1,15 @@
-int soma(int a1,int b2){
-
-	int resultado;
-	resultado = a1+b2;
-	write("resultado");
-	writeln('\?');
-	int x1;
-                                                          
-}
-
 int main(){
 
-	
-	int x3;
-	float x2;
-	elem x;
+int x;
+float y;
 
-	x3 = x2 * x ;
-	
-                                             	
+read(x);
+read(y);
+
+if (x > y) writeln(x);
+if (x < y) writeln(y);	
+
+writeln((x+y)*100);
                              
 return 0;
 

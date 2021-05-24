@@ -1167,6 +1167,17 @@ relExp:
 				$$ -> linha_tac = strdup(codigo_tac);
 				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 			}
+			if(strcmp($2->value_tac, ">")==0){
+				
+				snprintf(codigo_tac,1100,"sleq $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);
+				adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+				snprintf(codigo_tac,1100,"not $%d, $%d",registrador_atual,registrador_atual);
+				snprintf(char_reg,999,"$%d",registrador_atual);
+				$$ -> result = strdup(char_reg);
+				registrador_atual ++;
+				$$ -> linha_tac = strdup(codigo_tac);
+				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
+			}
 		}
 	 }
 ;
