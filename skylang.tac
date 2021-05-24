@@ -1,16 +1,25 @@
 .table
 .code
-teste:
-main2:
-mul $6, 8, 5
-add $7, $4, $6
-mov $4, $7
-add $10, $4, -2
-mul $11, $10, 3
-mov $4, $11
-seq $12, $-999, 1
-seq $13, $-999, 1
-mov $-999, 0
-slt $14, $-999, 232
-add $15, $-999, 1
-mov $-999, $15
+main:
+mov $0, 3
+inttofl $2, 4
+mov $1, $2
+fltoint $3, 2.5
+seq $4, $0, $3
+brz saida_if_0, $4
+println 1
+saida_if_0:
+fltoint $5, 3.3
+seq $6, $0, $5
+brz saida_if_1, $6
+println 2
+saida_if_1:
+add $7, $0, 2
+mov $0, $7
+add $8, 1, 1
+add $9, $0, $8
+add $10, $0, $9
+div $11, $10, 2
+fltoint $12, $1
+mul $13, $11, $12
+println $13
