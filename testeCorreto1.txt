@@ -1,11 +1,8 @@
 int main(){
     int x;
-    int y;
-    set g;
-    is_set(g);
-    add(x in g);
-    x=3.5;
-    y=4.5;
+    float y;
+    x=3;
+    y=4;
     if(x==2.5) writeln(1);
     if(x==3.3) writeln(2);
     x = x + 2;

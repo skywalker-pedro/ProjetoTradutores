@@ -693,12 +693,21 @@ call_param:
 
 inputStatement:
 
-	READ PARENTESES_INI ID PARENTESES_FIM {
+	READ PARENTESES_INI terminal PARENTESES_FIM {
 		if(passagem == 1){
 			$$ = add_tree_node("read Statement");	 
 			$$ -> flag_print = 1;
-			//$$ -> leaf1 = $3;
-			$$ -> flag_print = 1;
+			$$ -> type = translate_type(searchVarType($3->value,escopoAtual));
+			if($$ -> type == 1){
+				snprintf(codigo_tac,1100,"scani %s",$3->value_tac);
+				adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+				//registrador_atual ++;
+			}
+			if($$ -> type == 2){
+				snprintf(codigo_tac,1100,"scanf %s",$3->value_tac);
+				adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+				//registrador_atual ++;
+			}
 		}
 	}
 
