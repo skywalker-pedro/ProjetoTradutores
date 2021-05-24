@@ -923,6 +923,21 @@ assignmentExp:
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 				//printf("\n CONVERSAO: %d",$$ -> conversao);
+				if($$ -> conversao == 2){
+					snprintf(codigo_tac,1100,"fltoint $%d, %s",registrador_atual,$3 -> value_tac);
+					adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+					snprintf(char_reg,999,"$%d",registrador_atual);
+					$3 -> value_tac = strdup(char_reg);
+					registrador_atual ++;
+				}
+				if($$ -> conversao == 1){
+					snprintf(codigo_tac,1100,"inttofl $%d, %s",registrador_atual,$3 -> value_tac);
+					adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+					snprintf(char_reg,999,"$%d",registrador_atual);
+					$3 -> value_tac = strdup(char_reg);
+					registrador_atual ++;
+				}
+				
 			}
 			snprintf(codigo_tac,1100,"mov %s, %s", $1->value_tac,$3->value_tac);
 			$$ -> linha_tac = strdup(codigo_tac);
@@ -1065,6 +1080,20 @@ aritExp:
 			if (check_set_type($1->type,$3->type)==0){
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
+				if($$ -> conversao == 2){
+					snprintf(codigo_tac,1100,"fltoint $%d, %s",registrador_atual,$3 -> value_tac);
+					adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+					snprintf(char_reg,999,"$%d",registrador_atual);
+					$3 -> value_tac = strdup(char_reg);
+					registrador_atual ++;
+				}
+				if($$ -> conversao == 1){
+					snprintf(codigo_tac,1100,"inttofl $%d, %s",registrador_atual,$3 -> value_tac);
+					adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+					snprintf(char_reg,999,"$%d",registrador_atual);
+					$3 -> value_tac = strdup(char_reg);
+					registrador_atual ++;
+				}
 			}
 			snprintf(codigo_tac,1100,"%s $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
 			//printf("\n%s",codigo_tac);
@@ -1084,7 +1113,24 @@ relExp:
 			$$ -> leaf1 = $1;
 			$$ -> leaf2 = $2;
 			$$ -> leaf3 = $3;
-			check_set_type($1->type,$3->type);
+			if (check_set_type($1->type,$3->type)==0){
+				$$ -> type = $1 -> type;
+				$$ -> conversao = check_conversao($1->type,$3->type);
+				if($$ -> conversao == 2){
+					snprintf(codigo_tac,1100,"fltoint $%d, %s",registrador_atual,$3 -> value_tac);
+					adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+					snprintf(char_reg,999,"$%d",registrador_atual);
+					$3 -> value_tac = strdup(char_reg);
+					registrador_atual ++;
+				}
+				if($$ -> conversao == 1){
+					snprintf(codigo_tac,1100,"inttofl $%d, %s",registrador_atual,$3 -> value_tac);
+					adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+					snprintf(char_reg,999,"$%d",registrador_atual);
+					$3 -> value_tac = strdup(char_reg);
+					registrador_atual ++;
+				}
+			}
 			if(strcmp($2->value_tac, "==")==0){
 				
 				snprintf(codigo_tac,1100,"seq $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);

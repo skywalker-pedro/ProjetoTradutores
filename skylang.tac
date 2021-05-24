@@ -1,21 +1,17 @@
 .table
 .code
-main:
-mov $0, 2
-mov $1, 4
-seq $3, $0, 2
-brz saida_if_0, $3
-println 1
-saida_if_0:
-seq $4, $0, 3
-brz saida_if_1, $4
-println 2
-saida_if_1:
-add $5, $0, 2
-mov $0, $5
-add $6, 1, 1
-add $7, $0, $6
-add $8, $0, $7
-div $9, $8, 2
-mul $10, $9, $1
-println $10
+teste:
+main2:
+mul $6, 8, 5
+add $7, $4, $6
+mov $4, $7
+add $10, $4, -2
+mul $11, $10, 3
+mov $4, $11
+seq $12, $-999, 1
+brz saida_if_0, $12
+seq $13, $-999, 1
+mov $-999, 0
+slt $14, $-999, 232
+add $15, $-999, 1
+mov $-999, $15
