@@ -844,6 +844,24 @@ ifStatement:
 			$$ -> leaf2 = $5;
 			$$ -> leaf3 = $7;
 			$$ -> flag_print = 1;
+			//////////////////////////////// substituir linha tac da exp ////////////////////////////////////
+			snprintf(codigo_tac,1100,"%s\nbrz else_if_%d, %s",$3 -> linha_tac,contador_if,$3 -> result);
+			if (strdup(codigo_tac)!= NULL)
+				if ($3->linha_tac!= NULL)
+					substitui_linha_tac($3 -> linha_tac,strdup(codigo_tac));
+			//////////////////////////////// substituir linha tac do statement 1////////////////////////////////////
+			snprintf(codigo_tac,1100,"%s\njump saida_if_%d\nelse_if_%d:",$5->linha_tac,contador_if,contador_if);
+			//printf("\nAQUI : %s",strdup(codigo_tac));
+			if (strdup(codigo_tac)!= NULL)
+				if ($5->linha_tac!= NULL)
+					substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
+			//////////////////////////////// substituir linha tac do statement 2////////////////////////////////////
+			snprintf(codigo_tac,1100,"%s\nsaida_if_%d:",$7->linha_tac,contador_if);
+			//printf("\nAQUI : %s",strdup(codigo_tac));
+			if (strdup(codigo_tac)!= NULL)
+				if ($7->linha_tac!= NULL)
+					substitui_linha_tac($7 -> linha_tac,strdup(codigo_tac));
+			contador_if = contador_if + 1;
 		}
 	 }
 
