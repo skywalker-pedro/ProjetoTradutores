@@ -37,7 +37,6 @@ remove "remove"
 exists "exists"
 add "add"
 div  "/"
-is_in "is_in"
 is_set "is_set"
 in "in"
 type "int"|"float"|"set"|"elem"
@@ -344,19 +343,6 @@ empty "EMPTY"
 				posicao_linha_1 += yyleng;
 			}
 			return TYPE;
-}
-
-
-{is_in}	{
-    		//printf("Token valido: -> %s\n", yytext);
-			//yylval.str = (char *) strdup(yytext);
-   			if(passagem == 2){
-				posicao_linha += yyleng;
-			}
-			if(passagem == 1){
-				posicao_linha_1 += yyleng;
-			}
-			return IS_IN;
 }
 
 {is_set}	{

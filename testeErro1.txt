@@ -22,7 +22,7 @@ int main2(){
     add(x1 in SET1);
     remove(x1 in SET1);
     exists(x1 in SET1);
-    remove((exists (x1 in SET1)) in SET2);
+    remove(exists (x1 in SET1) in SET2);
 
     forall(x1 in SET1)
         writeln("escrevendoString");

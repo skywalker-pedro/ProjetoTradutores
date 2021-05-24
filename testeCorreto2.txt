@@ -12,8 +12,11 @@ int main(){
 
 	
 	int x3;
-	int x2;
-	soma(x3,x2);
+	float x2;
+	elem x;
+
+	x3 = x2 * x ;
+	
                                              	
                              
 return 0;

@@ -2,8 +2,6 @@ elem semEscopo;
 int semescopo;
 
 float teste(int a, int b){
-
-    
     float x;
     return x;
 }
@@ -19,7 +17,8 @@ set main2(){
     add(x1 in SET1);
     remove(x1 in SET1);
     exists(x1 in SET1);
-    remove((exists (x1 in SET1)) in SET2);
+    remove(exists(x1 in SET1) in SET2);
+    add(1 in add(2 in add(5 in add(8 in SET2))));
 
     forall(x1 in SET1){
         x1 = (x1 + -2)*3;
@@ -40,7 +39,7 @@ set main2(){
     for(i=0;i<232;i=i+1){
         writeln("Funcionou");;
     }
-    teste4(x,y1);
+    teste(SET1,y1);
 
 return cv;
 }
