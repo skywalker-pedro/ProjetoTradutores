@@ -8,7 +8,6 @@
 #include "skylang.h"
 #include "symbol_table.h"
 #include "skylangTree.h"
-#include "tac_functions.h"
 #include <string.h>
 
 extern int yylex();
@@ -16,8 +15,6 @@ extern void yyerror(const char* msg);
 extern int yylex_destroy();
 extern FILE *yyin;
 extern Hash_table * hashed_symbol_table;
-extern tac_lines * tac_completo;
-extern tac_lines * elt;
 int symbol_ID = 0;
 treeNode* tree = NULL;
 
@@ -251,12 +248,13 @@ int check_conversao(int tipo1, int tipo2){
 	struct node* tree;
 };
 
-%token <str> TYPE CLE CLT CNE CGT AND CEQ CGE 
-%token <str> ID INTEGER FLOAT CHAR STRING EMPTY
+%token<str>TYPE
+%token<str>ID INTEGER FLOAT
 %token RETURN IF ELSE WHILE WRITE WRITELN READ EXISTS ADD REMOVE FOR FORALL IN IS_IN IS_SET OR 
-%token NEGATION EQUALS
+%token <tree> CLE CLT CNE CGT AND CEQ CGE 
+%token CHAR STRING NEGATION EQUALS
 %token APOST
-%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM SEMICOLON COLON
+%token CHAVES_INI CHAVES_FIM PARENTESES_INI PARENTESES_FIM EMPTY SEMICOLON COLON
 
 %left PLUS MINUS MULT DIV
 
@@ -352,12 +350,9 @@ func_declaration:
 									printf("\n--> ERRO SEMANTICO: redeclaracao da FUNCAO -> %s <- na linha %d",$2,num_linha_1);
 									flag_redeclaracao_funcao = 1;
 								}
-								snprintf(char_reg,999,"%s:",$2);
-								adiciona_linha_tac(tac_completo,strdup(char_reg));
 								tipo_funcao_atual = $1;
-								
 							}
-							} params PARENTESES_FIM CHAVES_INI codeBlock CHAVES_FIM { 
+							} params PARENTESES_FIM CHAVES_INI codeBlock  CHAVES_FIM { 
 																					if(passagem == 1){
 											
 																						insert_symbol(symbol_ID, $2,"FUNCAO",$1,escopoAtual,-1);
@@ -366,13 +361,6 @@ func_declaration:
 																						$$ = add_tree_node("func_declaration");																		
 																						$$ -> leaf1 = $5;
 																						$$ -> leaf2 = $8;
-																						$$ -> value = $2;
-																						$$ -> type = translate_type($1);
-																						$$ -> flag_print =1;
-																						snprintf(codigo_tac,1100,"%s:",$2);
-																						$$->linha_tac = strdup(codigo_tac);
-																						
-																	
 																					}
 																					if(passagem ==2 ){
 																						aux = strcmp($2,"main");
@@ -630,45 +618,50 @@ inputStatement:
 ;
 
 outPutStatement:
-	WRITE PARENTESES_INI CONST PARENTESES_FIM  {
+	WRITE PARENTESES_INI STRING PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("write");
 			$$ -> flag_print = 1;
-			$$ -> leaf1 = $3;
 			//$$ -> leaf1 = $3;
 		}
 	 }
 
+	|WRITE PARENTESES_INI CHAR PARENTESES_FIM  {
+		if(passagem == 1){
+			$$ = add_tree_node("write");
+			$$ -> flag_print = 1;
+			//$$ -> leaf1 = $3;
+		}
+	 }
 
 	|WRITE PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("write");
 			$$ -> flag_print = 1;
-			$$ -> leaf1 = $3;
-			snprintf(codigo_tac,1100,"print %s", $3 -> value_tac);
-			$$ -> linha_tac = strdup(codigo_tac);
-			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 			//$$ -> leaf1 = $3;
 		}
 	 }
-	|WRITELN PARENTESES_INI CONST PARENTESES_FIM  {
+	|WRITELN PARENTESES_INI STRING PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("writeln");
-			$$ -> leaf1 = $3;
 			$$ -> flag_print = 1;
 			//$$ -> leaf1 = $3;
 		}
 	 }
 
+
+	 |WRITELN PARENTESES_INI CHAR PARENTESES_FIM  {
+		if(passagem == 1){
+			$$ = add_tree_node("writeln");
+			$$ -> flag_print = 1;
+			//$$ -> leaf1 = $3;
+		}
+	 }
 
 	 |WRITELN PARENTESES_INI exp PARENTESES_FIM  {
 		if(passagem == 1){
 			$$ = add_tree_node("writeln");
 			$$ -> flag_print = 1;
-			$$ -> leaf1 = $3;
-			snprintf(codigo_tac,1100,"println %s", $3 -> value_tac);
-			$$ -> linha_tac = strdup(codigo_tac);
-			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 			//$$ -> leaf1 = $3;
 		}
 	 }
@@ -738,7 +731,6 @@ ifStatement:
 			$$ = add_tree_node("ifStatement");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
-			$$ -> flag_print = 1;
 		}
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM statement ELSE statement {
@@ -747,7 +739,6 @@ ifStatement:
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $5;
 			$$ -> leaf3 = $7;
-			$$ -> flag_print = 1;
 		}
 	 }
 
@@ -756,7 +747,6 @@ ifStatement:
 			$$ = add_tree_node("ifStatement");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $6;
-			$$ -> flag_print = 1;
 		}
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM {
@@ -765,7 +755,6 @@ ifStatement:
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $6;
 			$$ -> leaf3 = $10;
-			$$ -> flag_print = 1;
 		}
 	 }
 ;
@@ -793,7 +782,8 @@ exp:
 			$$ = add_tree_node("exp");
 			$$ -> leaf1 = $1;
 			$$ -> type = $1 -> type;
-			$$ -> value_tac = $1 -> result;
+			$$ -> value_tac = $1 -> value_tac;
+
 		}
 	 }
 	|relExp {
@@ -832,9 +822,6 @@ assignmentExp:
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"mov %s, %s", $1->value_tac,$3->value_tac);
-			$$ -> linha_tac = strdup(codigo_tac);
-			adiciona_linha_tac(tac_completo,$$->linha_tac);
 		}
 	}
 	|terminal ASSIGN CONST {
@@ -937,24 +924,22 @@ Politica de conversao de tipo
 aritExp:
 	terminal OP exp {
 		if(passagem == 1){
+			int_reg = registrador_atual;
+			registrador_atual = registrador_atual+1;
+			snprintf(char_reg,999,"$%d",int_reg);
 			$$ = add_tree_node("aritExp");
 			$$ -> leaf1 = $1;
 			$$ -> leaf2 = $2;
 			$$ -> leaf3 = $3;
-			//$$ -> value_tac = char_reg;
+			$$ -> value_tac = char_reg;
 			if (check_set_type($1->type,$3->type)==0){
 				$$ -> type = $1 -> type;
 				$$ -> conversao = check_conversao($1->type,$3->type);
 			}
-			snprintf(codigo_tac,1100,"%s $%d, %s, %s",$2 -> value_tac, registrador_atual, $1 -> value_tac,$3 -> value_tac);
-			//printf("\n%s",codigo_tac);
-			snprintf(char_reg,999,"$%d",registrador_atual);
-			$$ -> result = strdup(char_reg);
-			registrador_atual ++;
-			$$ -> linha_tac = strdup(codigo_tac);
-			$$ -> printa_tac = 1;
-			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
-		} 
+			printf("\nTERMINAL : %s",$1 -> value_tac);
+			snprintf(codigo_tac,1100,"%s, $%d, %s, %s",$2 -> value_tac, int_reg, $1 -> value_tac, $3 -> value_tac);
+			printf("\n Codigo Tac: %s", codigo_tac);
+		}
 	 }
 ;
 relExp:
@@ -972,58 +957,37 @@ relExp:
 rel:
 	CGE {
 		if(passagem == 1){
-			$$ = add_tree_node("   >=");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel CGE");
 		}
 	 }
 	| CGT {
 		if(passagem == 1){
-			$$ = add_tree_node("   >");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel");
 		}
 	 }
 	| CNE {
 		if(passagem == 1){
-			$$ = add_tree_node("   !=");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel");
 		}
 	 }
 	| CLT {
 		if(passagem == 1){
-			$$ = add_tree_node("   <");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel");
 		}
 	 }
 	| AND {
 		if(passagem == 1){
-			$$ = add_tree_node("   &&");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel");
 		}
 	 }
 	| CLE {
 		if(passagem == 1){
-			$$ = add_tree_node("<=");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel");
 		}
 	 }
 	| CEQ {
 		if(passagem == 1){
-			$$ = add_tree_node("==");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print = 1;
+			$$ = add_tree_node("rel CEQ");
 		}
 	}
 
@@ -1047,7 +1011,8 @@ terminal:
 			$$ = add_tree_node("terminal ID");
 			$$ -> flag_print = 1;
 			$$ -> type = translate_type(searchVarType($1,escopoAtual));
-			$$ -> value_tac = strdup(char_reg);
+			$$ -> value_tac = char_reg;
+			printf("\nTERMINAL ID: %s",$$ -> value_tac);
 			$$ -> value = $1;
 		}
 		if(passagem == 2){
@@ -1066,7 +1031,7 @@ terminal:
 	}
 	|FLOAT {
 		if(passagem == 1){
-			$$ = add_tree_node("terminal CONST");
+			$$ = add_tree_node("terminal FLOAT");
 			$$ -> type = 2;
 			$$ -> flag_print = 1;
 			$$ -> value = $1;
@@ -1076,7 +1041,7 @@ terminal:
 	 }
 	|INTEGER {
 		if(passagem == 1){
-			$$ = add_tree_node("terminal CONST");
+			$$ = add_tree_node("terminal INTEGER");
 			$$ -> type = 1;
 			$$ -> flag_print = 1;
 			$$ -> value = $1;
@@ -1112,28 +1077,28 @@ OP:
 		if(passagem == 1){
 			$$ = add_tree_node(" *");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "mul";
+			$$ -> value_tac = "MULT";
 		}
 	 }
 	| PLUS {
 		if(passagem == 1){
 			$$ = add_tree_node(" +");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "add";
+			$$ -> value_tac = "ADD";
 		}
 	 }
 	| MINUS {
 		if(passagem == 1){
 			$$ = add_tree_node(" -");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "sub";
+			$$ -> value_tac = "SUB";
 		}
 	 }
 	| DIV {
 		if(passagem == 1){
 			$$ = add_tree_node(" /");
 			$$ -> flag_print = 1;
-			$$ -> value_tac = "div";
+			$$ -> value_tac = "DIV";
 		}
 	 }
 ;
@@ -1144,25 +1109,6 @@ EMPTY{
 	if(passagem == 1){
 			$$ = add_tree_node("EMPTY");
 			$$ -> type = 3;
-			$$ -> value = $1;
-		}
-}
-
-|CHAR{
-	if(passagem == 1){
-			$$ = add_tree_node("CHAR");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print=1;
-		}
-}
-
-|STRING{
-	if(passagem == 1){
-			$$ = add_tree_node("STRING");
-			$$ -> value_tac = $1;
-			$$ -> value = $1;
-			$$ -> flag_print=1;
 		}
 }
 
@@ -1207,10 +1153,6 @@ char fname[100];
 	if(flag_redeclaracao_variavel==1){
 		printf("\n--> ERRO: Redeclaracao de VARIAVEL (checar inicio da primeira passagem para mais detalhes)\n");
 	}
-	printf("\n==================== TAC =====================\n\n");
-	printf(".table\n.code\n");
-	printa_linha_tac(tac_completo,elt);
-	cria_arquivo_tac(tac_completo,elt);
     yylex_destroy();
 	free_tree(tree);
 	//free_TS(hashed_symbol_table);

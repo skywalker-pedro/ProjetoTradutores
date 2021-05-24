@@ -1,0 +1,7 @@
+//tac 
+
+mov $1 1 // y = 1
+add $1 2 // y + 2
+mov $2 $1 // x = y
+add $2 4
+mov $1 $2

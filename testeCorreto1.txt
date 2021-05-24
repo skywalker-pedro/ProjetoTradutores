@@ -1,15 +1,15 @@
 int main(){
-
- set possibleSums;
-    possibleSums = EMPTY;
     int x;
-    
-    forall (x in s) {
-        set sumsWithX;   
-        sumsWithX = EMPTY;
-        int val;
-        forall (val in possibleSums) add((x + val) in sumsWithX);
-        forall (val in sumsWithX) add (val in possibleSums);
-        if (13 in possibleSums) writeln('y'); else writeln('n');
-    }
+    float y;
+    y = -9;
+    x = 1;
+    x = x + (y * 2) + (2 - -2);
+    writeln(x*x);
+
+    if(x<1)
+        write('\t');
+    else
+        write('\n');
+
+return 0;
 }

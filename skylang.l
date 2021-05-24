@@ -1,41 +1,58 @@
+%option noinput
+%option nounput
+%option noyywrap
 %{
 
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "skylang.tab.h"
 
 int num_linha = 1;
 int posicao_linha = 0;
+int num_linha_1 = 1;
+int posicao_linha_1 = 0;
+int passagem;
 
 void LexicalError(){
-	printf("\nERROR: Token %s nao reconhecido na linha %d, posicao %d\n",yytext,num_linha,posicao_linha);
+	printf("\n--> ERRO LEXICO: Lexema %s nao reconhecido na linha %d, coluna %d",yytext,num_linha,posicao_linha);
 }
 
 %}
 
-str  \"(\\.|[^"\\])*\"
+string \"(\\.|[^"\\])*\"
+char (\'(.|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\x|\\\\|\\\'|\\\"|\\\?)\')
 new_line  \n
 tabulacao	\t
 espaco " "
 letter [a-zA-Z]
 digit [0-9]
-id   {letter}({letter}|{digit})*
-num  {digit}+
+integer -?{digit}+
+float_ -?{digit}*[.]{digit}+
+id   {letter}+({letter}|{digit}|_|-)*
 
-sub  "-"
+sub  [-]
 mult  "*"
 plus "+"
 remove "remove"
 exists "exists"
 add "add"
 div  "/"
-is_in "in"
+is_in "is_in"
 is_set "is_set"
-
-type "int"|"float"|"char"|"set"|"elem"
+in "in"
+type "int"|"float"|"set"|"elem"
 equals "="
 or "||"
 and "&&"
+negation "!"
+
+
+chaves_ini "{"
+chaves_fim "}"
+parenteses_ini "("
+parenteses_fim ")"	
+semicolon ";"
+colon ","
 
 return "return"
 if "if"
@@ -44,7 +61,7 @@ else "else"
 for "for"
 forall "forall"
 write "write"
-writeIn "writeIn"
+writeLn "writeln"
 read	"read"
 
 cle "<="
@@ -59,300 +76,698 @@ empty "EMPTY"
 
 %%
 
+{exists} {
+		//printf("Token valido exists: -> %s\n",yytext);
+		if(passagem == 2){
+			posicao_linha += yyleng;
+		}
+		if(passagem == 1){
+			posicao_linha_1 += yyleng;
+		}
+		//yylval.str = (char *) strdup(yytext);
+		return EXISTS;
 
+}
+
+{remove} {
+		//printf("Token valido remove: -> %s\n",yytext);
+		if(passagem == 2){
+			posicao_linha += yyleng;
+		}
+		if(passagem == 1){
+			posicao_linha_1 += yyleng;
+		}
+		//yylval.str = (char *) strdup(yytext);
+		return REMOVE;
+
+}
+
+{in} {
+
+		//printf("Token valido IN: -> %s\n",yytext);
+		if(passagem == 2){
+			posicao_linha += yyleng;
+		}
+		if(passagem == 1){
+			posicao_linha_1 += yyleng;
+		}
+		//yylval.str = (char *) strdup(yytext);
+		return IN;
+
+
+}
+
+{empty}	{
+
+			//printf("Token valido EMPTY: -> %s\n",yytext);
+			if(passagem == 2){
+			posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+			posicao_linha_1 += yyleng;
+			}
+			//yylval.str = (char *) strdup(yytext);
+			return EMPTY;
+
+}
+
+{negation}		{
+    		//printf("Token valido negation: -> %s\n", yytext);
+    		if(passagem == 2){
+			posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			//yylval.str = (char *) strdup(yytext);
+			return NEGATION;
+   
+}
 
 "]"		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+			posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
 "["		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 }
 
 "&"		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
-","		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+{colon}		{
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return COLON;
    
 }
 
 "\""		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
 "\\"		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
 {read}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return READ;
    
 }
 
-{writeIn}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+{writeLn}	{
+    		 //printf("Token valido: -> %s\n", yytext);
+			//yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return WRITELN;
+
    
 }
 
 {write}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return WRITE;
 }
 
 {add}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return ADD;
 }
 
 {espaco}	{
-    		posicao_linha += 1;
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
 {forall}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
-}
-
-{plus}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return FORALL;
 }
 
 {cgt}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CGT;
    
 }
 
 
 {for}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return FOR;
    
 }
 
 {else}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return ELSE;
    
 }
 
-{while}	{
-    		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
-}
-
 {if}	{
-    		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
-}
-
-{is_in}	{
-    		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+   			if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return IF;
+			
 }
 
 {type}	{
-    		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+   			if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return TYPE;
+}
+
+
+{is_in}	{
+    		//printf("Token valido: -> %s\n", yytext);
+			//yylval.str = (char *) strdup(yytext);
+   			if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return IS_IN;
+}
+
+{is_set}	{
+    		//printf("Token valido: -> %s\n", yytext);
+			//yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return IS_SET;
+   
+   
 }
 
 
 {return}	{
-    		printf("Token valido: -> %s\n", yytext);
-   			posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+   			if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return RETURN;
 }
 
 {tabulacao}	{
-    		printf(" ");
+    		 printf(" ");
+			 if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
 }	
 
 {new_line}	{
-    		num_linha += 1;
-    		posicao_linha = 0;
-   
-}
-
-{letter}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
-}
-
-{digit}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;  
-}
-
-{id}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+    		if(passagem==2){
+				num_linha += 1;
+				posicao_linha = 0;
+			}
+			if(passagem == 1){
+				num_linha_1 += 1;
+				posicao_linha_1 =0;
+			}
 }
 
 {sub}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return MINUS;
    
+}
+
+{integer}	{
+    		//printf("Token valido INTEIRO: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return INTEGER;
+}
+
+{float_}	{
+    		//printf("Token valido FLOAT: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return FLOAT;
+}
+
+{id}	{
+    		//printf("Token valido ID: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return ID;
+   
+}
+
+{char}	{
+    		//printf("Token valido CHAR: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CHAR;
+   
+}
+
+{string}	{
+    		//printf("Token valido STRING: -> %s\n", yytext);
+			 yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return STRING;
 }
 
 
 {div}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return DIV;
+   
+   
+}
+
+{mult}	{
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return MULT;
+   
+   
+}
+
+{plus}	{
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return PLUS;
+   
+   
+}
+
+{cge}	{
+    		//printf("Token valido eq or greater: -> %s\n", yytext);
+			//yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CGE;
+   
+}
+
+{ceq}	{
+    		 //printf("Token valido equals: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CEQ;
    
 }
 
 
+
 {equals}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido assign: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return EQUALS;
    
 }
 
 {or}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return OR;
    
 }
 
 {and}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return AND;
    
 }
 
 
 {cle}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CLE;
    
 }
 
-{ceq}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
-}
 
 {cne}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CNE;
    
 }
 
 {clt}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CLT;
    
 }
 
-{is_set}	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+
+{parenteses_ini}	{
+    		 //printf("Token valido parenteses ini: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return PARENTESES_INI;
    
 }
 
-"("	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+{parenteses_fim}	{
+    		 //printf("Token valido parenteses fim: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return PARENTESES_FIM;
    
 }
 
-")"	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+{chaves_ini}	{
+    		 //printf("Token valido chaves ini: -> %s\n", yytext);
+			// yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CHAVES_INI;
+
    
 }
 
-"{"	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+{chaves_fim}	{
+    		 //printf("Token valido chaves fim: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return CHAVES_FIM;
    
 }
 
-"}"	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
-}
-
-";"	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+{semicolon}	{
+    		 //printf("Token valido: -> %s\n", yytext);
+			 //yylval.str = (char *) strdup(yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return SEMICOLON;
    
 }
 
 "_"	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
 "."	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return '.';
    
 }
 
 ":"		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
-   
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return ':';
+
 }
 
 "%"		{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
    
 }
 
 "'"	{
-    		printf("Token valido: -> %s\n", yytext);
-    		posicao_linha += 1;
+    		 //printf("Token valido apost: -> %s\n", yytext);
+    		if(passagem == 2){
+				posicao_linha += yyleng;
+			}
+			if(passagem == 1){
+				posicao_linha_1 += yyleng;
+			}
+			return APOST;
    
 }
 
 
 . { 
-	posicao_linha += 1;
-    LexicalError();
+	if(passagem == 2){
+		posicao_linha += yyleng;
+		LexicalError();
+	}
+	if(passagem == 1){
+		posicao_linha_1 += yyleng;
+	}
 }
 
 
 %%
-
-int yywrap(){
-	return 1;
-}
-
-
-int main(){
-char fname[100];
-    printf("\nDigite o nome do arquivo a ser analisado:\n-> ");
-    scanf("%s",fname);
-    yyin=fopen(fname,"r+");
-    yylex();
-    return 0;
-}
-

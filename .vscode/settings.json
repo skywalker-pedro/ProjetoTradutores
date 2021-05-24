@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.y": "c",
+        "cmath": "c",
+        "skylangtree.h": "c"
+    }
+}

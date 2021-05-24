@@ -1,31 +1,21 @@
-int main() {
-  long int a,b,c;
-  int n,cont;
-  double r;
+int soma(int a1,int b2){
 
-  printf("Digite quantos termos da sequencia de Fibonacci voce quer:\n");
-  scanf("%d", &n);
+	int resultado;
+	resultado = a1+b2;
+	write("resultado");
+	writeln('\?');
+	int x1;
+                                                          
+}
 
-  if (n <= 1) {
-    printf("Numero de termos invalido\n");
-  }
-  else {
-    
-    a = 1;
-    b = 1;
-    cont = 2;
-    printf("\n\n1\n1\n");
+int main(){
 
-    while(cont < n) {
-      c = a + b;
-      r = c;
-      r = r/b;
-      printf("%ld %.15lf\n", c, r);
-      a = b;
-      b = c;
-      cont = cont + 1;
-    }
-  }
+	
+	int x3;
+	int x2;
+	soma(x3,x2);
+                                             	
+                             
+return 0;
 
-  return(0);
 }

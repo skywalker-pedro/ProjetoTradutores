@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.7.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_SKYLANG_TAB_H_INCLUDED
 # define YY_YY_SKYLANG_TAB_H_INCLUDED
@@ -44,39 +45,73 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TYPE = 258,
-    ID = 259,
-    RETURN = 260,
-    IF = 261,
-    ELSE = 262,
-    WHILE = 263,
-    WRITE = 264,
-    WRITELN = 265,
-    READ = 266,
-    EXISTS = 267,
-    ADD = 268,
-    REMOVE = 269,
-    FOR = 270,
-    FORALL = 271,
-    IN = 272
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    TYPE = 258,                    /* TYPE  */
+    CLE = 259,                     /* CLE  */
+    CLT = 260,                     /* CLT  */
+    CNE = 261,                     /* CNE  */
+    CGT = 262,                     /* CGT  */
+    AND = 263,                     /* AND  */
+    CEQ = 264,                     /* CEQ  */
+    CGE = 265,                     /* CGE  */
+    ID = 266,                      /* ID  */
+    INTEGER = 267,                 /* INTEGER  */
+    FLOAT = 268,                   /* FLOAT  */
+    CHAR = 269,                    /* CHAR  */
+    STRING = 270,                  /* STRING  */
+    EMPTY = 271,                   /* EMPTY  */
+    RETURN = 272,                  /* RETURN  */
+    IF = 273,                      /* IF  */
+    ELSE = 274,                    /* ELSE  */
+    WHILE = 275,                   /* WHILE  */
+    WRITE = 276,                   /* WRITE  */
+    WRITELN = 277,                 /* WRITELN  */
+    READ = 278,                    /* READ  */
+    EXISTS = 279,                  /* EXISTS  */
+    ADD = 280,                     /* ADD  */
+    REMOVE = 281,                  /* REMOVE  */
+    FOR = 282,                     /* FOR  */
+    FORALL = 283,                  /* FORALL  */
+    IN = 284,                      /* IN  */
+    IS_IN = 285,                   /* IS_IN  */
+    IS_SET = 286,                  /* IS_SET  */
+    OR = 287,                      /* OR  */
+    NEGATION = 288,                /* NEGATION  */
+    EQUALS = 289,                  /* EQUALS  */
+    APOST = 290,                   /* APOST  */
+    CHAVES_INI = 291,              /* CHAVES_INI  */
+    CHAVES_FIM = 292,              /* CHAVES_FIM  */
+    PARENTESES_INI = 293,          /* PARENTESES_INI  */
+    PARENTESES_FIM = 294,          /* PARENTESES_FIM  */
+    SEMICOLON = 295,               /* SEMICOLON  */
+    COLON = 296,                   /* COLON  */
+    PLUS = 297,                    /* PLUS  */
+    MINUS = 298,                   /* MINUS  */
+    MULT = 299,                    /* MULT  */
+    DIV = 300,                     /* DIV  */
+    THEN = 301                     /* THEN  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 17 "skylang.y"
+#line 249 "skylang.y"
 
-	char type;
-	char id;
+	char *str;
+	struct node* tree;
 
-#line 80 "skylang.tab.h"
+#line 115 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -84,23 +119,9 @@ typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
-/* Location type.  */
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-};
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
-#endif
-
 
 extern YYSTYPE yylval;
-extern YYLTYPE yylloc;
+
 int yyparse (void);
 
 #endif /* !YY_YY_SKYLANG_TAB_H_INCLUDED  */
