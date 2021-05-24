@@ -42,6 +42,7 @@ int int_reg;
 char codigo_tac[1100];
 char erro_atual[1500];
 int contador_if;
+char * func_call_atual;
 //////////////////////////////////
 char * escopoAtual = "Global";
 /* Print TS Function*/
@@ -158,6 +159,38 @@ int searchFunctionVariable(char*symbol,char*symbol_scope){
         if (strcmp(aux->name,symbol_scope)==0){
 			if (strcmp(aux-> varType,tipo_variavel)==0){
 				retorno = 1;
+			}
+		}
+        aux = aux -> hh.next;
+    }
+	//free(aux);
+	if(retorno == 1){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+//Check if parameters in function call are correct
+int searchFunctionVariable_2(char*symbol,char*symbol_scope,int posicao,char*escopo_atual){
+	Hash_table* aux = hashed_symbol_table;
+	int retorno = 0;
+	int i=0;
+	char * tipo_variavel;
+	tipo_variavel = searchVarType(symbol,escopoAtual);
+	//printf("\nTIPO DA VAR: %s", tipo_variavel);
+    while(aux!=NULL){
+		//strcmp retorna 0 caso as strings sejam iguais
+        if (strcmp(aux->type,"PARAMETRO_FUNCAO")==0){
+			//printf("\nAQUIII PARAM FUNC: %s", aux->type);
+			if (strcmp(aux-> escopo,symbol_scope)==0){
+				//printf("\nESCOPO: %s e %s", aux->escopo,symbol_scope);
+				//printf("\nposicao vs i: %d e %d", posicao,i);
+				if(posicao == i){
+					if(strcmp(tipo_variavel,aux->varType)==0)
+						retorno = 1;
+				}
+				i++;
 			}
 		}
         aux = aux -> hh.next;
@@ -591,10 +624,10 @@ forStatement:
 
 callFuncStatement:
 
-	ID PARENTESES_INI call_params PARENTESES_FIM {
+	ID {func_call_atual = strdup($1);}PARENTESES_INI call_params PARENTESES_FIM {
 		if(passagem == 1){
 			$$ = add_tree_node("CallFunStatement");
-			$$ -> leaf1 = $3;
+			$$ -> leaf1 = $4;
 			$$ -> flag_print = 1;
 			if (check_num_params($1,$1)!= conta_parametros_2){
 				snprintf(erro_atual,1100,"--> ERRO SEMANTICO: Numero de argumentos incorretos para a chamada de funcao na linha %d, coluna %d",num_linha_1,posicao_linha_1);
@@ -648,14 +681,12 @@ call_param:
 		if(passagem == 1){
 			$$ = add_tree_node("call_param terminal");
 			$$ -> leaf1 = $1;
+			//printf("\n\nAQUII: %s   %s",$1->value,func_call_atual);
+			if(searchFunctionVariable_2($1->value,func_call_atual,conta_parametros_2,escopoAtual)==0){
+				snprintf(erro_atual,1100,"--> ERRO SEMANTICO: Argumento %d do tipo errado na chamada de funcao da linha %d, coluna %d",conta_parametros_2+1,num_linha_1,posicao_linha_1);
+				adiciona_linha_erro(erros_semanticos,strdup(erro_atual));
+			}
 			conta_parametros_2 = conta_parametros_2 + 1;
-		}
-
-		if(passagem == 2){
-
-			/*if(searchFunctionVariable($1->value,char*symbol_scope)==0){
-				printf("\n ERRO SEMANTICO: Argumento do tipo errado");
-			}*/
 		}
 	}
 ;

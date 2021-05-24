@@ -1,7 +1,7 @@
 elem semEscopo;
 int var2;
 
-float teste(int a, int b, set y){
+float teste(int a, int b, int y){
     
     return 2.5;
 
