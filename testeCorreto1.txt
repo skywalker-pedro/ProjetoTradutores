@@ -1,17 +1,40 @@
 int main(){
-    elem x;
-    elem i;
-    int z;
-    x = 0;
+    
+   float x;
+   int y;
+   elem z;
+   int resultado;
+   int i;
+
+   x = 4;
+   y = 3.8;
+   z = 3;
+
+   resultado = (x*x) + y - (z * -2);
+
+   for(i=0;i<resultado - 10;i=i+1){
+      write('\t');
+      write((z - 3)+i);
+      write('\n');
+   }
+
+   writeln(resultado);
+
+   if(resultado>25){
+      write('M');
+      write('A');
+      write('I');
+      write('O');
+      write('R');
+   }
    
-   for(i=0;i<4;i=i+1){
-      writeln(x+i);
+   if(resultado<26){
+      write('M');
+      write('E');
+      write('N');
+      write('O');
+      write('R');
+      write('\n');
    }
-
-   for(z=0;z==3;z=z+1){
-      writeln(z*z);
-   }
-
-   writeln(z);
 return 0;
 }   

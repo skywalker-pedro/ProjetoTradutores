@@ -1,15 +1,46 @@
 int main(){
 
 int x;
-float y;
+int y;
+
+write('\t');
+write('D');
+write('i');
+write('g');
+write('i');
+write('t');
+write('e');
+write('\t');
+write('d');
+write('o');
+write('i');
+write('s');
+write('\t');
+write('n');
+write('u');
+write('m');
+write('e');
+write('r');
+write('o');
+write('s');
+write('\t');
+write('I');
+write('n');
+write('t');
+write('e');
+write('i');
+write('r');
+write('o');
+write('s');
+write('\n');
 
 read(x);
 read(y);
 
-if (x > y) writeln(x);
-if (x < y) writeln(y);	
-
-writeln((x+y)*100);
+if(x>y)
+    writeln(x);
+else
+    writeln(y);
                              
 return 0;
 

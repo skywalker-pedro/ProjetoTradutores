@@ -744,6 +744,9 @@ outPutStatement:
 			$$ -> flag_print = 1;
 			$$ -> leaf1 = $3;
 			$$ -> flag_print = 1;
+			snprintf(codigo_tac,1100,"print %s", $3 -> value_tac);
+			$$ -> linha_tac = strdup(codigo_tac);
+			adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 		}
 	 }
 
@@ -871,12 +874,6 @@ ifStatement:
 			if (strdup(codigo_tac)!= NULL)
 				if ($3->linha_tac!= NULL)
 					substitui_linha_tac($3 -> linha_tac,strdup(codigo_tac));
-			//////////////////////////////// substituir linha tac do statement 1////////////////////////////////////
-			//snprintf(codigo_tac,1100,"%s\njump saida_if_%d\nelse_if_%d:",$5->linha_tac,contador_if,contador_if);
-			//printf("\nAQUI : %s",strdup(codigo_tac));
-		//	if (strdup(codigo_tac)!= NULL)
-			//	if ($5->linha_tac!= NULL)
-				//	substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
 			//////////////////////////////// substituir linha tac do statement 2////////////////////////////////////
 			snprintf(codigo_tac,1100,"jump saida_if_%d\nelse_if_%d:%s\nsaida_if_%d:",contador_if,contador_if,$7->linha_tac,contador_if);
 			//printf("\nAQUI : %s",strdup(codigo_tac));
@@ -893,10 +890,20 @@ ifStatement:
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $6;
 			$$ -> flag_print = 1;
+			//////////////////////////////// substituir linha tac da exp ////////////////////////////////////
+			snprintf(codigo_tac,1100,"%s\nbrz saida_if_%d, %s",$3 -> linha_tac,contador_if,$3 -> result);
+			if (strdup(codigo_tac)!= NULL)
+				if ($3->linha_tac!= NULL)
+					substitui_linha_tac($3 -> linha_tac,strdup(codigo_tac));
+			//////////////////////////////// substituir linha tac do statement ////////////////////////////////////
+			snprintf(codigo_tac,1100,"saida_if_%d:",contador_if);
+			//printf("\nAQUI : %s",strdup(codigo_tac));
+			adiciona_linha_tac (tac_completo,strdup(codigo_tac));
+			contador_if = contador_if + 1;
 		}
 	 }
 	|IF PARENTESES_INI exp PARENTESES_FIM CHAVES_INI statement_list CHAVES_FIM ELSE CHAVES_INI statement_list CHAVES_FIM {
-		if(passagem == 1){
+		if(passagem == 1){		
 			$$ = add_tree_node("ifElseStatement");
 			$$ -> leaf1 = $3;
 			$$ -> leaf2 = $6;
