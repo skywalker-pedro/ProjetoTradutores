@@ -872,13 +872,13 @@ ifStatement:
 				if ($3->linha_tac!= NULL)
 					substitui_linha_tac($3 -> linha_tac,strdup(codigo_tac));
 			//////////////////////////////// substituir linha tac do statement 1////////////////////////////////////
-			snprintf(codigo_tac,1100,"%s\njump saida_if_%d\nelse_if_%d:",$5->linha_tac,contador_if,contador_if);
+			//snprintf(codigo_tac,1100,"%s\njump saida_if_%d\nelse_if_%d:",$5->linha_tac,contador_if,contador_if);
 			//printf("\nAQUI : %s",strdup(codigo_tac));
-			if (strdup(codigo_tac)!= NULL)
-				if ($5->linha_tac!= NULL)
-					substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
+		//	if (strdup(codigo_tac)!= NULL)
+			//	if ($5->linha_tac!= NULL)
+				//	substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
 			//////////////////////////////// substituir linha tac do statement 2////////////////////////////////////
-			snprintf(codigo_tac,1100,"%s\nsaida_if_%d:",$7->linha_tac,contador_if);
+			snprintf(codigo_tac,1100,"jump saida_if_%d\nelse_if_%d:%s\nsaida_if_%d:",contador_if,contador_if,$7->linha_tac,contador_if);
 			//printf("\nAQUI : %s",strdup(codigo_tac));
 			if (strdup(codigo_tac)!= NULL)
 				if ($7->linha_tac!= NULL)

@@ -1,12 +1,10 @@
 int main(){
     int x;
     float y;
-    x=2.3;
+    x=2;
     y=4;
-    if(x==2)
-        writeln(1);
-    if(x!=2)
-        writeln(2);
+    if(x!=3)
+       x=9*4+100;
     else
         writeln(200);
     x = x + 2;
