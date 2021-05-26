@@ -610,6 +610,15 @@ forStatement:
 				$$ -> leaf3 = $7;
 				$$ -> leaf4 = $10;
 				$$ -> flag_print = 1;
+				//////////////////////////////// substituir linha tac da exp ////////////////////////////////////
+				snprintf(codigo_tac,1100,"for%d:\n%s\nbrz fim_for_%d, %s", contador_for,$5 -> linha_tac,contador_for,$5 -> result);
+				if (strdup(codigo_tac)!= NULL)
+					if ($5->linha_tac!= NULL)
+						substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
+				//////////////////////////////// substituir linha tac do statement ////////////////////////////////////	
+				snprintf(codigo_tac,1100,"jump for%d\nfim_for_%d:",contador_for,contador_for);
+				adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+				contador_for++;
 			}
 	}
 | FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement{
@@ -1182,6 +1191,15 @@ relExp:
 				$$ -> linha_tac = strdup(codigo_tac);
 				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
 			}
+			if(strcmp($2->value_tac, "!=")==0){
+				
+				snprintf(codigo_tac,1100,"seq $%d, %s, %s\nnot $%d, $%d",registrador_atual, $1->value_tac,$3->value_tac,registrador_atual,registrador_atual);
+				snprintf(char_reg,999,"$%d",registrador_atual);
+				$$ -> result = strdup(char_reg);
+				registrador_atual ++;
+				$$ -> linha_tac = strdup(codigo_tac);
+				adiciona_linha_tac(tac_completo,$$ -> linha_tac);
+			}
 			if(strcmp($2->value_tac, "<=")==0){
 				
 				snprintf(codigo_tac,1100,"sleq $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);
@@ -1202,9 +1220,7 @@ relExp:
 			}
 			if(strcmp($2->value_tac, ">")==0){
 				
-				snprintf(codigo_tac,1100,"sleq $%d, %s, %s",registrador_atual, $1->value_tac,$3->value_tac);
-				adiciona_linha_tac(tac_completo,strdup(codigo_tac));
-				snprintf(codigo_tac,1100,"not $%d, $%d",registrador_atual,registrador_atual);
+				snprintf(codigo_tac,1100,"sleq $%d, %s, %s\nnot $%d, $%d",registrador_atual, $1->value_tac,$3->value_tac,registrador_atual,registrador_atual);
 				snprintf(char_reg,999,"$%d",registrador_atual);
 				$$ -> result = strdup(char_reg);
 				registrador_atual ++;

@@ -1,22 +1,14 @@
-float teste(){
-    int x;
-    int y;
-
-    x = 1;
-    y = x;
-
-return 1;
-}
-
 int main(){
     int x;
-    int y;
-    x=2;
+    float y;
+    x=2.3;
     y=4;
     if(x==2)
         writeln(1);
-    if(x==3)
+    if(x!=2)
         writeln(2);
+    else
+        writeln(200);
     x = x + 2;
     writeln(((x+x+1+1)/2)*y);
 return 0;
