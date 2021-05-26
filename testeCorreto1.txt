@@ -1,17 +1,16 @@
 int main(){
     int x;
-    float y;
-    x=3;
-    y=4;
-    if(x==0) 
-        writeln(1);
-    else 
-       writeln(3);
-    if(x<4) 
-        writeln(1);
-    else 
-       writeln(3);
-    x = x + 2;
-    writeln(((x+x+1+1)/2)*y);
+    int i;
+    x = 0;
+   
+
+   for(i=0;i<3;i=i+1)
+      writeln(x+i);
+   for(i=0;i<3;i=i+1)
+      writeln(x+1*100);
+   if(x<0)
+      write(1);
+   else
+      write(1);
 return 0;
 }   

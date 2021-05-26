@@ -1,0 +1,461 @@
+==5299== Memcheck, a memory error detector
+==5299== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5299== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==5299== Command: ./skylang
+==5299== Parent PID: 2717
+==5299== 
+--5299-- 
+--5299-- Valgrind options:
+--5299--    -v
+--5299--    --tool=memcheck
+--5299--    --leak-check=full
+--5299--    --show-leak-kinds=all
+--5299--    --track-origins=yes
+--5299--    --log-file=logfile.out
+--5299-- Contents of /proc/version:
+--5299--   Linux version 5.8.0-53-generic (buildd@lcy01-amd64-012) (gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #60~20.04.1-Ubuntu SMP Thu May 6 09:52:46 UTC 2021
+--5299-- 
+--5299-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--5299-- Page sizes: currently 4096, max supported 4096
+--5299-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--5299-- Reading syms from /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang
+--5299-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--5299--   Considering /usr/lib/x86_64-linux-gnu/ld-2.31.so ..
+--5299--   .. CRC mismatch (computed 6cded93a wanted 1af57820)
+--5299--   Considering /lib/x86_64-linux-gnu/ld-2.31.so ..
+--5299--   .. CRC mismatch (computed 6cded93a wanted 1af57820)
+--5299--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.31.so ..
+--5299--   .. CRC is valid
+--5299-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--5299--    object doesn't have a symbol table
+--5299--    object doesn't have a dynamic symbol table
+--5299-- Scheduler: using generic scheduler lock implementation.
+--5299-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==5299== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-5299-by-pedro_gonzaga-on-???
+==5299== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-5299-by-pedro_gonzaga-on-???
+==5299== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-5299-by-pedro_gonzaga-on-???
+==5299== 
+==5299== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==5299== don't want to do, unless you know exactly what you're doing,
+==5299== or are doing some strange experiment):
+==5299==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=5299 ...command...
+==5299== 
+==5299== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==5299==   /path/to/gdb ./skylang
+==5299== and then give GDB the following command
+==5299==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=5299
+==5299== --pid is optional if only one valgrind process is running
+==5299== 
+--5299-- REDIR: 0x4022d80 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--5299-- REDIR: 0x4022b50 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--5299-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--5299--    object doesn't have a symbol table
+--5299-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--5299--    object doesn't have a symbol table
+==5299== WARNING: new redirection conflicts with existing -- ignoring it
+--5299--     old: 0x04022d80 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--5299--     new: 0x04022d80 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--5299-- REDIR: 0x401f560 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--5299-- REDIR: 0x40232e0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--5299-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--5299--   Considering /usr/lib/x86_64-linux-gnu/libc-2.31.so ..
+--5299--   .. CRC mismatch (computed cd1655d1 wanted 09373696)
+--5299--   Considering /lib/x86_64-linux-gnu/libc-2.31.so ..
+--5299--   .. CRC mismatch (computed cd1655d1 wanted 09373696)
+--5299--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.31.so ..
+--5299--   .. CRC is valid
+--5299-- REDIR: 0x48ff600 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe900 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff930 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe220 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe960 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x4900dd0 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x491be60 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x491b9a0 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff760 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff590 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe890 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe2d0 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff6c0 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x491b960 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe7f0 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe3b0 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff980 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe350 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ffad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x491d0d0 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x491b9e0 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe9a0 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe280 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fe7b0 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x4907d20 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff9d0 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff550 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x491bab0 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48fec60 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff8d0 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ff870 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x4900e10 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x48ffa20 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--5299-- REDIR: 0x49e7490 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--5299-- REDIR: 0x48f9260 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--5299-- REDIR: 0x48ff120 (libc.so.6:__GI_strstr) redirected to 0x4843ca0 (__strstr_sse2)
+--5299-- REDIR: 0x49e7660 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
+--5299-- REDIR: 0x49eaaf0 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x48428e0 (memset)
+--5299-- REDIR: 0x49ea670 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
+--5299-- REDIR: 0x49e72a0 (libc.so.6:__strchrnul_avx2) redirected to 0x4843540 (strchrnul)
+--5299-- REDIR: 0x49e2b60 (libc.so.6:__strcmp_avx2) redirected to 0x483fed0 (strcmp)
+--5299-- REDIR: 0x49ea650 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4843660 (mempcpy)
+--5299-- REDIR: 0x48f9850 (libc.so.6:free) redirected to 0x483c9d0 (free)
+==5299== 
+==5299== HEAP SUMMARY:
+==5299==     in use at exit: 2,888 bytes in 160 blocks
+==5299==   total heap usage: 284 allocs, 124 frees, 45,946 bytes allocated
+==5299== 
+==5299== Searching for pointers to 160 not-freed blocks
+==5299== Checked 75,640 bytes
+==5299== 
+==5299== 2 bytes in 1 blocks are still reachable in loss record 1 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10AF97: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 4 bytes in 2 blocks are indirectly lost in loss record 2 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10B053: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 4 bytes in 1 blocks are definitely lost in loss record 3 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10ADBF: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 5 bytes in 1 blocks are still reachable in loss record 4 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10B053: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 6 bytes in 1 blocks are still reachable in loss record 5 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x11018D: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 6 bytes in 1 blocks are definitely lost in loss record 6 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x1102F9: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 8 bytes in 2 blocks are indirectly lost in loss record 7 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10ADBF: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 8 bytes in 3 blocks are indirectly lost in loss record 8 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10AF97: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 9 bytes in 3 blocks are still reachable in loss record 9 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10B053: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 9 bytes in 3 blocks are definitely lost in loss record 10 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x112BB0: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 12 bytes in 3 blocks are still reachable in loss record 11 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10ADBF: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 15 bytes in 5 blocks are definitely lost in loss record 12 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x112670: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are still reachable in loss record 13 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x1101A2: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are still reachable in loss record 14 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4E4: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x11176B: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are still reachable in loss record 15 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4E4: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111803: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are still reachable in loss record 16 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4E4: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111886: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are still reachable in loss record 17 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110885: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 2 blocks are indirectly lost in loss record 18 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x111073: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are definitely lost in loss record 19 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4F2: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x11176B: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are definitely lost in loss record 20 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4F2: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111803: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 16 bytes in 1 blocks are definitely lost in loss record 21 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4F2: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111886: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 18 bytes in 9 blocks are definitely lost in loss record 22 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10AF97: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 20 bytes in 1 blocks are still reachable in loss record 23 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x11186A: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 20 bytes in 1 blocks are definitely lost in loss record 24 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x111846: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 22 bytes in 2 blocks are still reachable in loss record 25 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x111175: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 26 bytes in 13 blocks are definitely lost in loss record 26 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10B053: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 26 bytes in 13 blocks are definitely lost in loss record 27 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10B053: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 28 bytes in 13 blocks are definitely lost in loss record 28 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x10AF97: yylex (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x10FABB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 1 blocks are still reachable in loss record 29 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x11174B: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 2 blocks are still reachable in loss record 30 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111196: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 2 blocks are still reachable in loss record 31 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4E4: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110AA1: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 2 blocks are still reachable in loss record 32 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110AF0: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 2 blocks are indirectly lost in loss record 33 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111094: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 1 blocks are definitely lost in loss record 34 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x111723: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 32 bytes in 2 blocks are definitely lost in loss record 35 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E4F2: substitui_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110AA1: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 34 bytes in 1 blocks are still reachable in loss record 36 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x110870: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 35 bytes in 1 blocks are still reachable in loss record 37 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x1117E3: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 35 bytes in 1 blocks are definitely lost in loss record 38 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x1117BB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 39 bytes in 13 blocks are definitely lost in loss record 39 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x1130CE: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 42 bytes in 2 blocks are still reachable in loss record 40 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x110ADB: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 42 bytes in 3 blocks are indirectly lost in loss record 41 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x112BD6: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 52 bytes in 5 blocks are still reachable in loss record 42 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x111EA8: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 64 bytes in 1 blocks are still reachable in loss record 43 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10D885: insert_symbol (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110036: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 73 bytes in 5 blocks are still reachable in loss record 44 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x112696: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 76 bytes in 2 blocks are still reachable in loss record 45 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x110A81: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 76 bytes in 2 blocks are definitely lost in loss record 46 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x48FE50E: strdup (strdup.c:42)
+==5299==    by 0x110A59: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 80 bytes in 5 blocks are still reachable in loss record 47 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x111EC9: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 80 bytes in 5 blocks are still reachable in loss record 48 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x1126C5: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 104 bytes in 1 blocks are still reachable in loss record 49 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10D43C: insert_symbol (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110219: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 138 (48 direct, 90 indirect) bytes in 3 blocks are definitely lost in loss record 50 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10E3D6: adiciona_linha_tac (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x112BF7: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 208 bytes in 2 blocks are still reachable in loss record 51 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10D43C: insert_symbol (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110036: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 512 bytes in 1 blocks are still reachable in loss record 52 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10D915: insert_symbol (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110036: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113E2C: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 576 bytes in 6 blocks are indirectly lost in loss record 53 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10DDC4: add_tree_node (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110525: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== 692 (96 direct, 596 indirect) bytes in 1 blocks are definitely lost in loss record 54 of 54
+==5299==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5299==    by 0x10DDC4: add_tree_node (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x110525: yyparse (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299==    by 0x113EBA: main (in /home/pedro_gonzaga/Projeto Tradutores/ProjetoTradutores/skylang)
+==5299== 
+==5299== LEAK SUMMARY:
+==5299==    definitely lost: 558 bytes in 85 blocks
+==5299==    indirectly lost: 686 bytes in 20 blocks
+==5299==      possibly lost: 0 bytes in 0 blocks
+==5299==    still reachable: 1,644 bytes in 55 blocks
+==5299==         suppressed: 0 bytes in 0 blocks
+==5299== 
+==5299== ERROR SUMMARY: 19 errors from 19 contexts (suppressed: 0 from 0)

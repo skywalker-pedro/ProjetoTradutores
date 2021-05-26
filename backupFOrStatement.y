@@ -32,7 +32,6 @@ int registrador_atual = 0;
 char* tipo_funcao_atual;
 int conta_parametros = 0;
 int conta_parametros_2 = 0;
-int contador_for;
 
 //int erro_count = 0;
 int aux=1;
@@ -43,6 +42,7 @@ int int_reg;
 char codigo_tac[1100];
 char erro_atual[1500];
 int contador_if;
+int contador_for;
 char * func_call_atual;
 //////////////////////////////////
 char * escopoAtual = "Global";
@@ -561,13 +561,15 @@ statement:
 		if(passagem == 1){
 			$$ = add_tree_node("statement");
 			$$ -> leaf1 = $1;
-			$$ -> linha_tac = $1 -> linha_tac;
-		}
+			$$ -> linha_tac = $1-> linha_tac;
+			$$ -> flag_print = 1;
+			printf("\n---AAAAAA %s",$$ -> linha_tac);
+		} 
 	 }
 	|inputStatement SEMICOLON {
 		if(passagem == 1){
 			$$ = add_tree_node("statement");
-			$$ -> leaf1 = $1;
+			$$ -> leaf1 = $1;			
 		}
 	 }
 	|callFuncStatement SEMICOLON {
@@ -587,8 +589,6 @@ statement:
 				snprintf(erro_atual,1100,"--> ERRO SEMANTICO: Tipo do retorno da funcao -> %s <- incorreto na linha %d",escopoAtual,num_linha_1-1);
 				adiciona_linha_erro(erros_semanticos,strdup(erro_atual));
 			}
-			snprintf(codigo_tac,1100,"jump end_program\nend_program:\nnop");
-			adiciona_linha_tac(tac_completo,strdup(codigo_tac));
 		}
 	 }
 
@@ -612,7 +612,7 @@ forStatement:
 				$$ -> flag_print = 1;
 			}
 	}
-| FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement{
+| FOR PARENTESES_INI exp SEMICOLON exp SEMICOLON exp PARENTESES_FIM statement {
 			if(passagem == 1){
 				$$ = add_tree_node("ForStatement");
 				$$ -> leaf1 = $3;
@@ -620,15 +620,24 @@ forStatement:
 				$$ -> leaf3 = $7;
 				$$ -> leaf4 = $9;
 				$$ -> flag_print = 1;
-				//treeNode* auxiliar = NULL;
+				printf("\nAQUIIII %s",$9 -> linha_tac);
 				//////////////////////////////// substituir linha tac da exp ////////////////////////////////////
-				snprintf(codigo_tac,1100,"for%d:\n%s\nbrz fim_for_%d, %s", contador_for,$5 -> linha_tac,contador_for,$5 -> result);
+				snprintf(codigo_tac,1100,"for_%d:\n%s\nbrz fim_for_%d, %s", contador_for,$5 -> linha_tac,contador_for,$5 -> result);
 				if (strdup(codigo_tac)!= NULL)
 					if ($5->linha_tac!= NULL)
 						substitui_linha_tac($5 -> linha_tac,strdup(codigo_tac));
-				//////////////////////////////// substituir linha tac do statement ////////////////////////////////////	
-				snprintf(codigo_tac,1100,"jump for%d\nfim_for_%d:",contador_for,contador_for);
-				adiciona_linha_tac(tac_completo,strdup(codigo_tac));
+				//////////////////////////////// substituir linha tac do statement ////////////////////////////////////
+				
+				//////////////////////////////// substituir linha tac da exp ////////////////////////////////////
+				snprintf(codigo_tac,1100,"%s\njump for_%d\nfim_for_%d:", $9 -> leaf1 ->leaf1 ->linha_tac,contador_for,contador_for);
+				if (strdup(codigo_tac)!= NULL){
+					printf("\nDiferente de NULL");
+					if ($9-> leaf1 -> leaf1-> linha_tac!= NULL){
+						printf("\n Diferente de NULL");
+						substitui_linha_tac($9 -> leaf1 ->leaf1->linha_tac,strdup(codigo_tac));
+					}
+				}
+				//////////////////////////////// substituir linha tac do statement ////////////////////////////////////
 				contador_for++;
 			}
 	}

@@ -1,0 +1,55 @@
+
+
+
+int main(){
+    int x;
+    int i;
+    x = 0;
+    for(i=0;i<5;i=i+1)
+       writeln(1);
+    for(i=0;i<5;i=i+1)
+       writeln(1);
+       
+    if(x>2000)
+        writeln(1);
+    else    
+        writeln(2);
+return 0;
+}   
+
+
+
+.table
+.code
+
+main:
+mov $0, 0
+mov $1, 0
+for_0:
+slt $2, $1, 5
+brz fim_for_0, $2
+add $3, $1, 1
+mov $1, $3
+println 1
+jump saida_if_0
+else_if_0:
+jump for_0
+fim_for_0:
+mov $1, 0
+for_1:
+slt $4, $1, 5
+brz fim_for_1, $4
+add $5, $1, 1
+mov $1, $5
+println 1
+jump for_1
+fim_for_1:
+sleq $6, $0, 2000
+not $6, $6
+brz else_if_0, $6
+println 1
+println 2
+saida_if_0:
+jump end_program
+end_program:
+nop
