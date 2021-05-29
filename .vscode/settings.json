@@ -2,6 +2,7 @@
     "files.associations": {
         "*.y": "c",
         "cmath": "c",
-        "skylangtree.h": "c"
+        "skylangtree.h": "c",
+        "tac_functions.h": "c"
     }
 }

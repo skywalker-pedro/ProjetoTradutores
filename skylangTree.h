@@ -67,6 +67,22 @@ treeNode*add_tree_node(char*name){
     return node;
 }
 
+
+/*Politica de conversao de tipo
+0 = não teve conversao
+1 = intToFLoat
+2 = floatToInt
+3 = elemToInt
+4 = IntToElem
+5 = elemToFloat
+6 = floatToElem
+TYPES:
+0 = nao definido ainda
+1 = int
+2 = float
+3 = set
+4 = elem */
+
 void print_tree(int conta_identacao,struct node * node){
 
 int i;
@@ -86,7 +102,7 @@ int i;
         }
         if(node->flag_print != 0)
             printf("%s",node->node_name);
-        if(node->flag_print != 0){
+        if((node->flag_print != 0) || (node->conversao != 0)){
             printf("\n");
             for(i=0;i<conta_identacao+1;i++){
                 printf(" ");
@@ -101,6 +117,20 @@ int i;
                 printf("-> ELEM");
             if(node->value != NULL)
                 printf("  %s",node->value);
+
+            if (node->conversao == 1)
+                printf("\n -> Conversao intToFLoat"); 
+            if (node->conversao == 2)
+                printf("-> Conversao floatToInt");
+            if (node->conversao == 3)
+                printf("-> Conversao elemToInt");
+            if (node->conversao == 4)
+                printf("-> Conversao intToElem");
+            if (node->conversao == 5)
+                printf("-> Conversao elemToFloat");
+            if (node->conversao == 6)
+                printf("-> Conversao floatToElem");
+
         }
     }
     if(node->leaf1!=NULL){
@@ -175,6 +205,5 @@ void free_tree(struct node * node){
     if(node->leaf5!=NULL){
         free_tree(node->leaf5);
     };
-
     free(node);
 }

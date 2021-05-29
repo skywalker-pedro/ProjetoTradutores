@@ -1,0 +1,15 @@
+int main(){
+    int x;
+    int i;
+    x = 0;
+    for(i=0;i<5;i=i+1)
+       x=x+100*2;
+    for(i=0;i<5;i=i+1)
+       x=x+100*2;
+
+    if(x>2000)
+        writeln(1);
+    else    
+        writeln(2);
+return 0;
+}   

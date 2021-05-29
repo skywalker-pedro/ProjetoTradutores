@@ -81,23 +81,22 @@ extern int yydebug;
     FOR = 282,                     /* FOR  */
     FORALL = 283,                  /* FORALL  */
     IN = 284,                      /* IN  */
-    IS_IN = 285,                   /* IS_IN  */
-    IS_SET = 286,                  /* IS_SET  */
-    OR = 287,                      /* OR  */
-    NEGATION = 288,                /* NEGATION  */
-    EQUALS = 289,                  /* EQUALS  */
-    APOST = 290,                   /* APOST  */
-    CHAVES_INI = 291,              /* CHAVES_INI  */
-    CHAVES_FIM = 292,              /* CHAVES_FIM  */
-    PARENTESES_INI = 293,          /* PARENTESES_INI  */
-    PARENTESES_FIM = 294,          /* PARENTESES_FIM  */
-    SEMICOLON = 295,               /* SEMICOLON  */
-    COLON = 296,                   /* COLON  */
-    PLUS = 297,                    /* PLUS  */
-    MINUS = 298,                   /* MINUS  */
-    MULT = 299,                    /* MULT  */
-    DIV = 300,                     /* DIV  */
-    THEN = 301                     /* THEN  */
+    IS_SET = 285,                  /* IS_SET  */
+    OR = 286,                      /* OR  */
+    NEGATION = 287,                /* NEGATION  */
+    EQUALS = 288,                  /* EQUALS  */
+    APOST = 289,                   /* APOST  */
+    CHAVES_INI = 290,              /* CHAVES_INI  */
+    CHAVES_FIM = 291,              /* CHAVES_FIM  */
+    PARENTESES_INI = 292,          /* PARENTESES_INI  */
+    PARENTESES_FIM = 293,          /* PARENTESES_FIM  */
+    SEMICOLON = 294,               /* SEMICOLON  */
+    COLON = 295,                   /* COLON  */
+    PLUS = 296,                    /* PLUS  */
+    MINUS = 297,                   /* MINUS  */
+    MULT = 298,                    /* MULT  */
+    DIV = 299,                     /* DIV  */
+    THEN = 300                     /* THEN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -106,12 +105,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 249 "skylang.y"
+#line 307 "skylang.y"
 
 	char *str;
 	struct node* tree;
 
-#line 115 "skylang.tab.h"
+#line 114 "skylang.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

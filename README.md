@@ -12,3 +12,5 @@ Para executar o programa e realizar a análise dos arquivos de teste, digite o s
 
 1- echo testeCorreto1.txt | ./skylang
 
+Alternativamente, pode-se utilizar o comando make compile para realizar a compilação e os comandos make testeCorreto1, make testeCorreto2, make testeErrado1 e make testeErrado2 para 
+executar os testes.

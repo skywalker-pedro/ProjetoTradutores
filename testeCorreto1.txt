@@ -1,15 +1,40 @@
 int main(){
-    int x;
-    float y;
-    y = -9;
-    x = 1;
-    x = x + (y * 2) + (2 - -2);
-    writeln(x*x);
+    
+   float x;
+   int y;
+   elem z;
+   int resultado;
+   int i;
 
-    if(x<1)
-        write('\t');
-    else
-        write('\n');
+   x = 4;
+   y = 3.8;
+   z = 3;
 
+   resultado = (x*x) + y - (z * -2);
+
+   for(i=0;i<resultado - 10;i=i+1){
+      write('\t');
+      write((z - 3)+i);
+      write('\n');
+   }
+
+   writeln(resultado);
+
+   if(resultado>25){
+      write('M');
+      write('A');
+      write('I');
+      write('O');
+      write('R');
+   }
+   
+   if(resultado<26){
+      write('M');
+      write('E');
+      write('N');
+      write('O');
+      write('R');
+      write('\n');
+   }
 return 0;
-}
+}   

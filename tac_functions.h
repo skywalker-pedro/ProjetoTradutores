@@ -35,6 +35,16 @@ typedef struct tac {
     struct tac * next;
 }tac_lines;
 
+typedef struct error { 
+    //char * node_type;
+    char * line;
+    struct error * next;
+}erros;
+
+
+int namecmp(tac_lines *a, tac_lines *b) {
+    return strcmp(a->line,b->line);
+}
 
 void print_tac(tac_lines*tac){
     tac_lines * aux = tac;
@@ -46,9 +56,11 @@ void print_tac(tac_lines*tac){
     printf("\n");
 }
 
+erros* erros_semanticos = NULL;
 tac_lines * tac_completo = NULL;
-tac_lines * elt;
- 
+tac_lines * elt_1;
+erros*elt_erros;
+
 void adiciona_linha_tac(tac_lines*tac,char* linha){
 tac_lines* nodo=(tac_lines*)malloc(sizeof(tac_lines));
     nodo->line = linha;
@@ -56,11 +68,35 @@ tac_lines* nodo=(tac_lines*)malloc(sizeof(tac_lines));
 
 }
 
-void printa_linha_tac(tac_lines*tac,tac_lines* elt){
+void adiciona_linha_erro(erros*erros_sem,char* linha){
+erros* nodo=(erros*)malloc(sizeof(erros));
+    nodo->line = linha;
+    LL_APPEND(erros_semanticos, nodo);
+}
+
+
+void substitui_linha_tac(char*delete, char*adiciona){
+tac_lines* add=(tac_lines*)malloc(sizeof(tac_lines));
+tac_lines* del=(tac_lines*)malloc(sizeof(tac_lines));
+tac_lines * elt;
+
+    add -> line = adiciona;
+    del -> line = delete;
+
+    LL_SEARCH(tac_completo,elt,del,namecmp);
+    LL_REPLACE_ELEM(tac_completo,elt,add);
+}
+
+
+void printa_linha_tac(tac_lines*tac,tac_lines* elt_1){
     printf("\n");
-    LL_FOREACH(tac,elt) printf("%s\n", elt -> line);
+    LL_FOREACH(tac,elt_1) printf("%s\n", elt_1 -> line);
 
 }
+void printa_erros(erros*erros_sem,erros* elt_erros){
+    LL_FOREACH(erros_sem,elt_erros) printf("\n%s\n", elt_erros -> line);
+}
+
 
 void cria_arquivo_tac(tac_lines*tac,tac_lines*elt){
     

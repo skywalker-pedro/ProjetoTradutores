@@ -1,6 +1,0 @@
-mov y_1, 1
-	add $0, y_1, 2
-	mov x_1, $0
-	add $1, x_1, 4
-	mov y_1, $1
-	jump END

@@ -1,20 +1,46 @@
-int soma(int a1,int b2){
-
-	int resultado;
-	resultado = a1+b2;
-	write("resultado");
-	writeln('\?');
-	int x1;
-                                                          
-}
-
 int main(){
 
-	
-	int x3;
-	int x2;
-	soma(x3,x2);
-                                             	
+int x;
+int y;
+
+write('\t');
+write('D');
+write('i');
+write('g');
+write('i');
+write('t');
+write('e');
+write('\t');
+write('d');
+write('o');
+write('i');
+write('s');
+write('\t');
+write('n');
+write('u');
+write('m');
+write('e');
+write('r');
+write('o');
+write('s');
+write('\t');
+write('I');
+write('n');
+write('t');
+write('e');
+write('i');
+write('r');
+write('o');
+write('s');
+write('\n');
+
+read(x);
+read(y);
+
+if(x>y)
+    writeln(x);
+else
+    writeln(y);
                              
 return 0;
 
