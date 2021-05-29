@@ -1,7 +1,7 @@
+
+Este repositório contém o Projeto da disciplina de tradutores da Universidade de Brasília. Desenvolvido majoritariamete durante minhas madrugadas. Não espere organização, nem modularização/padrões de código rsrs.
+
 Para as gerações futuras dos alunos de Tradutores da UnB: Boa sorte.
-
-
-
 
 Para compilar os arquivos .l e .y, em ambiente Linux:
 
