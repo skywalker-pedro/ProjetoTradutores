@@ -1,3 +1,8 @@
+Para as gerações futuras dos alunos de Tradures da UnB: Boa sorte.
+
+
+
+
 Para compilar os arquivos .l e .y, em ambiente Linux:
 
 
