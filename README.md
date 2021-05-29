@@ -1,4 +1,4 @@
-Para as gerações futuras dos alunos de Tradures da UnB: Boa sorte.
+Para as gerações futuras dos alunos de Tradutores da UnB: Boa sorte.
 
 
 
