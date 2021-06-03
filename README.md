@@ -5,7 +5,9 @@ Para as gerações futuras dos alunos de Tradutores da UnB: Boa sorte.
 
 
 Dependências:
+
 Bison 3.7.2
+
 Flex 2.6.4
 
 Compilado originalmente em ambiente Linux Ubuntu
